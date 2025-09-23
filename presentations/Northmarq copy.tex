@@ -1,0 +1,1326 @@
+\documentclass{beamer}
+
+\usetheme{Frankfurt}
+
+\setbeamerfont{caption}{size=\tiny}
+
+
+\input{Template/preamble}
+
+
+% Customize the footer (footline) template
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}Dr. Cayman Seagraves (TU)
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}Leveraging AI in CRE
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{page number in head/foot}%
+            \usebeamerfont{page number in head/foot}C\&W, 2025 \hfill \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+
+% Add your university logo here (adjust the path and size as needed)
+\logo{\includegraphics[height=.8cm]{Images/Stacked TU blue and gold (1).png}}
+
+% Define the logo command
+% \newcommand{\universitylogo}{%
+%   \includegraphics[height=0.8cm]{Images/Stacked TU blue and gold (1).png}%
+% }
+
+
+
+
+% Title slide logo position customization
+% \titlegraphic{\hfill\includegraphics[width=1.5cm]{Images/CCB.jpg}}
+
+
+\author{Dr. Cayman Seagraves, University of Tulsa (TU)}
+% \institute{ARES, March 2024}
+\date{Cushman \& Wakefield, 2025}
+
+
+\title{Leveraging AI in Commercial Real Estate: \\ 2025 - The Year of the Agent\\}
+
+
+
+\begin{document}
+
+% Title page
+{
+\setbeamertemplate{headline}{\vskip-\headheight}
+\begin{frame}
+    \titlepage
+\end{frame}
+}
+
+% Outline
+% \section*{Outline}
+% \begin{frame}{Outline}
+%     \tableofcontents
+% \end{frame}
+
+% \begin{frame}{Outline}
+%     \begin{columns}[t]
+%         \begin{column}{0.5\textwidth}
+%             \tableofcontents
+%         \end{column}
+%         \begin{column}{0.45\textwidth}
+%             \begin{block}{}
+%                 \small
+%                 \textit{``I think it's the biggest technological advance that we've had since the adoption of the internet, and I think it will continue to permeate everything that we do in our daily lives, how we interact business-wise, and how we interact with each other.''}
+                
+%                 \vspace{0.3em}
+%                 \raggedleft
+%                 \textbf{Michael Hironimus, CCIM}\\
+%                 \footnotesize Principal/Founder\\
+%                 Duckridge Realty Advisors\\
+%                 West Linn, OR
+%             \end{block}
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+\section{Introduction}
+
+\begin{frame}{Outline}
+    \begin{columns}[c]
+        \begin{column}{0.45\textwidth}
+            \centering
+            \large
+            \setlength{\itemsep}{1em}
+            \tableofcontents
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \begin{block}{}
+                \normalsize
+                \textit{``I think it's the biggest technological advance that we've had since the adoption of the internet, and I think it will continue to permeate everything that we do in our daily lives, how we interact business-wise, and how we interact with each other.''}
+                
+                \vspace{0.5em}
+                \raggedleft
+                \textbf{Michael Hironimus, CCIM}\\
+                \small Principal/Founder\\
+                Duckridge Realty Advisors\\
+                West Linn, OR
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%
+% Bio - Final Working Solution
+%%%%%%%%%%%%%%
+\begin{frame}{Why Listen to Me About AI in Commercial Real Estate?}
+  \begin{columns}[T]
+    % Left column: Academic Credentials
+    \begin{column}{0.32\textwidth}
+      \textbf{\color{RoyalBlue} \small Academic Foundation}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~Ph.D. in Finance, Florida State University
+      
+      \vspace{3pt}
+      \textbullet~Assistant Professor, University of Tulsa Collins College of Business
+      
+      \vspace{3pt}
+      \textbullet~Co-founder, Agentic Assets (PhD-led AI consulting firm)
+    \end{column}
+    
+    % Center column: Research & Publications  
+    \begin{column}{0.39\textwidth}
+      \textbf{\color{RoyalBlue} \small  Research \& Publications}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~5 peer-reviewed publications in top finance/real estate journals
+      
+      \vspace{3pt}
+      \textbullet~``Optimizing Real Estate Portfolios: The Role of Generative AI'' \textit{(JREPM, 2025)}
+      
+      \vspace{3pt}
+      \textbullet~Multiple manuscript awards, American Real Estate Society (2024)
+      
+      \vspace{3pt}
+      \textbullet~Best Paper Award, Afrimed Finance Society (2024)
+    \end{column}
+    
+    % Right column: Practical AI Experience
+    \begin{column}{0.34\textwidth}
+      \textbf{\color{RoyalBlue} \small  AI Implementation}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~Building ``Orbis'' - Real Estate AI agent with 50,000+ academic papers
+      
+      \vspace{3pt}
+      \textbullet~Created \href{https://www.reitfactors.ai/}{\color{blue!60!black}REITfactors.ai} - AI-powered REIT analytics
+      
+      \vspace{3pt}
+      \textbullet~Program Chair, Future Leaders of ARES
+      
+      \vspace{3pt}
+      \textbullet~Bridging academic AI research with industry applications
+    \end{column}
+  \end{columns}
+  
+  \vspace{0.1cm}
+  
+  \begin{center}
+  \begin{minipage}{0.85\textwidth}
+  \begin{block}{\centering\footnotesize Approach}
+    \centering
+    \scriptsize Combining rigorous academic research with practical AI implementation in real estate markets
+  \end{block}
+  \end{minipage}
+  \end{center}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – AI REVOLUTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AI Revolution}
+
+%----------------------------------------
+\begin{frame}{The AI Revolution Has Arrived in Commercial Real Estate}
+\small
+  \begin{columns}[onlytextwidth]
+  \hspace*{-.7cm}
+    % Left column: bullets
+    \column{0.55\textwidth}
+      \begin{itemize}
+        \item In 2025, AI isn’t just changing CRE-\emph{it’s actively working for you}
+          \begin{itemize}
+            \item Evolution from passive tools to active participants in your deals
+          \end{itemize}
+        \item \textbf{90.1\%} of companies plan to use AI-augmented CRE workflows by 2029 {\tiny(JLL 2024)} 
+        \item Every \$1 spent on gen-AI returns \textbf{\$3.70} in value  {\tiny(Microsoft/IDC 2024)}
+      \end{itemize}
+    % Right column: image
+    \hspace*{-1.3cm}
+    \column{0.45\textwidth}
+      \centering
+      \includegraphics[height=0.45\textheight,keepaspectratio]{Figures/AI in Real Estate.png}
+  \end{columns}
+
+  \vspace{-0.3cm}
+
+  \begin{block}{Key Message}
+    If ChatGPT is a brilliant intern, autonomous \textbf{agents} are full-time
+    associates closing deals while you sleep.
+  \end{block}
+\end{frame}
+
+
+%--- figure (McKinsey value-creation chart)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{Figures/AI in Real Estate.png}\\
+%   % \tiny Source: McKinsey, 2024
+% \end{frame}
+
+
+
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]{2025 commercial real estate outlook}
+    % shift everything to the left by 1cm:
+    % \hspace*{-5cm}%
+    \begin{columns}[t,onlytextwidth]
+      % set 1cm between the columns:
+      \setlength{\columnsep}{.8cm}
+
+      \column{0.48\textwidth}\hspace*{-1.1cm}
+        \centering
+        \includegraphics[height=0.65\textheight,keepaspectratio]
+          {Figures/2025/Deloitte - AI-Forward Companies Likely to get the best talent.png}
+
+      \column{0.48\textwidth}\hspace*{-.5cm}
+        \centering
+        \includegraphics[height=0.65\textheight,keepaspectratio]
+          {Figures/2025/Deloitte - Pioneers unlock substantial value from gen AI deployments.png}
+
+    \end{columns}
+\vspace{.35cm}
+  \centering
+  \includegraphics[height=0.24\textheight,keepaspectratio]{Figures/2024/JLL - Corporate real estate and AI - 2024.png}\\
+  \tiny Source: JLL, 2024
+    
+  \end{frame}
+}
+
+
+%----------------------------------------
+\begin{frame}{AI – in Plain English}
+  \begin{block}{Artificial Intelligence}
+    Systems that learn from data to perceive, reason and act with minimal human
+    direction-covering machine learning, NLP, computer vision and more (EY Standard for Trustworthy AI, 2024).
+  \end{block}
+
+  \begin{itemize}
+    \item \textbf{Three things to remember}
+      \begin{enumerate}
+        \item It trains on \emph{data}—not hand-written rules
+        \item It gets better the more feedback you give it
+        \item It works fast and at huge scale, but still needs your judgment
+      \end{enumerate}
+    \item \textbf{What it’s \underline{not}}
+      \begin{itemize}
+        \item A thinking robot—it crunches numbers, it doesn’t “feel”
+        \item A magic wand—poor data \(\Rightarrow\) poor results
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/History of Artificial Intelligence (AI) timeline.jpg}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/ChatGPT Launched - time to 100 M users.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+
+
+\begin{frame}{}
+  \begin{columns}[T,onlytextwidth]
+
+    % --- 70 % picture column ---
+    \begin{column}{0.87\textwidth}
+      \centering
+      \hspace*{-1.8cm}% shift image left
+      \includegraphics[width=\linewidth,
+                       keepaspectratio]{Figures/Recent timeline of LLMs and AI models.png}
+    \end{column}
+
+    % --- 30 % text column, shifted left as a whole ---
+    \hspace*{-0.5cm}% <-- move the entire column left (adjust value)
+    \begin{column}{0.21\textwidth}
+      \vspace{0.5em}
+      \begin{block}{}
+        \scriptsize\bfseries
+        2025 – “Year of the Agent”
+      \end{block}
+
+      \vspace{0.3em}
+      \scriptsize
+      AI starts \emph{doing work}, not just answering questions.
+    \end{column}
+
+  \end{columns}
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Interactive: How Many Words Do You Use With AI?}
+  \begin{columns}[c]
+    % Left column: interactive content
+    \begin{column}{0.6\textwidth}
+      \begin{itemize}
+        \item Raise your hand if you typically use at least 5–10 words when prompting ChatGPT
+        \item Now keep your hand up if you use at least 20 words
+        \item 50 words?
+        \item 500 words?
+      \end{itemize}
+    \end{column}
+
+    % Right column: image, moved down slightly
+    \begin{column}{0.4\textwidth}
+      \vspace{0.4cm}  % adjust this value to move image further down or up
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{ai_models.png}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.2cm}\pause
+    \begin{block}{Key Insight}
+    \small
+      \begin{itemize}
+        \item Only those crafting 500+ word prompts unlock AI’s full capabilities.
+        \item Rich, detailed prompts consistently produce more accurate and insightful results.
+      \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Setting Up \& Customizing Your AI Project}
+  \begin{columns}
+    % Left column: two smallish images stacked
+    \begin{column}{0.44\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{Chatgpt setting up a project.png}\\[1ex]
+      \includegraphics[width=\linewidth,keepaspectratio]{Commercial Real Estate Assistant.png}
+    \end{column}
+
+    % Right column: one tall image
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[height=0.772\textheight,keepaspectratio]{Customize ChatGPT.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+%----------------------------------------
+
+
+
+
+  % \begin{itemize}
+  %   \item Even with identical prompts, different users often receive different responses
+  %   \item Understanding prompt engineering is crucial for consistent, high-quality results
+  % \end{itemize}
+
+%----------------------------------------
+% \begin{frame}{Choosing the Right AI Model}
+%   % Top half: two simple columns
+%   \small
+%   \begin{columns}[T,onlytextwidth]
+%     \begin{column}{0.48\textwidth}
+%       \textbf{Specialized Models}
+%       \begin{itemize}\scriptsize
+%         \item Designed for one or two tasks (e.g.\ deep reasoning, summarization)
+%         \item Best-in-class accuracy (“highest intelligence”)
+%         \item Higher compute cost \& slower inference
+%       \end{itemize}
+%     \end{column}
+%     \begin{column}{0.48\textwidth}
+%       \textbf{General-Purpose Models}
+%       \begin{itemize}\scriptsize
+%         \item Wide range of abilities (chat, simple code, translation)
+%         \item Very low cost \& lightning fast
+%         \item Good—but not maximal—performance
+%       \end{itemize}
+%     \end{column}
+%   \end{columns}
+
+%   \vfill
+
+%   % Bottom half: your image
+%   \centering
+%   \hspace*{-1cm}
+%   \includegraphics[height=0.33\textheight,keepaspectratio]{Figures/Artificial Analysis - metrics.png}\\
+%   \tiny Source: Artificial Analysis Intelligence Index
+% \end{frame}
+
+
+%----------------------------------------
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{Choosing the Right AI Model}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/2025/Intelligence vs Price (5 Aug '25) .png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+%----------------------------------------
+\begin{frame}{Interactive: Where’s Your Firm on the AI Adoption Curve?}
+  \textbf{Quick self-assessment – which stage best describes your organization?}
+  \begin{enumerate}
+    \item \textbf{Observer:} “We’re aware but haven’t implemented AI tools yet”
+    \item \textbf{Experimenter:} “We’re using ChatGPT/Claude/Copilot occasionally for simple tasks”
+    \item \textbf{Adopter:} “We’ve integrated AI tools into our regular workflows”
+    \item \textbf{Leader:} “We’re using AI agents to transform our business model”
+  \end{enumerate}
+
+  \pause
+  \begin{block}{Insight}
+    Most CRE firms in secondary markets like Tulsa are between stages 1–2,
+    creating immediate opportunities for competitive advantage by moving to
+    stages 3–4.
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – AI AGENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AI Agents}
+
+%----------------------------------------
+\begin{frame}{2025 = “The Year of the Agent”}
+  % \begin{itemize}
+  %   \item AI agents jumped from research labs to revenue centers in 18 months
+  %   \item 90.1\% of companies expect their CRE functions to be AI-supported
+  %         within five years (JLL Spark 2025)
+  %   \item Venture funding for agentic PropTech nearly tripled in 2024 (JLL Spark 2025)
+  % \end{itemize}
+
+  \begin{columns}[T]
+  \hspace*{-1.1cm}
+    \column{0.48\linewidth}
+    
+{\small
+\begin{itemize}
+  \setlength\itemsep{1.3em}  % adjust this value to taste
+  \item AI agents jumped from research labs to revenue centers in 18 months
+  \item 78\% of companies are now using gen AI in at least one business function (up from 55\% a year earlier) {\tiny (McKinsey, 2025)}   
+  \item Venture funding for agentic PropTech nearly tripled in 2024 {\tiny  (JLL Spark 2025)}
+\end{itemize}
+}
+
+    \column{0.48\linewidth}
+    \hspace*{-1cm}
+  \centering
+  \includegraphics[height=0.68\textheight,keepaspectratio]{CBinsights - AI deal growth by industry.png}\\
+  % \tiny Source: CB Insights, 2024
+  \end{columns}
+
+  
+\end{frame}
+
+% %--- figure (CB Insights funding by industry)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{CBinsights - AI deal growth by industry.png}\\
+%   \tiny Source: CB Insights, 2024
+% \end{frame}
+
+%----------------------------------------
+\begin{frame}{From Smart \underline{Tool} to Smart \underline{Teammate}}
+  \begin{block}{AI Agent}
+    An autonomous software entity that \textbf{perceives} its environment,
+    \textbf{plans} multi-step workflows and \textbf{executes} actions iteratively
+    toward a goal (LeewayHertz 2024)
+  \end{block}
+
+  \begin{columns}[T]
+    \column{0.48\linewidth}
+      \textbf{Key capabilities}
+      \begin{itemize}\scriptsize
+        \item Memory \& self-reflection
+        \item Tool orchestration (CRM API + Excel + Email)
+        \item Continuous learning
+      \end{itemize}
+    \column{0.48\linewidth}
+      \textbf{Why CRE cares}
+      \begin{itemize}\scriptsize
+        \item Automates deal sourcing/analysis
+        \item 24/7 conversational interface
+        \item Scales expertise without adding head-count
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.9em}
+  \centering
+  \footnotesize
+\begin{tabular}{|p{0.12\linewidth}|p{0.8\linewidth}|}
+  \hline
+  \textbf{Tool}    & e.g. auto-generate listings, tag photos, run valuations \\ \hline
+  \textbf{Chatbot}& e.g. book tours, answer tenant requests, fetch lease info \\ \hline
+  \rowcolor{blue!10}
+  \textbf{Agent}  & e.g. source leads → qualify → schedule viewings → update CRM \\ \hline
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}[plain]
+    % \frametitle{Example Workflow on ChatGPT.com (1/4)}
+    \vfill % Adds flexible space above the image
+    \centering % Ensures the image is centered horizontally
+    \includegraphics[height=0.76\textheight, keepaspectratio]{Figures/2025/McKinsey - Agent Example - 2025.png}
+    \vspace{1cm}
+    \tiny Source: McKinsey, 2025
+    \vfill % Adds flexible space below the image
+\end{frame}
+
+
+% { % all template changes are local to this group.
+%     \setbeamertemplate{navigation symbols}{}
+%     \begin{frame}{Real Estate Portfolio Management (REPM) Agent}<article:0>[plain]
+%         \begin{tikzpicture}[remember picture,overlay]
+%             \node[at=(current page.center)] {
+%                 \includegraphics[keepaspectratio,
+%                                  width=.94\paperwidth,
+%                                  height=\paperheight]{Figures/repm_agent_landscape (1).png}
+%             };
+%         \end{tikzpicture}
+%      \end{frame}
+% }
+
+{% all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{Real Estate Portfolio Management (REPM) Agent}[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center), yshift=0.0cm] {
+                \includegraphics[keepaspectratio,
+                                 width=.94\paperwidth,
+                                 height=0.85\paperheight]{Figures/repm_agent_landscape (1).png}
+            };
+            \node[at=(current page.south), yshift=0.9cm] {
+                \begin{minipage}{0.9\paperwidth}
+                    \centering
+                    \tiny
+                    Dombrowski, Timothy, and Cayman Seagraves. ``Optimizing Real Estate Portfolios: The Role of Generative AI in Geographic Diversification.'' \textit{Journal of Real Estate Portfolio Management} (2025): 1--33.
+                \end{minipage}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+\begin{frame}
+    \frametitle{Example Workflow on ChatGPT.com (1/4)}
+    \vfill % Adds flexible space above the image
+    \centering % Ensures the image is centered horizontally
+    \includegraphics[height=0.62\textheight, keepaspectratio]{Figures/My Figures - Cayman Seagraves/ChatGPT screenshot 1.png}
+    \vfill % Adds flexible space below the image
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example Workflow on ChatGPT.com (2/4)}
+    \vfill
+    \centering
+    \includegraphics[height=0.76\textheight, keepaspectratio]{Figures/My Figures - Cayman Seagraves/ChatGPT screenshot 2.png}
+    \vfill
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example Workflow on ChatGPT.com (3/4)}
+    \vfill
+    \centering
+    \includegraphics[height=0.76\textheight, keepaspectratio]{Figures/My Figures - Cayman Seagraves/ChatGPT screenshot 4.png}
+    \vfill
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example Workflow on ChatGPT.com (4/4)}
+    \vfill
+    \centering
+    \includegraphics[height=0.76\textheight, keepaspectratio]{Figures/My Figures - Cayman Seagraves/ChatGPT screenshot 6.png}
+    \vfill
+\end{frame}
+
+%-------------------------------------------
+
+
+%--- figure (AI-vs-Human performance side by side)
+% \begin{frame}[plain]
+%   \centering
+%   \begin{columns}[c]
+%     \column{0.48\textwidth}
+%       \includegraphics[height=\lineheight,keepaspectratio]{AI-vs.-Human-Performance-in-Technical-Tasks_website_Apr21.jpg}
+%     \column{0.48\textwidth}
+%       \includegraphics[height=\lineheight,keepaspectratio]{Top-Countries-Investing-in-AI_Site.jpg}
+%   \end{columns}
+%   \vspace{1ex}
+%   {\tiny Source: Visual Capitalist, 2025}
+% \end{frame}
+
+
+
+% { % all template changes are local to this group.
+%     \setbeamertemplate{navigation symbols}{}
+%     \begin{frame}<article:0>[plain]
+%         \begin{tikzpicture}[remember picture,overlay]
+%             \node[at=(current page.center)] {
+%                 \includegraphics[keepaspectratio,
+%                                  width=.95\paperwidth,
+%                                  height=\paperheight]{AI-vs.-Human-Performance-in-Technical-Tasks_website_Apr21.jpg}
+%             };
+%         \end{tikzpicture}
+%      \end{frame}
+% }
+
+
+{ % local template changes
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}<article:0>[plain]
+    \begin{tikzpicture}[remember picture,overlay]
+      % Background full–slide image, nudged left for room
+      \node[xshift=-2.8cm] at (current page.center) {
+        \includegraphics[keepaspectratio,
+                         width=0.95\paperwidth,
+                         height=\paperheight]{AI-vs.-Human-Performance-in-Technical-Tasks_website_Apr21.jpg}
+      };
+      % Quote block centered vertically on the right edge
+      \node[anchor=east, xshift=-0.5cm] at (current page.east) {
+        \begin{minipage}{0.34\paperwidth}
+          \footnotesize
+          \begin{block}{Looking Forward}
+            ``\textit{I expect over the next five years, so much of what human investors 
+            and analysts can do can be better done with machine intelligence.}''
+            
+            \vspace{0.5ex}
+            {\tiny — Greg Jensen, Co-CIO @ Bridgewater (July 8, 2024)}
+          \end{block}
+        \end{minipage}
+      };
+    \end{tikzpicture}
+  \end{frame}
+}
+
+
+
+
+
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]
+  \setlength{\columnsep}{15cm}
+    \begin{columns}[onlytextwidth]
+      \column{0.5\textwidth}
+        \centering
+        \includegraphics[height=.88\textheight,keepaspectratio]{Top-Countries-Investing-in-AI_Site.jpg}
+      \column{0.5\textwidth}
+        \centering
+        \includegraphics[height=.88\textheight,keepaspectratio]{Figures/U.S.-vs.-China-in-AI_website_Apr22.jpg}
+    \end{columns}
+  \end{frame}
+}
+
+
+%----------------------------------------
+\begin{frame}{AI Agents in Action: A Day in Commercial Real Estate}
+\small
+  \begin{columns}
+    \column{0.52\textwidth}
+      \textbf{Morning: Acquisition Analysis}
+      \begin{itemize}\small
+        \item Agent monitors 50+ markets overnight
+        \item Flags 3 properties matching investment criteria
+        \item Prepares preliminary underwriting
+        \item Drafts LOI options with comparable data
+      \end{itemize}
+    \column{0.52\textwidth}
+      \textbf{Afternoon: Portfolio Management}
+      \begin{itemize}\small
+        \item Predictively schedules maintenance
+        \item Responds to 24 tenant \\ inquiries
+        \item Processes 16 lease-amendment requests
+        \item Updates investor dashboards in real-time
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.3cm}
+  \begin{block}{The Difference}
+    \centering Traditional AI helps with \underline{\textbf{individual}} tasks,\\
+    agents orchestrate \underline{\textbf{entire}} workflows across systems.
+  \end{block}
+\end{frame}
+
+%----------------------------------------
+% \begin{frame}{How AI Agents Work}
+% \small
+%   \textbf{The Reasoning-Action Loop}
+%   \begin{enumerate}
+%     \item \textbf{Perceive:} Gather information from users and systems
+%     \item \textbf{Reason:} Process information using large language models
+%     \item \textbf{Plan:} Determine optimal steps to achieve goals
+%     \item \textbf{Act:} Execute actions across various tools and platforms
+%     \item \textbf{Learn:} Improve from outcomes and feedback
+%   \end{enumerate}
+
+%     \vspace{0.3cm}
+%     \textbf{Technical Components:}
+%     \begin{itemize}
+%         \item\textbf{LLM Core:} The ``brain" providing reasoning capabilities
+%         \item\textbf{Tool Integration:} APIs connecting to external systems
+%         \item\textbf{Memory Systems:} Maintaining context and history
+%         \item\textbf{Action Frameworks:} Translating decisions into specific actions
+%     \end{itemize}
+    
+
+% \end{frame}
+
+%--- figure (Reasoning-Action schematic)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{Figures/Towards data science - Agentic AI - Single vs Multi-Agent Systems.png}\\
+%   \tiny Source: LeewayHertz, 2024
+% \end{frame}
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{Single vs. Multi-Agent Systems}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=1\paperwidth,
+                                 height=\paperheight]{Figures/Towards data science - Agentic AI - Single vs Multi-Agent Systems.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – APPLICATIONS / MARKET MOMENTUM
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Applications}
+
+%----------------------------------------
+\begin{frame}{From Theory to Practice: AI in Your Business}
+  \centering
+
+  \centering
+  \includegraphics[height=0.55\textheight,keepaspectratio]{Figures/From Theory to Practice - AI in Your Business.png}\\
+  
+
+  \vspace{0.25cm}
+  \begin{block}{The Journey}
+    CRE is moving from \underline{\textbf{automation}}  to \underline{\textbf{augmentation}} to full
+    \underline{\textbf{autonomy}} in core business functions.
+  \end{block}
+\end{frame}
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.94\paperwidth,
+                                 height=\paperheight]{Figures/Aigent Realty - AI-Powered Agents - CRE.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.88\paperwidth,
+                                 height=\paperheight]{Figures/Aigent Realty - AI-Powered Agents - CRE - Contract Agent.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]{AI Workflow Automation Platform \& Tools - n8n}
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.88\paperwidth,
+                                 height=\paperheight]{Figures/n8n.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+%--- figure (JLL adoption heat-map)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{JLL FEATURED RESEARCH - Breakthrough in AI with new companies.jpeg}\\
+%   \tiny Source: JLL Spark, 2025
+% \end{frame}
+
+%----------------------------------------
+% \begin{frame}{AI in Real Estate – Headline Numbers}
+%   \begin{itemize}
+%     \item Market value grows \$226 B (2024) → \$731 B by 2028 (CAGR 34\%, LeewayHertz 2024)
+%     \item Only 10.4\% of facilities management pros use AI daily → huge upside (JLL 2024)
+%     \item 700+ start-ups already deliver AI-powered PropTech solutions (JLL Spark 2025)
+%   \end{itemize}
+% \end{frame}
+
+
+
+% %----------------------------------------
+% \begin{frame}{Where Agents Are Driving ROI Now}
+%   \begin{enumerate}
+%     \item \textbf{Predictive Property \& Facilities Management Ops} – 80\% cycle-time cut at C\&W (Microsoft × C\&W 2024)
+%     \item \textbf{Lease Abstraction \& Document AI} – 25\% faster processing at CBRE (CBRE 2024)
+%     \item \textbf{Energy Optimisation} – 59\% savings using Hank at Royal London (JLL 2024)
+%     \item \textbf{Automated Valuation \& Financial Modeling} – Datagrid, Skyline AI (significant analyst-hour savings 2024)
+%   \end{enumerate}
+% \end{frame}
+
+\begin{frame}{AI Agents in CRE: Market Size \& Proven ROI (2025)}
+  \begin{columns}
+    \column{1.0\textwidth}
+      \begin{minipage}[t]{0.48\textwidth}
+        \textbf{Market Opportunity:}
+        \begin{itemize}
+          \item Market grows \$226B → \$731B by 2028 {\tiny(LeewayHertz 2024)}
+          \item 700+ startups delivering AI-powered PropTech {\tiny(JLL Spark 2025)}
+          \item Only 10.4\% of facilities management pros use AI regularly {\tiny(JLL 2024)}
+        \end{itemize}
+      \end{minipage}
+      \hfill
+      \begin{minipage}[t]{0.48\textwidth}
+        \textbf{Proven ROI Areas:}
+        \begin{enumerate}
+          \item \textbf{Facilities Management:} 80\% cycle-time ↓ {\tiny(Microsoft × C\&W 2024)}
+          \item \textbf{Document AI:} 25\% faster processing {\tiny(CBRE 2024)}
+          \item \textbf{Energy Optimization:} 59\% savings {\tiny(JLL 2024)}
+          \item \textbf{Automated Valuation:} Major time savings {\tiny(Datagrid 2024)}
+        \end{enumerate}
+      \end{minipage}
+  \end{columns}
+\end{frame}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{AI Lead Generation}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/World’s first AI real estate agent has already made 100M in sales.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+%--- figure (Top 5 pilot areas)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[width=0.9\textwidth,keepaspectratio]{Figures/JLL FEATURED RESEARCH - top 5 areas for ai pilots.png}\\
+%   \vspace{.05cm}
+%   \tiny Source: JLL Future of Work Survey 2024
+% \end{frame}
+
+%----------------------------------------
+
+
+\begin{frame}{Mini-Case Studies}
+  \begin{itemize}
+    \item \textbf{CBRE Ellis AI} – 65\% fewer building management system false alarms; complex tasks reduced from weeks→minutes {\tiny(CBRE 2024)}
+    \item \textbf{JLL Falcon + GPT} – Firm-wide semantic search \& scenario analysis powered by proprietary data {\tiny(JLL 2024)}
+    \item \textbf{Voiceflow PM Agent} – 24/7 tenant communication automation {\tiny(Voiceflow 2024)}
+  \end{itemize}
+  
+  \vspace{0.5cm}
+  \begin{center}
+    \begin{tabular}{ccc}
+      \includegraphics[height=0.8cm]{cbre long.png} & 
+      \includegraphics[height=0.8cm]{JLL_logo.png} & 
+      \includegraphics[height=0.8cm]{voiceflow-black-png.png} \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]
+    % shift everything to the left by 1cm:
+    % \hspace*{-5cm}%
+    \begin{columns}[t,onlytextwidth]
+      % set 1cm between the columns:
+      \setlength{\columnsep}{1cm}
+
+      \column{0.48\textwidth}\hspace*{-1cm}
+        \centering
+        \includegraphics[height=0.78\textheight,keepaspectratio]
+          {REIT_factors_landing_page.png}
+
+      \column{0.48\textwidth}
+        \centering
+        \includegraphics[height=0.78\textheight,keepaspectratio]
+          {REIT_factors_dashboard_page.png}
+
+    \end{columns}
+  \end{frame}
+}
+
+
+%--- figure (CBRE vs JLL platform comparison)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{CBRE vs JLL platform chart.png}\\
+%   \tiny Source: CBRE 2024 [1][10], JLL 2024 [5][14]
+% \end{frame}
+
+%----------------------------------------
+% \begin{frame}{Performance Metrics to Track}
+%   \begin{columns}
+%     \column{0.65\linewidth}
+%       \begin{itemize}
+%         \item NOI uplift 10\%+ via predictive maintenance (McKinsey 2023)
+%         \item Operating cycle time ↓ 80\% (C\&W 2024)
+%         \item Energy spend ↓ 20–59\% (JLL 2024)
+%         \item Lease processing cost ↓ 25\% (CBRE 2024)
+%         \item Predictive maintenance ROI: 708\% (JLL 2024)
+
+%       \end{itemize}
+%     \column{0.35\linewidth}
+%       \centering
+%       \includegraphics[width=\textwidth]{ChatGPT Image Apr 29, 2025, 01_51_59 AM.png}
+%   \end{columns}
+% \end{frame}
+
+
+%----------------------------------------
+\section{Implementation}
+
+% \begin{frame}{Successful Roll-Out Playbook}
+%   \begin{enumerate}
+%     \item \textbf{Start small, scale fast} – prove ROI in $<$ 90 days (EY 2024)
+%     \item \textbf{Data foundation first} – unify leases, IoT, market data in a governed lakehouse (JLL 2024)
+%     \item \textbf{Human-in-the-loop} – keep expert review on critical decisions (McKinsey 2023)
+%     \item \textbf{Responsible AI guardrails} – bias checks, audit trails, privacy-by-design (NAIOP 2025)
+%     \item \textbf{Change management} – upskill teams; position agents as co-pilots, not replacements (JLL Spark 2025)
+%   \end{enumerate}
+% \end{frame}
+
+\begin{frame}{AI Agent Implementation: ROI Metrics \& Success Factors}
+\small
+  \begin{columns}
+    \column{0.65\linewidth}
+      \textbf{Key Performance Metrics:}
+      \begin{itemize}
+        \item NOI uplift 10\%+ via predictive maintenance {\tiny(McKinsey 2023)}
+        \item Operating cycle time ↓ 80\% {\tiny(C\&W 2024)}
+        \item Energy spend ↓ 20–59\% with 708\% ROI {\tiny(JLL 2024)}
+      \end{itemize}
+      \vspace{0.2cm}
+      \small
+      \textbf{Implementation Success Factors:}
+      \begin{itemize}
+        \item \textbf{Start small, scale fast} – prove ROI in $<$ 90 days
+        \item \textbf{Data foundation first} – unify property data sources
+        \item \textbf{Human-in-the-loop} – expert oversight on critical decisions
+      \end{itemize}
+    \column{0.35\linewidth}
+      \centering
+      \includegraphics[width=\textwidth]{ChatGPT Image Apr 29, 2025, 01_51_59 AM.png}
+  \end{columns}
+\end{frame}
+
+%----------------------------------------
+
+
+% \begin{frame}{Mind the Pitfalls}
+%   \begin{columns}[t,onlytextwidth]
+%     % left column: your bullet list
+%     \small
+%     \begin{column}{0.48\textwidth}
+%       \vspace{0.5em}  % give a little breathing room under the title
+%       \begin{itemize}
+%         \item \textbf{Data bias} → fair-housing violations
+%         \item \textbf{Hallucinations} → wrong comps in valuation
+%         \item \textbf{Security} → model or tenant-data leakage
+%         \item \textbf{Energy usage} → AI workloads can raise GHG emissions 48\% {\tiny(NAIOP 2025)}
+%       \end{itemize}
+%     \end{column}
+
+%     % right column: the survey image
+%     \begin{column}{0.48\textwidth}
+%       \vspace{-0.5em}  % nudge the image down a bit
+%       \centering
+%       \includegraphics[
+%         width=\linewidth,
+%         height=0.75\textheight,
+%         keepaspectratio
+%       ]{AI survey.jpeg}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
+
+
+
+%--- figure (McKinsey workforce impact chart)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{McKinsey workforce impact by industry.png}\\
+%   \tiny Source: McKinsey Global Institute 2024
+% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – TULSA ACTION PLAN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{frame}{Next Steps for the Tulsa Market}
+  \footnotesize
+  \begin{columns}[t,onlytextwidth]
+    % Left column: concise steps
+    \column{0.70\textwidth}
+      \begin{enumerate}
+        \item Audit data (leases, contracts, emails)
+        \item Pilot one AI use case in Q4 2025
+          \begin{itemize}\scriptsize
+            \item \textbf{Small firms:} tenant chat or lease abstraction
+            \item \textbf{Large portfolios:} predictive maintenance or deal sourcing
+          \end{itemize}
+        \item Track ROI (cycle time, \$/ft², satisfaction)
+        \item Connect with me and the local AI ecosystem
+      \end{enumerate}
+
+    % Right column: Tulsa advantage block
+    \column{0.24\textwidth}
+      \begin{block}{Tulsa Advantage}\scriptsize
+        Regional firms can out-compete national players by combining deep local
+        knowledge with AI automation.
+      \end{block}
+  \end{columns}
+
+  \vfill
+  % Wide Tulsa image at bottom with border
+  \setlength{\fboxsep}{0pt}% no padding between image and box
+  \setlength{\fboxrule}{1pt}% border thickness
+  \begin{center}
+    \fbox{%
+      \includegraphics[width=.98\textwidth,keepaspectratio]{Tulsa skyline.jpg}%
+    }
+  \end{center}
+\end{frame}
+
+
+
+
+%----------------------------------------
+% \begin{frame}{Start Today with ChatGPT Agent Mode (July 17, 2025)}
+%   \begin{columns}
+%     % Left column: two smallish images stacked
+%     \begin{column}{0.44\textwidth}
+%       \centering
+%       \includegraphics[width=\linewidth,keepaspectratio]{Figures/2025/New ChatGPT Agent Mode August 2025.png}\\[1ex]
+%       \includegraphics[width=\linewidth,keepaspectratio]{Figures/2025/New ChatGPT Agent Mode 2 August 2025.png}
+%     \end{column}
+
+%     \begin{column}{0.44\textwidth}
+%       \centering
+%       \includegraphics[width=\linewidth,keepaspectratio]{Figures/2025/New ChatGPT Agent Mode 3 August 2025.png}\\[1ex]
+%       \includegraphics[width=\linewidth,keepaspectratio]{Figures/2025/New ChatGPT Agent Mode 4 August 2025.png}
+%     \end{column}    
+
+%     % % Right column: one tall image
+%     % \begin{column}{0.48\textwidth}
+%     %   \centering
+%     %   \includegraphics[height=0.772\textheight,keepaspectratio]{Customize ChatGPT.png}
+%     % \end{column}
+%   \end{columns}
+% \end{frame}
+%----------------------------------------
+
+
+\begin{frame}[plain]{Start Today with ChatGPT Agent Mode!! (July 17, 2025)}
+    % \frametitle{Example Workflow on ChatGPT.com (1/4)}
+    \vfill % Adds flexible space above the image
+    \centering % Ensures the image is centered horizontally
+    \includegraphics[height=0.78\textheight, keepaspectratio]{Figures/2025/New ChatGPT Agent Mode 4 August 2025.png}
+
+    \vfill % Adds flexible space below the image
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – TU PROGRAM
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{University of Tulsa}
+
+
+% { % all template changes are local to this group.
+%     \setbeamertemplate{navigation symbols}{}
+%     \begin{frame}<article:0>[plain]
+%         \begin{tikzpicture}[remember picture,overlay]
+%             \node[at=(current page.center)] {
+%                 \includegraphics[keepaspectratio,
+%                                  width=1.1\paperwidth,
+%                                  height=\paperheight]{Figures/TU_CRES}
+%             };
+%         \end{tikzpicture}
+%      \end{frame}
+% }
+
+
+
+% { % all template changes are local to this group.
+%     \setbeamertemplate{navigation symbols}{}
+%     \begin{frame}<article:0>[plain]
+%         \begin{tikzpicture}[remember picture,overlay]
+%             \node[at=(current page.center)] {
+%                 \includegraphics[keepaspectratio,
+%                                  width=1\paperwidth,
+%                                  height=\paperheight]{Figures/TU_CRES_2}
+%             };
+%         \end{tikzpicture}
+%      \end{frame}
+% }
+
+
+% \begin{frame}{TU’s Real-Estate Program Resources}
+% \small
+%   \begin{columns}
+%     \column{0.48\textwidth}
+%       \textbf{Center for Real Estate Studies}
+%       \begin{itemize}
+%         \item Academic research on AI in CRE
+%         \item Industry partnerships for technology adoption
+%         \item Student training for an AI-augmented workplace
+%       \end{itemize}
+%       \vspace{0.2cm}
+%       \textbf{Educational Opportunities}
+%       \begin{itemize}
+%         \item Minor in Real Estate
+%         \item Professional networking
+%         \item Research initiatives
+%       \end{itemize}
+%     \column{0.52\textwidth}
+%       \textbf{Contact}
+%       \begin{itemize}
+%         \item Center for Real Estate Studies, University of Tulsa
+%         \item \texttt{cayman.seagraves@utulsa.edu}
+%       \end{itemize}
+%   \end{columns}
+% \end{frame}
+
+%----------------------------------------
+\section{Conclusion}
+
+
+
+
+\begin{frame}{Conclusion}
+  \begin{columns}[t,onlytextwidth]
+  \small
+    % Left column: key takeaways and block
+    \column{0.6\textwidth}
+      \vspace{0.5em}   % nudge down below the blue header
+      \textbf{Key Takeaways}
+      \begin{itemize}
+        \item AI agents represent a fundamental shift in CRE operations
+        \item Early adoption provides immediate competitive advantage
+        \item Focus on \emph{augmentation}—enhancing your expertise, not replacing it
+        \item The technology is mature enough for implementation \emph{now}
+      \end{itemize}
+
+      \vspace{0.7em}
+      \begin{block}{Looking Forward}
+        {\small
+        “We are still in the early innings with AI.”\\
+        {\tiny — Sandeep Davé, Chief Digital \& Technology Officer, CBRE (2025)}
+        }
+      \end{block}
+
+    % Right column: illustrative image
+    \column{0.34\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[height=0.68\textheight,keepaspectratio]{Humans_and_AI.png}
+  \end{columns}
+\end{frame}
+
+
+
+
+
+%----------------------------------------
+% \begin{frame}{Questions and Contact Info}
+%   \begin{center}
+%     % \Large Questions?\\[0.5cm]
+%     \small
+%     ``AI in commercial real estate is no longer experimental—it's essential."\\[0.5cm]
+%     \begin{minipage}{0.6\textwidth}
+%       \begin{block}{Dr. Cayman Seagraves}
+%         \textbf{Email:} \href{mailto:cayman-seagraves@utulsa.edu}{cayman-seagraves@utulsa.edu}
+%       \end{block}
+%     \end{minipage}
+    
+%     \vspace{0.8cm}
+%     \begin{tabular}{c@{\hspace{2cm}}c}
+%       \includegraphics[height=3cm]{qrcode_cayman_sites.google.com.png} & 
+%       \includegraphics[height=3cm]{qrcode_www.aigentrealty.ai.png} \\
+%       \scriptsize www.caymanseagraves.com & 
+%       \scriptsize www.aigentrealty.ai \\
+%     \end{tabular}
+%   \end{center}
+% \end{frame}
+
+
+\begin{frame}{Questions and Contact Info}
+  \begin{center}
+    \small
+    “AI in commercial real estate is no longer experimental—it's essential.”\\[0.5cm]
+    \begin{minipage}{0.6\textwidth}
+      \begin{block}{Dr. Cayman Seagraves}
+        \textbf{Email:} \href{mailto:cayman-seagraves@utulsa.edu}{cayman-seagraves@utulsa.edu}
+      \end{block}
+    \end{minipage}
+
+    \vspace{0.8cm}
+    \begin{tabular}{c@{\hspace{.3cm}}c@{\hspace{.3cm}}c}
+      \includegraphics[height=3cm]{Figures/qrcode_caymanseagraves.com.png} &
+      \includegraphics[height=3cm]{Figures/qrcode_www.caiyman.ai.png} &
+      \includegraphics[height=3cm]{qrcode_www.reitfactors.ai.png} \\
+      \tiny caymanseagraves.com &
+      \tiny caiyman.ai &
+      \tiny reitfactors.ai \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+
+
+% \section{Conclusion}
+% \begin{frame}{Questions and Contact Info}
+%     \begin{columns}[c, totalwidth=\textwidth]
+%         \column{0.48\textwidth}
+%             \begin{block}{Dr. Cayman Seagraves}
+%                 \textbf{Email:} \href{mailto:cayman-seagraves@utulsa.edu}{cayman-seagraves@utulsa.edu}
+%             \end{block}
+%         \column{0.48\textwidth}
+%             \begin{block}{Dr. Meagan McCollum}
+%                 \textbf{Email:} \href{mailto:meagan-mccollum@utulsa.edu}{meagan-mccollum@utulsa.edu}
+%             \end{block}
+%     \end{columns}
+%     \vspace{.6cm}
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Images/CCB.jpg} % Placeholder for contact details visual
+% \end{frame}
+
+
+
+
+\end{document}
+
+

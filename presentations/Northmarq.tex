@@ -1,0 +1,655 @@
+\documentclass{beamer}
+
+\usetheme{Frankfurt}
+
+\setbeamerfont{caption}{size=\tiny}
+
+
+\input{Template/preamble}
+
+
+% Customize the footer (footline) template
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}Dr. Cayman Seagraves (Agentic Assets)
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}Microsoft Copilot for CRE
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{page number in head/foot}%
+            \usebeamerfont{page number in head/foot}Northmarq, 2025 \hfill \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+
+% Add your university logo here (adjust the path and size as needed)
+\logo{\includegraphics[height=.8cm]{Images/Stacked TU blue and gold (1).png}}
+
+% Define the logo command
+% \newcommand{\universitylogo}{%
+%   \includegraphics[height=0.8cm]{Images/Stacked TU blue and gold (1).png}%
+% }
+
+
+
+
+% Title slide logo position customization
+% \titlegraphic{\hfill\includegraphics[width=1.5cm]{Images/CCB.jpg}}
+
+
+\author{Dr. Cayman Seagraves, Agentic Assets LLC}
+% \institute{ARES, March 2024}
+\date{Northmarq, 2025}
+
+
+\title{Microsoft Copilot for CRE: Practical Foundations \\ 75-Minute Workshop\\}
+
+
+
+\begin{document}
+
+% Title page
+{
+\setbeamertemplate{headline}{\vskip-\headheight}
+\begin{frame}
+    \titlepage
+\end{frame}
+}
+
+\section{Workshop Overview}
+
+\begin{frame}{Workshop Agenda}
+    \begin{columns}[c]
+        \begin{column}{0.45\textwidth}
+            \centering
+            \large
+            \setlength{\itemsep}{1em}
+            \tableofcontents
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \begin{block}{Session Goal}
+                \normalsize
+                Provide Northmarq CRE teams with practical Microsoft Copilot skills to improve productivity and leverage enterprise AI securely within Microsoft 365.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%
+% Bio Slide
+%%%%%%%%%%%%%%%
+\begin{frame}{Why Listen to Me About AI in Commercial Real Estate?}
+  \begin{columns}[T]
+    % Left column: Academic Credentials
+    \begin{column}{0.32\textwidth}
+      \textbf{\color{RoyalBlue} \small Academic Foundation}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~Ph.D. in Finance, Florida State University
+      
+      \vspace{3pt}
+      \textbullet~Assistant Professor, University of Tulsa Collins College of Business
+      
+      \vspace{3pt}
+      \textbullet~Co-founder, Agentic Assets (PhD-led AI consulting firm)
+    \end{column}
+    
+    % Center column: Research & Publications  
+    \begin{column}{0.39\textwidth}
+      \textbf{\color{RoyalBlue} \small  Research \& Publications}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~5 peer-reviewed publications in top finance/real estate journals
+      
+      \vspace{3pt}
+      \textbullet~``Optimizing Real Estate Portfolios: The Role of Generative AI'' \textit{(JREPM, 2025)}
+      
+      \vspace{3pt}
+      \textbullet~Multiple manuscript awards, American Real Estate Society (2024)
+      
+      \vspace{3pt}
+      \textbullet~Best Paper Award, Afrimed Finance Society (2024)
+    \end{column}
+    
+    % Right column: Practical AI Experience
+    \begin{column}{0.34\textwidth}
+      \textbf{\color{RoyalBlue} \small  AI Implementation}
+      \vspace{0.2cm}
+      
+      \footnotesize
+      \textbullet~Building ``Orbis'' - Real Estate AI agent with 50,000+ academic papers
+      
+      \vspace{3pt}
+      \textbullet~Created \href{https://www.reitfactors.ai/}{\color{blue!60!black}REITfactors.ai} - AI-powered REIT analytics
+      
+      \vspace{3pt}
+      \textbullet~Program Chair, Future Leaders of ARES
+      
+      \vspace{3pt}
+      \textbullet~Bridging academic AI research with industry applications
+    \end{column}
+  \end{columns}
+  
+  \vspace{0.1cm}
+  
+  \begin{center}
+  \begin{minipage}{0.85\textwidth}
+  \begin{block}{\centering\footnotesize Approach}
+    \centering
+    \scriptsize Combining rigorous academic research with practical AI implementation in real estate markets
+  \end{block}
+  \end{minipage}
+  \end{center}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – AI REVOLUTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AI Revolution}
+
+%----------------------------------------
+\begin{frame}{The AI Revolution Has Arrived in Commercial Real Estate}
+\small
+  \begin{columns}[onlytextwidth]
+  \hspace*{-.7cm}
+    % Left column: bullets
+    \column{0.55\textwidth}
+      \begin{itemize}
+        \item In 2025, AI isn’t just changing CRE-\emph{it’s actively working for you}
+          \begin{itemize}
+            \item Built specifically for enterprise environments
+            \item Enterprise-grade security and compliance
+          \end{itemize}
+        \item \textbf{90.1\%} of companies plan to use AI-augmented CRE workflows by 2029 {\tiny(JLL 2024)} 
+        \item Every \$1 spent on gen-AI returns \textbf{\$3.70} in value  {\tiny(Microsoft/IDC 2024)}
+      \end{itemize}
+    % Right column: image
+    \hspace*{-1.3cm}
+    \column{0.45\textwidth}
+      \centering
+      \includegraphics[height=0.45\textheight,keepaspectratio]{Figures/AI in Real Estate.png}
+  \end{columns}
+
+  \vspace{-0.3cm}
+
+  \begin{block}{Key Message}
+    If ChatGPT is a brilliant intern, autonomous \textbf{agents} are full-time
+    associates closing deals while you sleep.
+  \end{block}
+\end{frame}
+
+
+%--- figure (McKinsey value-creation chart)
+% \begin{frame}[plain]
+%   \centering
+%   \includegraphics[height=0.9\textheight,keepaspectratio]{Figures/AI in Real Estate.png}\\
+%   % \tiny Source: McKinsey, 2024
+% \end{frame}
+
+
+
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]{2025 commercial real estate outlook}
+    % shift everything to the left by 1cm:
+    % \hspace*{-5cm}%
+    \begin{columns}[t,onlytextwidth]
+      % set 1cm between the columns:
+      \setlength{\columnsep}{.8cm}
+
+      \column{0.48\textwidth}\hspace*{-1.1cm}
+        \centering
+        \includegraphics[height=0.65\textheight,keepaspectratio]
+          {Figures/2025/Deloitte - AI-Forward Companies Likely to get the best talent.png}
+
+      \column{0.48\textwidth}\hspace*{-.5cm}
+        \centering
+        \includegraphics[height=0.65\textheight,keepaspectratio]
+          {Figures/2025/Deloitte - Pioneers unlock substantial value from gen AI deployments.png}
+
+    \end{columns}
+\vspace{.35cm}
+  \centering
+  \includegraphics[height=0.24\textheight,keepaspectratio]{Figures/2024/JLL - Corporate real estate and AI - 2024.png}\\
+  \tiny Source: JLL, 2024
+    
+  \end{frame}
+}
+
+
+%----------------------------------------
+\begin{frame}{AI – in Plain English}
+  \begin{block}{Artificial Intelligence}
+    Systems that learn from data to perceive, reason and act with minimal human
+    direction-covering machine learning, NLP, computer vision and more (EY Standard for Trustworthy AI, 2024).
+  \end{block}
+
+  \begin{itemize}
+    \item \textbf{Three things to remember}
+      \begin{enumerate}
+        \item It trains on \emph{data}—not hand-written rules
+        \item It gets better the more feedback you give it
+        \item It works fast and at huge scale, but still needs your judgment
+      \end{enumerate}
+    \item \textbf{What it’s \underline{not}}
+      \begin{itemize}
+        \item A thinking robot—it crunches numbers, it doesn’t “feel”
+        \item A magic wand—poor data \(\Rightarrow\) poor results
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/History of Artificial Intelligence (AI) timeline.jpg}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/ChatGPT Launched - time to 100 M users.png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+
+
+
+\begin{frame}{}
+  \begin{columns}[T,onlytextwidth]
+
+    % --- 70 % picture column ---
+    \begin{column}{0.87\textwidth}
+      \centering
+      \hspace*{-1.8cm}% shift image left
+      \includegraphics[width=\linewidth,
+                       keepaspectratio]{Figures/Recent timeline of LLMs and AI models.png}
+    \end{column}
+
+    % --- 30 % text column, shifted left as a whole ---
+    \hspace*{-0.5cm}% <-- move the entire column left (adjust value)
+    \begin{column}{0.21\textwidth}
+      \vspace{0.5em}
+      \begin{block}{}
+        \scriptsize\bfseries
+        2025 – “Year of the Agent”
+      \end{block}
+
+      \vspace{0.3em}
+      \scriptsize
+      AI starts \emph{doing work}, not just answering questions.
+    \end{column}
+
+  \end{columns}
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Interactive: How Many Words Do You Use With AI?}
+  \begin{columns}[c]
+    % Left column: interactive content
+    \begin{column}{0.6\textwidth}
+      \begin{itemize}
+        \item Raise your hand if you typically use at least 5–10 words when prompting ChatGPT
+        \item Now keep your hand up if you use at least 20 words
+        \item 50 words?
+        \item 500 words?
+      \end{itemize}
+    \end{column}
+
+    % Right column: image, moved down slightly
+    \begin{column}{0.4\textwidth}
+      \vspace{0.4cm}  % adjust this value to move image further down or up
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{ai_models.png}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.2cm}\pause
+    \begin{block}{Key Insight}
+    \small
+      \begin{itemize}
+        \item Only those crafting 500+ word prompts unlock AI’s full capabilities.
+        \item Rich, detailed prompts consistently produce more accurate and insightful results.
+      \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Setting Up \& Customizing Your AI Project}
+  \begin{columns}
+    % Left column: two smallish images stacked
+    \begin{column}{0.44\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{Chatgpt setting up a project.png}\\[1ex]
+      \includegraphics[width=\linewidth,keepaspectratio]{Commercial Real Estate Assistant.png}
+    \end{column}
+
+    % Right column: one tall image
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[height=0.772\textheight,keepaspectratio]{Customize ChatGPT.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+%----------------------------------------
+
+
+
+
+  % \begin{itemize}
+  %   \item Even with identical prompts, different users often receive different responses
+  %   \item Understanding prompt engineering is crucial for consistent, high-quality results
+  % \end{itemize}
+
+%----------------------------------------
+% \begin{frame}{Choosing the Right AI Model}
+%   % Top half: two simple columns
+%   \small
+%   \begin{columns}[T,onlytextwidth]
+%     \begin{column}{0.48\textwidth}
+%       \textbf{Specialized Models}
+%       \begin{itemize}\scriptsize
+%         \item Designed for one or two tasks (e.g.\ deep reasoning, summarization)
+%         \item Best-in-class accuracy (“highest intelligence”)
+%         \item Higher compute cost \& slower inference
+%       \end{itemize}
+%     \end{column}
+%     \begin{column}{0.48\textwidth}
+%       \textbf{General-Purpose Models}
+%       \begin{itemize}\scriptsize
+%         \item Wide range of abilities (chat, simple code, translation)
+%         \item Very low cost \& lightning fast
+%         \item Good—but not maximal—performance
+%       \end{itemize}
+%     \end{column}
+%   \end{columns}
+
+%   \vfill
+
+%   % Bottom half: your image
+%   \centering
+%   \hspace*{-1cm}
+%   \includegraphics[height=0.33\textheight,keepaspectratio]{Figures/Artificial Analysis - metrics.png}\\
+%   \tiny Source: Artificial Analysis Intelligence Index
+% \end{frame}
+
+
+%----------------------------------------
+
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{Choosing the Right AI Model}<article:0>[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.95\paperwidth,
+                                 height=\paperheight]{Figures/2025/Intelligence vs Price (5 Aug '25) .png}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+
+%----------------------------------------
+\begin{frame}{Interactive: Where’s Your Firm on the AI Adoption Curve?}
+  \textbf{Quick self-assessment – which stage best describes your organization?}
+  \begin{enumerate}
+    \item \textbf{Observer:} "We're aware but haven't implemented AI tools yet"
+    \item \textbf{Experimenter:} "We're using ChatGPT/Claude/Copilot occasionally for simple tasks"
+    \item \textbf{Adopter:} "We've integrated AI tools into our regular workflows"
+    \item \textbf{Leader:} "We're using AI agents to transform our business model"
+  \end{enumerate}
+
+  \pause
+  \begin{block}{Insight}
+    Most CRE firms in secondary markets like Tulsa are between stages 1–2,
+    creating immediate opportunities for competitive advantage by moving to
+    stages 3–4.
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – MICROSOFT COPILOT SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Microsoft Copilot Setup}
+
+%----------------------------------------
+\begin{frame}{Copilot: Enterprise AI for Northmarq}
+  \begin{columns}[T]
+  \hspace*{-1.1cm}
+    \column{0.48\linewidth}
+
+{\small
+\begin{itemize}
+  \setlength\itemsep{1.3em}
+  \item AI agents jumped from research labs to revenue centers in 18 months
+  \item 78\% of companies are now using gen AI in at least one business function (up from 55\% a year earlier) {\tiny (McKinsey, 2025)}
+  \item Venture funding for agentic PropTech nearly tripled in 2024 {\tiny  (JLL Spark 2025)}
+  \item Every \$1 spent on Copilot returns \$3.50 in productivity gains
+\end{itemize}
+}
+
+    \column{0.48\linewidth}
+    \hspace*{-1cm}
+  \centering
+  \includegraphics[height=0.68\textheight,keepaspectratio]{CBinsights - AI deal growth by industry.png}\\
+  % \tiny Source: CB Insights, 2024
+  \end{columns}
+
+  \begin{block}{Multi-Platform Strategy}
+    Use Copilot for M365 integration, ChatGPT for research, Claude for analysis.
+  \end{block}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{Setting Up Your AI Workspace}
+  \begin{columns}
+    \column{0.5\textwidth}
+      \textbf{Multi-Platform Setup:}
+      \begin{itemize}
+        \item \textbf{Microsoft Copilot:} Primary enterprise tool
+        \item \textbf{ChatGPT:} Research and creative tasks
+        \item \textbf{Claude:} Analysis and detailed writing
+        \item \textbf{Custom Instructions:} Set role as "Northmarq CRE professional"
+        \item \textbf{Memory:} Upload templates and guidelines
+      \end{itemize}
+    \column{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.6\textheight,keepaspectratio]{Commercial Real Estate Assistant.png}
+  \end{columns}
+
+  \begin{block}{Best Practice}
+    Use each AI tool for its strengths while maintaining Copilot as your M365 hub.
+  \end{block}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{Hands-On Exercise: Document Analysis}
+  \begin{columns}
+    \column{0.6\textwidth}
+      \textbf{Practical Exercise:}
+      \begin{enumerate}
+        \item Open Copilot in Microsoft 365
+        \item Upload a sample lease or market report
+        \item Ask: "Summarize key terms and identify risks"
+        \item Request: "Create a markdown table of critical dates"
+        \item Compare results with ChatGPT for validation
+      \end{enumerate}
+    \column{0.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{ai_models.png}
+  \end{columns}
+
+  \begin{block}{Evaluation Mindset}
+    Always review AI outputs for accuracy before using in client deliverables.
+  \end{block}
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Copilot in Microsoft 365}
+  \begin{columns}
+    \column{0.5\textwidth}
+      \textbf{Integration Points:}
+      \begin{itemize}
+        \item \textbf{Excel:} Financial modeling, market analysis
+        \item \textbf{Word:} Document drafting, lease reviews
+        \item \textbf{Outlook:} Email summarization, meeting prep
+        \item \textbf{PowerPoint:} Presentation creation, design
+        \item \textbf{Teams:} Meeting summaries, action items
+        \item \textbf{SharePoint:} Document collaboration, version control
+      \end{itemize}
+    \column{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.6\textheight,keepaspectratio]{Customize ChatGPT.png}
+  \end{columns}
+\end{frame}
+
+{% all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \begin{frame}{Real Estate Portfolio Management (REPM) Agent}[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center), yshift=0.0cm] {
+                \includegraphics[keepaspectratio,
+                                 width=.94\paperwidth,
+                                 height=0.85\paperheight]{Figures/repm_agent_landscape (1).png}
+            };
+            \node[at=(current page.south), yshift=0.9cm] {
+                \begin{minipage}{0.9\paperwidth}
+                    \centering
+                    \tiny
+                    Dombrowski, Timothy, and Cayman Seagraves. ``Optimizing Real Estate Portfolios: The Role of Generative AI in Geographic Diversification.'' \textit{Journal of Real Estate Portfolio Management} (2025): 1--33.
+                \end{minipage}
+            };
+        \end{tikzpicture}
+     \end{frame}
+}
+
+%----------------------------------------
+\begin{frame}{Advanced Copilot Features}
+  \begin{columns}
+    \column{0.5\textwidth}
+      \textbf{Enterprise Capabilities:}
+      \begin{itemize}
+        \item \textbf{Web search:} Real-time market data, comps
+        \item \textbf{Data analysis:} Excel integration, trends
+        \item \textbf{Document workflows:} Multi-file processing
+        \item \textbf{Custom agents:} Specialized for CRE tasks
+        \item \textbf{Integration:} Connect to Northmarq systems
+        \item \textbf{Collaboration:} Share prompts and templates
+      \end{itemize}
+    \column{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.6\textheight,keepaspectratio]{Customize ChatGPT.png}
+  \end{columns}
+
+  \begin{block}{Multi-Tool Strategy}
+    Use ChatGPT for research, Claude for analysis, Copilot for M365 execution.
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SECTION – OPTIMIZATION & BEST PRACTICES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Optimization}
+
+%----------------------------------------
+\begin{frame}{ROI Tracking \& Success Metrics}
+  \begin{columns}
+    \column{0.5\textwidth}
+      \textbf{Key Metrics:}
+      \begin{itemize}
+        \item \textbf{Time savings:} Hours saved per week/month
+        \item \textbf{Accuracy improvement:} Error reduction in documents
+        \item \textbf{Productivity gains:} Tasks completed faster
+        \item \textbf{Quality enhancement:} Better analysis and insights
+        \item \textbf{Client satisfaction:} Faster response times
+      \end{itemize}
+    \column{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.6\textheight,keepaspectratio]{ChatGPT Image Apr 29, 2025, 01_51_59 AM.png}
+  \end{columns}
+\end{frame}
+
+
+
+%----------------------------------------
+\begin{frame}{Next Steps for Northmarq}
+  \begin{columns}
+    \column{0.6\textwidth}
+      \textbf{Implementation Roadmap:}
+      \begin{enumerate}
+        \item \textbf{Week 1:} Set up Copilot accounts and basic training
+        \item \textbf{Week 2-3:} Create team templates and workflows
+        \item \textbf{Month 1:} Pilot with 2-3 key processes
+        \item \textbf{Month 2:} Full team rollout and optimization
+        \item \textbf{Ongoing:} Track metrics and continuous improvement
+      \end{enumerate}
+    \column{0.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,keepaspectratio]{Tulsa skyline.jpg}
+  \end{columns}
+
+  \begin{block}{Northmarq Advantage}
+    Your \$78B portfolio and tech-forward culture make you ideal for rapid AI adoption.
+  \end{block}
+\end{frame}
+
+
+%----------------------------------------
+\begin{frame}{Questions and Contact Info}
+  \begin{center}
+    \small
+    "AI in commercial real estate is no longer experimental—it's essential."\\[0.5cm]
+    \begin{minipage}{0.6\textwidth}
+      \begin{block}{Dr. Cayman Seagraves}
+        \textbf{Email:} \href{mailto:cayman@agenticassets.ai}{cayman@agenticassets.ai}\\
+        \textbf{Company:} Agentic Assets LLC
+      \end{block}
+    \end{minipage}
+
+    \vspace{0.8cm}
+    \begin{tabular}{c@{\hspace{1cm}}c}
+      \includegraphics[height=2.5cm]{Figures/qrcode_caymanseagraves.com.png} &
+      \includegraphics[height=2.5cm]{Figures/qrcode_www.caiyman.ai.png} \\
+      \scriptsize caymanseagraves.com &
+      \scriptsize agenticassets.ai \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\end{document}
