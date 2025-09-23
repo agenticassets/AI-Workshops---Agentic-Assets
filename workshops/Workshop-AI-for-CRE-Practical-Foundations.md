@@ -1,7 +1,7 @@
 <div class="title-block">
   <p align="center">
     <a href="https://www.agenticassets.ai/" target="_blank">
-      <img src="../../Marketing/Orbis/agentic-logo.png" alt="Agentic Assets logo" width="280" />
+      <img src="../Images/Agentic-Assets/AA_Logo_SVG_and_PNG/agentic-logo-long.png" alt="Agentic Assets logo" width="280" />
     </a>
   </p>
   <hr class="section-divider" />

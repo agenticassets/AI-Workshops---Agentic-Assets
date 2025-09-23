@@ -1,4 +1,4 @@
-# AI Education & Training Hub: Comprehensive AI Agent Training for Real Estate & Finance Professionals
+## AI Education & Training Hub: Comprehensive AI Agent Training for Real Estate & Finance Professionals
 
 ---
 
