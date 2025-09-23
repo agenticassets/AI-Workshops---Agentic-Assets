@@ -1,7 +1,21 @@
 # AI Education & Training Hub: Comprehensive AI Agent Training for Real Estate & Finance Professionals
 
-**Instructor:** Dr. Cayman Seagraves  
-**Learn more about:** [Agentic Assets - AI Consulting](https://www.agenticassets.ai/) | [Academic Profile & Research](https://www.caymanseagraves.com/)
+---
+
+## 👨‍💼 Meet Your Instructor
+
+<div align="center">
+<img src="Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
+
+**Dr. Cayman Seagraves**
+*Co-Founder, [Agentic Assets LLC](https://www.agenticassets.ai/)*
+*Assistant Professor of Finance, The University of Tulsa*
+📧 **Contact:** cayman@agenticassets.ai
+
+Specializing in autonomous AI systems and agentic intelligence for institutional real estate and finance. Dr. Seagraves combines academic research expertise with practical implementation experience, helping organizations deploy measurable AI solutions that deliver quantifiable ROI.
+
+[Academic Profile & Research](https://www.caymanseagraves.com/) | [Agentic Assets Consulting](https://www.agenticassets.ai/)
+</div>
 
 ---
 
@@ -21,23 +35,6 @@
 - Academic researchers and students
 
 This comprehensive AI education hub provides multiple pathways for learning AI agent implementation. Whether you're looking for hands-on workshops, self-paced resources, or custom training solutions, you'll find practical, real-world applications for AI in real estate and finance.
-
----
-
-## 👨‍💼 Meet Your Instructor
-
-<div align="center">
-<img src="Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
-
-**Dr. Cayman Seagraves**  
-*Co-Founder, [Agentic Assets LLC](https://www.agenticassets.ai/)*
-*Assistant Professor of Finance, The University of Tulsa*  
-📧 **Contact:** cayman@agenticassets.ai
-
-Specializing in autonomous AI systems and agentic intelligence for institutional real estate and finance. Dr. Seagraves combines academic research expertise with practical implementation experience, helping organizations deploy measurable AI solutions that deliver quantifiable ROI.
-
-[Academic Profile & Research](https://www.caymanseagraves.com/) | [Agentic Assets Consulting](https://www.agenticassets.ai/)
-</div>
 
 ---
 
