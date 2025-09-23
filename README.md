@@ -7,9 +7,9 @@
 <div align="center">
 <img src="Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
 
-**Dr. Cayman Seagraves**
+**Dr. Cayman Seagraves**  
 *Co-Founder, [Agentic Assets LLC](https://www.agenticassets.ai/)*
-*Assistant Professor of Finance, The University of Tulsa*
+*Assistant Professor of Finance, The University of Tulsa*  
 📧 **Contact:** cayman@agenticassets.ai
 
 Specializing in autonomous AI systems and agentic intelligence for institutional real estate and finance. Dr. Seagraves combines academic research expertise with practical implementation experience, helping organizations deploy measurable AI solutions that deliver quantifiable ROI.
