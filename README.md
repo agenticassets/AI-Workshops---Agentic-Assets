@@ -1,20 +1,48 @@
-## AI Education & Training Hub: Comprehensive AI Agent Training for Real Estate & Finance Professionals
+# AI Education & Training Hub: Comprehensive AI Agent Training for Real Estate & Finance Professionals
+
+<div align="center">
+  <p>
+    <a href="https://www.agenticassets.ai/" target="_blank">
+      <img src="https://raw.githubusercontent.com/agenticassets/AI-Workshops---Agentic-Assets/main/Images/Agentic-Assets/AA_Logo_SVG_and_PNG/AA_Logo.png" alt="Agentic Assets logo" width="300" />
+    </a>
+  </p>
+
+  <p><em>Empowering real estate and finance professionals with practical AI solutions since 2025</em></p>
+</div>
 
 ---
 
 ## 👨‍💼 Meet Your Instructor
 
-<div align="center">
-<img src="https://raw.githubusercontent.com/agenticassets/AI-Workshops---Agentic-Assets/main/Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
+<div align="center" style="max-width: 800px; margin: 0 auto; text-align: center;">
+  <div style="margin-bottom: 30px;">
+    <img src="https://raw.githubusercontent.com/agenticassets/AI-Workshops---Agentic-Assets/main/Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="500" style="border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin: 20px 0;">
+  </div>
 
-**Dr. Cayman Seagraves**  
-*Co-Founder, [Agentic Assets LLC](https://www.agenticassets.ai/)*
-*Assistant Professor of Finance, The University of Tulsa*  
-📧 **Contact:** cayman@agenticassets.ai
+  <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #007bff;">
+    <h3 style="margin-top: 0; color: #2c3e50; font-size: 2em; font-weight: 600;">Dr. Cayman Seagraves</h3>
 
-Specializing in autonomous AI systems and agentic intelligence for institutional real estate and finance. Dr. Seagraves combines academic research expertise with practical implementation experience, helping organizations deploy measurable AI solutions that deliver quantifiable ROI.
+    <div style="margin: 15px 0;">
+      <p style="margin: 8px 0; font-size: 1.1em; color: #495057;">
+        <strong>🏢 Co-Founder,</strong> <a href="https://www.agenticassets.ai/" style="color: #007bff; text-decoration: none; font-weight: 500;">Agentic Assets LLC</a>
+      </p>
+      <p style="margin: 8px 0; font-size: 1.1em; color: #495057;">
+        <strong>🎓 Assistant Professor of Finance,</strong> <em>The University of Tulsa</em>
+      </p>
+      <p style="margin: 8px 0; font-size: 1.1em; color: #495057;">
+        <strong>📧 Contact:</strong> <a href="mailto:cayman@agenticassets.ai" style="color: #007bff;">cayman@agenticassets.ai</a>
+      </p>
+    </div>
 
-[Academic Profile & Research](https://www.caymanseagraves.com/) | [Agentic Assets Consulting](https://www.agenticassets.ai/)
+    <p style="font-size: 1.1em; color: #6c757d; margin: 20px 0; line-height: 1.6; font-style: italic;">
+      "Specializing in autonomous AI systems and agentic intelligence for institutional real estate and finance. Dr. Seagraves combines academic research expertise with practical implementation experience, helping organizations deploy measurable AI solutions that deliver quantifiable ROI."
+    </p>
+
+    <div style="margin-top: 25px;">
+      <a href="https://www.caymanseagraves.com/" style="background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 25px; margin: 0 10px; font-weight: 500; display: inline-block;">Academic Profile & Research</a>
+      <a href="https://www.agenticassets.ai/" style="background: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 25px; margin: 0 10px; font-weight: 500; display: inline-block;">Agentic Assets Consulting</a>
+    </div>
+  </div>
 </div>
 
 ---
