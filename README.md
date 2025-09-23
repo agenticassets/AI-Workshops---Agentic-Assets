@@ -381,7 +381,7 @@ Choose your preferred AI platforms based on your workshop focus:
 ### Agentic Assets Resources
 - **Agentic Assets Website:** [https://www.agenticassets.ai/](https://www.agenticassets.ai/)
 - **Dr. Seagraves Academic Profile:** [https://www.caymanseagraves.com/](https://www.caymanseagraves.com/)
-- **AI Agent Resources Repository:** [https://github.com/agentic-assets/ai-education-workshops](https://github.com/agentic-assets/ai-education-workshops)
+- **AI Agent Resources Repository:** [https://github.com/agenticassets/AI-Workshops---Agentic-Assets](https://github.com/agenticassets/AI-Workshops---Agentic-Assets)
 
 ---
 
