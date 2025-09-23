@@ -1,0 +1,194 @@
+---
+description: Presentation standards, training materials, and visual content guidelines for AI education
+globs: presentations/**, **/presentation/**, **/slide/**, **/deck/**, **/training/**
+alwaysApply: false
+---
+
+# Presentation & Training Materials Standards
+
+## Presentation Content Structure
+
+### Standard Presentation Format
+- **Title Slide**: Workshop name, instructor, date, and contact information
+- **Agenda Overview**: Clear session structure and learning objectives
+- **Content Sections**: Modular topics with consistent formatting
+- **Hands-On Exercises**: Interactive elements and practical applications
+- **Summary & Next Steps**: Key takeaways and follow-up actions
+
+### Slide Design Principles
+- **Visual Hierarchy**: Clear heading structure with consistent typography
+- **Content Density**: 3-5 bullet points maximum per slide
+- **Readability**: High contrast text, appropriate font sizes (24pt+)
+- **Consistent Branding**: Use organizational colors, logos, and templates
+- **Professional Layout**: Clean, uncluttered design with ample white space
+
+## Training Material Standards
+
+### Slide Deck Requirements
+- **Learning Objectives**: Each section starts with clear, measurable goals
+- **Key Concepts**: Core ideas presented with supporting visuals
+- **Practical Examples**: Real-world scenarios and use cases
+- **Step-by-Step Instructions**: Sequential implementation guidance
+- **Interactive Elements**: Questions, polls, or discussion prompts
+
+### Workshop Delivery Standards
+- **Timing Pacing**: Allocate appropriate time for each section with buffers
+- **Audience Engagement**: Include interactive elements and Q&A opportunities
+- **Technical Demonstrations**: Live examples with error handling shown
+- **Participant Practice**: Hands-on exercises with guidance and feedback
+- **Resource Integration**: Connect slides to supporting materials and templates
+
+## Visual Design Standards
+
+### Color and Branding Guidelines
+- **Primary Colors**: Consistent brand colors for headings and highlights
+- **Secondary Colors**: Complementary palette for supporting elements
+- **Background**: Clean, professional backgrounds that don't distract
+- **Accent Colors**: Used sparingly for emphasis and call-to-action elements
+- **Consistency**: Same color scheme across all presentation materials
+
+### Typography Standards
+- **Heading Hierarchy**: H1 (36-44pt), H2 (28-32pt), H3 (24-28pt), Body (18-24pt)
+- **Font Families**: Sans-serif for readability (Arial, Helvetica, Calibri)
+- **Font Weights**: Bold for headings, regular for body text
+- **Line Spacing**: 1.2-1.5 line height for optimal readability
+- **Text Alignment**: Left-aligned for body text, center for titles
+
+### Image and Media Standards
+- **Resolution**: High-quality images (minimum 1920x1080 for presentations)
+- **Relevance**: Images directly support and illustrate content points
+- **Licensing**: Use properly licensed or original images only
+- **Alt Text**: Include descriptive alt text for accessibility
+- **Optimization**: Compress images for fast loading without quality loss
+
+## Content Organization Framework
+
+### Presentation File Naming Convention
+- **Format**: [Topic]-[Platform]-[Audience]-[Version].pptx
+- **Examples**:
+  - AI-Agents-Real-Estate-Foundations-v1.0.pptx
+  - ChatGPT-Prompting-Advanced-Workshop-v2.1.pptx
+  - n8n-Automation-Enterprise-Training-v1.5.pptx
+  - Copilot-Integration-Business-Users-v1.0.pptx
+
+### Version Control Standards
+- **Semantic Versioning**: Major.minor.patch format (e.g., v2.1.3)
+- **Change Documentation**: Maintain changelog with significant updates
+- **Template Updates**: Synchronize with master template versions
+- **Review Cycles**: Regular content review and accuracy verification
+- **Backup Strategy**: Multiple version retention for rollback capability
+
+### Content Section Standards
+- **Introduction**: Workshop overview, objectives, and prerequisites
+- **Foundation**: Core concepts and fundamental principles
+- **Application**: Practical use cases and implementation examples
+- **Advanced Topics**: Complex scenarios and expert-level content
+- **Hands-On Practice**: Interactive exercises and guided implementation
+- **Assessment**: Knowledge checks and skill validation
+- **Resources**: Additional materials and continued learning paths
+- **Q&A**: Open discussion and clarification session
+
+## Training Effectiveness Standards
+
+### Learning Design Principles
+- **Cognitive Load Management**: Balance information density with comprehension
+- **Progressive Disclosure**: Reveal information in digestible, sequential chunks
+- **Active Learning**: Include opportunities for practice and application
+- **Feedback Integration**: Immediate response to participant actions and questions
+- **Retention Strategies**: Use repetition, reinforcement, and real-world connections
+
+### Engagement and Interaction Standards
+- **Participant Involvement**: Multiple opportunities for questions and discussion
+- **Interactive Elements**: Polls, quizzes, group exercises, and hands-on activities
+- **Real-Time Feedback**: Immediate response to participant input and questions
+- **Adaptability**: Ability to adjust pace and content based on audience needs
+- **Technology Integration**: Seamless use of presentation tools and platforms
+
+### Assessment and Measurement Guidelines
+- **Pre-Workshop Assessment**: Baseline knowledge evaluation
+- **Formative Assessment**: In-session checkpoints and skill verification
+- **Summative Evaluation**: Post-workshop knowledge and satisfaction surveys
+- **Success Metrics**: Quantifiable outcomes and implementation tracking
+- **Feedback Collection**: Structured mechanisms for participant input
+
+## Technical Production Standards
+
+### Presentation Software Requirements
+- **Cross-Platform Compatibility**: Works on Windows, macOS, and web platforms
+- **File Size Optimization**: Compressed for efficient sharing and loading
+- **Embedded Media**: Properly linked and tested multimedia elements
+- **Accessibility Features**: Screen reader compatibility and keyboard navigation
+- **Mobile Responsiveness**: Readable on tablets and mobile devices
+
+### Audio-Visual Standards
+- **Speaker Notes**: Detailed notes for presenter reference and backup
+- **Slide Transitions**: Subtle, professional animations that enhance content
+- **Media Integration**: Synchronized audio, video, and interactive elements
+- **Backup Plans**: Alternative formats and offline presentation options
+- **Testing Protocol**: Verify functionality across different devices and platforms
+
+### Digital Asset Management
+- **File Organization**: Consistent naming and directory structure
+- **Version History**: Maintain records of significant changes and updates
+- **Asset Library**: Organized collection of reusable images and templates
+- **Metadata Standards**: Descriptive tags and categorization for easy discovery
+- **Backup Systems**: Regular backups and version control procedures
+
+## Workshop Material Integration
+
+### Multi-Modal Content Strategy
+- **Presentation Slides**: Visual overview and key concepts
+- **Handout Materials**: Detailed guides and reference documents
+- **Digital Resources**: Online links, downloadable templates, and tools
+- **Interactive Elements**: Live demos, exercises, and participant activities
+- **Follow-Up Resources**: Post-workshop materials and continued learning support
+
+### Resource Linkage Standards
+- **Cross-References**: Connect slides to related resources and materials
+- **External Links**: Verified, current links to relevant tools and documentation
+- **Internal Navigation**: Clear pathways between related content sections
+- **Resource Accessibility**: Easy access to supporting materials during presentation
+- **Download Availability**: Provide materials in multiple formats for different needs
+
+### Workshop Flow Optimization
+- **Logical Progression**: Smooth transitions between topics and activities
+- **Time Allocation**: Realistic timing for each section with built-in buffers
+- **Energy Management**: Balance between instruction, practice, and breaks
+- **Technical Preparation**: Setup and testing of all presentation tools and demos
+- **Contingency Planning**: Backup plans for technical issues or timing overruns
+
+## Quality Assurance Process
+
+### Presentation Review Checklist
+- [ ] **Content Accuracy**: All information verified against current standards
+- [ ] **Visual Consistency**: Uniform design, colors, and typography throughout
+- [ ] **Technical Functionality**: All links, media, and interactive elements working
+- [ ] **Audience Appropriateness**: Content matches target skill level and interests
+- [ ] **Time Alignment**: Realistic timing for all sections and activities
+- [ ] **Resource Integration**: All supporting materials properly linked and accessible
+- [ ] **Accessibility Compliance**: Meets standards for diverse learners and abilities
+- [ ] **Mobile Compatibility**: Readable and functional on different screen sizes
+
+### Training Effectiveness Standards
+- **Learning Objectives Achievement**: Content supports stated goals and outcomes
+- **Participant Engagement**: Interactive elements and audience participation opportunities
+- **Practical Application**: Clear pathways from theory to real-world implementation
+- **Knowledge Retention**: Strategies for reinforcing learning and memory
+- **Skill Development**: Progressive building of competencies and capabilities
+
+### Technical Validation Standards
+- **Cross-Platform Testing**: Verified functionality across different operating systems
+- **Media Compatibility**: All audio, video, and interactive elements working properly
+- **Link Validation**: All internal and external references functional and current
+- **Performance Optimization**: Fast loading and smooth presentation delivery
+- **Backup Systems**: Alternative formats and delivery methods available
+
+## Key Reference Documents
+
+@presentations/README.md
+@README.md
+@workshops/README.md
+@resources/README.md
+
+---
+*These presentation and training material standards ensure professional, effective, and engaging educational experiences across all AI training programs.*

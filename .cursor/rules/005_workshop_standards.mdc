@@ -1,0 +1,142 @@
+---
+description: Workshop content structure, format, and delivery standards for AI education
+globs: workshops/**, **/workshop/**, **/training/**, **/*.md
+alwaysApply: false
+---
+
+# AI Workshop Content Standards
+
+## Workshop Structure Framework
+
+### Standard Workshop Format (75-90 minutes)
+- **Executive Context**: 15-20 min - AI landscape, platform overview, business value
+- **Setup & Foundation**: 20-30 min - Platform setup, basic configuration, initial exercises
+- **Advanced Application**: 25-35 min - Industry-specific use cases, complex workflows
+- **Scaling & Optimization**: 10-15 min - Best practices, measurement, next steps
+
+### Workshop Session Types
+- **Platform-Focused**: ChatGPT, Claude, Copilot, n8n, custom development
+- **Industry-Specific**: Real estate, finance, property management applications
+- **Skill-Level Based**: Beginner foundations, intermediate implementation, advanced orchestration
+- **Format Variations**: Virtual interactive, on-site intensive, self-paced modules
+
+## Workshop Content Standards
+
+### Learning Objectives Requirements
+- **Clear & Measurable**: Specific skills or knowledge participants will gain
+- **Action-Oriented**: Focus on practical implementation over theoretical concepts
+- **Time-Bound**: Achievable within workshop timeframe with practice exercises
+- **Business-Relevant**: Connect learning outcomes to real business value
+
+### Workshop Prerequisites Framework
+- **Technical Requirements**: Hardware, software, accounts needed for participation
+- **Skill Level Assumptions**: Prior knowledge or experience required
+- **Preparation Steps**: Pre-workshop setup instructions and checklists
+- **Alternative Options**: Multiple paths for different starting points
+
+### Hands-On Exercise Standards
+- **Practical Implementation**: Real-world scenarios and industry examples
+- **Progressive Difficulty**: Build from simple to complex applications
+- **Immediate Feedback**: Include validation steps and success indicators
+- **Troubleshooting Guidance**: Common issues and resolution methods
+
+## Workshop Delivery Standards
+
+### Instructor Presentation Guidelines
+- **Engagement Techniques**: Interactive elements, polls, Q&A integration
+- **Pacing Control**: Balance between instruction and hands-on practice
+- **Platform Demonstrations**: Live examples with multiple AI platforms
+- **Error Handling**: Show common mistakes and how to recover
+- **Time Management**: Buffer time for technical issues and extended Q&A
+
+### Workshop Materials Requirements
+- **Slide Decks**: Professional presentations with consistent branding
+- **Exercise Guides**: Step-by-step instructions with screenshots
+- **Resource Handouts**: Quick reference cards and cheat sheets
+- **Follow-Up Materials**: Post-workshop guides and continued learning paths
+
+### Assessment & Evaluation Standards
+- **Pre-Workshop Assessment**: Baseline knowledge and skill evaluation
+- **In-Session Validation**: Checkpoint exercises and skill verification
+- **Post-Workshop Survey**: Learning effectiveness and satisfaction measurement
+- **Success Metrics**: Quantifiable outcomes and implementation tracking
+
+## Workshop Content Categories
+
+### Platform-Specific Workshops
+- **ChatGPT/Claude/Gemini**: Advanced prompting, custom assistants, integration patterns
+- **Microsoft Copilot**: Enterprise workflows, Microsoft 365 optimization, business integration
+- **n8n Automation**: No-code workflow building, multi-agent orchestration, API connections
+- **Custom Development**: Python agents, API integration, enterprise deployment
+
+### Industry Application Workshops
+- **Real Estate Focus**: Market analysis, property valuation, client communication
+- **Finance Specialization**: Portfolio analysis, risk assessment, compliance automation
+- **Property Management**: Tenant services, maintenance coordination, operational efficiency
+- **Investment Analysis**: Due diligence, market intelligence, decision support
+
+### Implementation-Focused Workshops
+- **Technical Setup**: API configuration, credential management, security practices
+- **Integration Workshops**: CRM connections, data sources, business system linking
+- **Scaling Sessions**: Enterprise deployment, governance, performance optimization
+- **ROI Measurement**: Success metrics, business value tracking, optimization strategies
+
+## Workshop Quality Assurance
+
+### Content Review Checklist
+- [ ] **Learning Objectives**: Clear, measurable, and achievable outcomes defined
+- [ ] **Prerequisites**: Accurate technical requirements and preparation steps
+- [ ] **Time Allocation**: Realistic pacing with buffers for exercises and Q&A
+- [ ] **Platform Coverage**: Multiple implementation options and alternatives included
+- [ ] **Hands-On Elements**: Practical exercises with clear success criteria
+- [ ] **Troubleshooting**: Common issues identified with resolution steps
+- [ ] **Resource Links**: All external references functional and current
+- [ ] **Follow-Up Support**: Post-workshop resources and continued learning paths
+
+### Workshop Effectiveness Standards
+- **Participant Engagement**: Interactive elements and active participation opportunities
+- **Skill Progression**: Logical flow from basic concepts to advanced applications
+- **Error Recovery**: Guidance for handling common mistakes and technical issues
+- **Real-World Relevance**: Industry examples and practical use cases
+- **Accessibility**: Inclusive design for diverse learners and skill levels
+
+### Technical Requirements Standards
+- **Platform Compatibility**: Works across major browsers and operating systems
+- **Connectivity Requirements**: Clear bandwidth and internet specifications
+- **Account Setup**: Step-by-step instructions for required services
+- **Alternative Solutions**: Backup options if primary platforms unavailable
+- **Security Guidelines**: Safe handling of API keys and credentials
+
+## Workshop Documentation Standards
+
+### Workshop File Naming Convention
+- **Format**: Workshop-[Platform]-[Focus]-[Audience]-[Duration].md
+- **Examples**:
+  - Workshop-ChatGPT-Real-Estate-Foundations-90min.md
+  - Workshop-Copilot-Enterprise-Integration-120min.md
+  - Workshop-n8n-Multi-Agent-Orchestration-Advanced-180min.md
+
+### Workshop Metadata Requirements
+- **Session Goal**: Clear statement of workshop objectives and outcomes
+- **Target Audience**: Specific participant profiles and prerequisites
+- **Technical Requirements**: Hardware, software, and setup specifications
+- **Duration & Format**: Time allocation and delivery method
+- **Instructor Information**: Contact details and expertise summary
+
+### Workshop Structure Template
+- **Title Block**: Workshop name, instructor, and branding
+- **Meta Information**: Duration, audience, prerequisites, objectives
+- **Session Agenda**: Time-allocated sections with clear descriptions
+- **Preparation Requirements**: Pre-workshop setup and resources
+- **Materials List**: Required and optional resources
+- **Assessment Criteria**: Success metrics and evaluation methods
+
+## Key Reference Documents
+
+@workshops/README.md
+@resources/README.md
+@README.md
+@presentations/README.md
+
+---
+*These workshop standards ensure consistent, high-quality educational experiences across all AI training sessions and platforms.*

@@ -1,0 +1,150 @@
+---
+description: AI prompting standards, educational content guidelines, and conversation design patterns
+globs: prompts/**, resources/**, **/prompt/**, **/conversation/**, **/template/**
+alwaysApply: false
+---
+
+# AI Prompting & Educational Content Standards
+
+## Prompt Engineering Fundamentals
+
+### Core Prompting Principles
+- **Clarity First**: Use precise, unambiguous language in all prompts
+- **Context Provision**: Include relevant background information and constraints
+- **Role Definition**: Clearly specify the AI's role, expertise, and perspective
+- **Output Format**: Define expected response structure, length, and style
+- **Error Prevention**: Include validation criteria and boundary conditions
+
+### Prompt Structure Framework
+- **System Prompt**: Establishes AI persona, capabilities, and behavioral guidelines
+- **User Context**: Provides specific situation, data, and requirements
+- **Task Definition**: Clear instructions on what to accomplish and how
+- **Output Specifications**: Format, length, style, and quality expectations
+- **Quality Criteria**: Success metrics and evaluation standards
+
+## Educational Content Standards
+
+### Learning Material Structure
+- **Modular Design**: Break complex topics into digestible, progressive sections
+- **Clear Learning Objectives**: State what learners will know or do after each section
+- **Practical Examples**: Include real-world scenarios and use cases
+- **Step-by-Step Instructions**: Provide sequential, actionable guidance
+- **Assessment Points**: Include checkpoints to verify understanding
+
+### Content Organization Standards
+- **Hierarchical Structure**: Use consistent heading levels (H1, H2, H3)
+- **Progressive Disclosure**: Build from simple concepts to complex applications
+- **Cross-References**: Link related topics and resources
+- **Visual Elements**: Include diagrams, screenshots, and flowcharts where helpful
+- **Code Examples**: Provide working examples with explanations
+
+## Prompt Template Standards
+
+### Template Categories
+- **Instructional Prompts**: Teaching and guidance-focused interactions
+- **Analytical Prompts**: Data analysis and insight generation
+- **Creative Prompts**: Content creation and problem-solving
+- **Transactional Prompts**: Business process and workflow automation
+- **Diagnostic Prompts**: Troubleshooting and issue resolution
+
+### Template Quality Standards
+- **Reusability**: Design templates that work across different scenarios
+- **Customization**: Include placeholder variables and adaptation guidance
+- **Validation**: Built-in error checking and quality assurance
+- **Documentation**: Clear usage instructions and example outputs
+- **Testing**: Verified functionality with multiple AI platforms
+
+## Conversation Design Patterns
+
+### Educational Conversation Flow
+- **Assessment Phase**: Evaluate learner's current knowledge and needs
+- **Foundation Building**: Establish core concepts and terminology
+- **Skill Development**: Progressive exercises and practice opportunities
+- **Application Phase**: Real-world application and problem-solving
+- **Evaluation & Feedback**: Assessment of learning outcomes and next steps
+
+### Interactive Learning Patterns
+- **Guided Discovery**: Lead learners through exploration and self-discovery
+- **Scaffolding Approach**: Provide support that decreases as competence increases
+- **Feedback Loops**: Immediate response to learner actions and decisions
+- **Adaptive Pathways**: Adjust difficulty and pace based on learner performance
+- **Reinforcement Cycles**: Review, practice, and application repetition
+
+## Platform-Specific Prompting Standards
+
+### ChatGPT/Claude/Gemini Prompting
+- **Persona Establishment**: Clear role definition with expertise boundaries
+- **Knowledge Integration**: Leverage platform-specific capabilities and features
+- **Response Optimization**: Structure prompts for maximum clarity and usefulness
+- **Multi-Turn Management**: Design for conversation flow and context maintenance
+- **Error Recovery**: Include fallback options and correction mechanisms
+
+### Microsoft Copilot Prompting
+- **Enterprise Context**: Incorporate business system knowledge and data sources
+- **Workflow Integration**: Connect with Microsoft 365 applications and services
+- **Security Awareness**: Respect enterprise data policies and access controls
+- **Collaboration Focus**: Design for team-based workflows and shared resources
+- **Compliance Alignment**: Ensure prompts meet organizational governance requirements
+
+### n8n Workflow Prompting
+- **Technical Precision**: Specify exact data formats and transformation requirements
+- **Integration Focus**: Define API connections and data flow patterns
+- **Error Handling**: Include exception management and retry logic
+- **Performance Optimization**: Balance functionality with efficiency considerations
+- **Monitoring Requirements**: Define success metrics and logging needs
+
+## Educational Content Quality Standards
+
+### Instructional Design Principles
+- **Cognitive Load Management**: Avoid overwhelming learners with too much information
+- **Active Learning**: Encourage participation through exercises and application
+- **Feedback Integration**: Provide immediate and constructive response to learner actions
+- **Transfer Support**: Help learners apply concepts to real-world situations
+- **Retention Strategies**: Use repetition, examples, and reinforcement techniques
+
+### Content Accessibility Standards
+- **Multiple Learning Styles**: Accommodate visual, auditory, and kinesthetic learners
+- **Language Clarity**: Use plain language with professional terminology defined
+- **Visual Design**: Ensure readable fonts, appropriate contrast, and logical layouts
+- **Navigation Support**: Clear structure with consistent navigation patterns
+- **Mobile Compatibility**: Optimize for different screen sizes and devices
+
+### Assessment & Measurement Standards
+- **Learning Objectives Alignment**: Assessment methods match stated objectives
+- **Multiple Evaluation Types**: Use quizzes, exercises, projects, and discussions
+- **Immediate Feedback**: Provide instant response to learner submissions
+- **Progress Tracking**: Allow learners to monitor their advancement
+- **Success Criteria**: Define clear standards for completion and mastery
+
+## Prompt Library Organization
+
+### Prompt Categorization Framework
+- **Platform-Specific**: ChatGPT, Claude, Copilot, n8n, custom development
+- **Function-Based**: Research, analysis, creation, communication, automation
+- **Industry-Focused**: Real estate, finance, property management, investment
+- **Complexity Levels**: Beginner, intermediate, advanced, expert
+- **Use Case Templates**: Specific scenarios and business applications
+
+### Prompt Documentation Standards
+- **Usage Instructions**: Clear guidance on when and how to use each prompt
+- **Example Inputs**: Sample data and context for testing
+- **Expected Outputs**: Descriptions of typical responses and variations
+- **Customization Notes**: How to adapt prompts for different situations
+- **Troubleshooting Tips**: Common issues and resolution strategies
+
+### Prompt Testing & Validation
+- **Multi-Platform Testing**: Verify functionality across different AI services
+- **Edge Case Handling**: Test with unusual inputs and boundary conditions
+- **Performance Benchmarking**: Measure response quality, speed, and consistency
+- **User Feedback Integration**: Collect and incorporate user experience data
+- **Continuous Improvement**: Regular updates based on usage patterns and feedback
+
+## Key Reference Documents
+
+@resources/README.md
+@prompts/README.md
+@workshops/README.md
+@README.md
+
+---
+*These prompting and educational content standards ensure high-quality, effective learning experiences across all AI platforms and educational materials.*

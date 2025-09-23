@@ -1,0 +1,143 @@
+---
+description: AI Education repository overview, structure, and content standards
+globs:
+alwaysApply: true
+---
+
+# AI Education & Training Repository Overview
+
+## Repository Purpose & Mission
+**AI Education Hub** provides comprehensive training materials, workshops, and resources for implementing AI agents in real estate and finance. This repository serves as the central hub for educational content, practical templates, and implementation guides.
+
+### Core Focus Areas
+- **Multi-Platform AI Training**: ChatGPT, Claude, Gemini, Copilot, n8n, custom development
+- **Industry Specialization**: Real estate applications, financial services, property management
+- **Practical Implementation**: Hands-on workshops, templates, and deployment guides
+- **Educational Progression**: Foundation → Intermediate → Advanced → Enterprise levels
+
+### Target Audience
+- Real estate professionals seeking AI adoption
+- Finance executives implementing automation
+- Property management teams optimizing operations
+- Academic institutions teaching AI applications
+- Technology consultants and trainers
+
+## Repository Structure & Organization
+
+### Core Content Directories
+- **workshops/**: Structured training sessions and workshop materials
+- **resources/**: Learning materials, guides, templates, and documentation
+- **workflow-templates/**: Ready-to-use AI workflows and automation templates
+- **presentations/**: Training slides, pitch decks, and presentation materials
+- **prompts/**: AI system prompts, conversation templates, and examples
+
+### Supporting Assets
+- **Images/**: Visual assets for presentations and documentation
+- **README.md**: Comprehensive repository overview and navigation
+- **README.pdf**: Formatted version for offline reference
+
+### Content Categories
+- **Platform Training**: Platform-specific setup and implementation guides
+- **Industry Applications**: Real estate and finance use cases and templates
+- **Implementation Resources**: Technical setup, API configuration, troubleshooting
+- **Business Value**: ROI measurement, success metrics, adoption strategies
+
+## Content Standards & Quality Guidelines
+
+### Educational Content Principles
+- **Practical Focus**: Every resource must provide actionable, implementable guidance
+- **Multi-Platform Coverage**: Include instructions for major AI platforms and tools
+- **Progressive Learning**: Structure content from beginner to advanced levels
+- **Real-World Application**: Use actual industry examples and case studies
+- **Measurable Outcomes**: Include success metrics and ROI frameworks
+
+### Documentation Standards
+- **Clear Structure**: Use consistent headings, bullet points, and formatting
+- **Step-by-Step Instructions**: Provide detailed, sequential implementation guides
+- **Platform Alternatives**: Offer multiple solution paths for different tools
+- **Troubleshooting Sections**: Include common issues and solutions
+- **Resource Links**: Connect related materials and external references
+
+### Workshop Design Standards
+- **Modular Format**: 60-90 minute focused sessions with clear objectives
+- **Hands-On Practice**: Include practical exercises and real-time implementation
+- **Multiple Tracks**: Offer platform-specific and industry-focused pathways
+- **Assessment Framework**: Provide pre/post evaluation and success metrics
+- **Follow-Up Support**: Include resources for continued learning and implementation
+
+## AI Platform Coverage Standards
+
+### Conversational AI Platforms
+- **ChatGPT/Claude/Gemini**: Advanced prompting techniques and custom applications
+- **Prompt Engineering**: Systematic approach to effective AI communication
+- **Custom GPT Development**: Building specialized AI assistants and tools
+- **Integration Patterns**: Connecting conversational AI with business systems
+
+### Enterprise AI Integration
+- **Microsoft Copilot**: Microsoft 365 optimization and enterprise workflows
+- **Google Workspace AI**: Gmail, Drive, Sheets, and Docs automation
+- **CRM Integration**: Salesforce, HubSpot, and other business system connections
+- **Communication Automation**: Email, calendar, and meeting optimization
+
+### Workflow Automation Platforms
+- **n8n Automation**: No-code workflow building and multi-agent orchestration
+- **Zapier/Make**: Integration-focused automation and API connections
+- **Custom Development**: Python-based AI agents and system integration
+- **API Orchestration**: Connecting multiple AI services and business systems
+
+## Industry Application Standards
+
+### Real Estate Applications
+- **Market Analysis**: Automated research, report generation, and trend analysis
+- **Property Valuation**: Data-driven appraisal and market comparison tools
+- **Client Communication**: Personalized outreach and relationship management
+- **Transaction Support**: Contract analysis, due diligence, and closing assistance
+
+### Finance & Investment
+- **Portfolio Analysis**: Risk assessment, performance tracking, and optimization
+- **Investment Research**: Market intelligence, due diligence, and analysis automation
+- **Financial Reporting**: Automated report generation and compliance documentation
+- **Risk Management**: Monitoring, alerting, and mitigation strategies
+
+### Property Management
+- **Tenant Services**: Communication automation, request handling, and support
+- **Maintenance Coordination**: Work order management and vendor dispatch
+- **Lease Administration**: Document tracking, renewal processing, and compliance
+- **Operational Efficiency**: Process automation and performance monitoring
+
+## Quality Assurance & Review Process
+
+### Content Review Checklist
+- [ ] **Accuracy**: All technical information verified and current
+- [ ] **Completeness**: All promised deliverables and resources included
+- [ ] **Clarity**: Instructions clear, sequential, and easy to follow
+- [ ] **Platform Coverage**: Multiple implementation options provided
+- [ ] **Industry Relevance**: Examples and use cases appropriate for target audience
+- [ ] **Resource Links**: All referenced materials accessible and functional
+- [ ] **Troubleshooting**: Common issues addressed with solutions
+- [ ] **Success Metrics**: Measurable outcomes and evaluation criteria included
+
+### Educational Effectiveness Standards
+- **Learning Objectives**: Clear, achievable goals for each resource
+- **Knowledge Progression**: Logical flow from basic to advanced concepts
+- **Practical Application**: Real-world exercises and implementation examples
+- **Assessment Methods**: Ways to measure learning and skill development
+- **Support Resources**: Additional help, communities, and continued learning paths
+
+### Technical Standards
+- **Platform Compatibility**: Works across major browsers and devices
+- **Security Practices**: Safe handling of API keys and credentials
+- **Performance Optimization**: Efficient resource usage and fast loading
+- **Accessibility**: Inclusive design for diverse learners and abilities
+- **Cross-Platform Testing**: Verified functionality across different AI platforms
+
+## Key Reference Documents
+
+@README.md
+@workshops/README.md
+@resources/README.md
+@workflow-templates/README.md
+@presentations/README.md
+
+---
+*This repository serves as the comprehensive hub for AI education and practical implementation resources in real estate and finance industries.*

@@ -1,0 +1,171 @@
+---
+description: Resource organization standards, file management, and content categorization guidelines
+globs: resources/**, **/resource/**, **/guide/**, **/template/**, **/documentation/**
+alwaysApply: false
+---
+
+# Resource Organization & Management Standards
+
+## Resource Categorization Framework
+
+### Primary Resource Categories
+- **Learning Materials**: Educational content, tutorials, and instructional guides
+- **Technical Documentation**: API setup, configuration guides, troubleshooting
+- **Business Templates**: ROI tracking, implementation roadmaps, success metrics
+- **Code Examples**: Sample workflows, scripts, and automation templates
+- **Reference Materials**: Cheat sheets, quick guides, and reference cards
+
+### Content Type Classification
+- **Guides & Tutorials**: Step-by-step instructional content
+- **Templates & Examples**: Reusable assets and implementation patterns
+- **Reference Documents**: Lookup tables, specifications, and standards
+- **Tools & Utilities**: Calculators, generators, and helper applications
+- **Assessment Materials**: Quizzes, exercises, and evaluation tools
+
+## File Organization Standards
+
+### Directory Structure Guidelines
+- **Hierarchical Depth**: Maximum 3 levels deep (category/subcategory/item)
+- **Consistent Naming**: Use kebab-case for files and directories (e.g., `api-setup-guide.md`)
+- **Logical Grouping**: Related resources should be co-located in same directory
+- **Index Files**: Every directory must have README.md explaining contents
+- **Cross-References**: Link related resources across different directories
+
+### File Naming Conventions
+- **Format**: [category]-[specific-topic]-[type].md
+- **Examples**:
+  - `chatgpt-prompting-basics-guide.md`
+  - `copilot-excel-automation-template.md`
+  - `n8n-workflow-deployment-reference.md`
+  - `real-estate-roi-calculation-tool.md`
+
+### Version Control Standards
+- **Semantic Versioning**: Use version numbers for major content updates
+- **Change Tracking**: Document significant modifications and rationale
+- **Update Frequency**: Regular reviews to ensure content remains current
+- **Deprecation Process**: Clear process for retiring outdated materials
+- **Backup Strategy**: Maintain version history and recovery procedures
+
+## Resource Quality Standards
+
+### Content Completeness Requirements
+- **Problem Definition**: Clearly state what issue or need the resource addresses
+- **Solution Approach**: Provide multiple implementation strategies where applicable
+- **Step-by-Step Instructions**: Detailed, sequential guidance for implementation
+- **Prerequisites**: List required knowledge, tools, accounts, or resources
+- **Expected Outcomes**: Define success criteria and measurable results
+
+### Technical Accuracy Standards
+- **Current Information**: All technical details verified against latest platform versions
+- **Platform Compatibility**: Tested across major browsers and operating systems
+- **API References**: Include links to official documentation and current endpoints
+- **Security Practices**: Follow best practices for credential handling and data protection
+- **Performance Considerations**: Address efficiency and resource optimization
+
+### Usability Standards
+- **Target Audience Clarity**: Specify intended skill level and background knowledge
+- **Time Requirements**: Estimate completion time and difficulty level
+- **Alternative Paths**: Provide options for different learning styles or constraints
+- **Troubleshooting Section**: Include common issues and resolution strategies
+- **Next Steps Guidance**: Suggest related resources and advancement paths
+
+## Resource Documentation Standards
+
+### Metadata Requirements
+- **Title**: Clear, descriptive name that reflects content purpose
+- **Description**: Brief summary of what the resource provides and its value
+- **Target Audience**: Who should use this resource and prerequisite knowledge
+- **Difficulty Level**: Beginner, intermediate, advanced, or expert classification
+- **Estimated Time**: How long it takes to complete or implement
+- **Last Updated**: Date of most recent revision and version number
+
+### Content Structure Template
+- **Overview Section**: Purpose, benefits, and key takeaways
+- **Prerequisites**: Required knowledge, tools, or setup steps
+- **Step-by-Step Instructions**: Detailed implementation guidance
+- **Examples & Use Cases**: Real-world applications and scenarios
+- **Troubleshooting**: Common issues and solutions
+- **Related Resources**: Links to complementary materials
+- **Next Steps**: Advancement suggestions and further learning
+
+### Visual and Interactive Elements
+- **Screenshots**: Include relevant images for setup and configuration steps
+- **Code Blocks**: Use syntax highlighting for technical examples
+- **Diagrams**: Flowcharts for complex processes or decision trees
+- **Interactive Elements**: Embedded tools, calculators, or demos where applicable
+- **Video Links**: References to complementary video content
+
+## Resource Maintenance Standards
+
+### Regular Review Process
+- **Content Audits**: Quarterly review of all resources for accuracy and relevance
+- **User Feedback Integration**: Collect and incorporate user suggestions and corrections
+- **Platform Updates**: Monitor AI platform changes and update affected resources
+- **Broken Link Checks**: Regular verification of all external references and links
+- **Performance Monitoring**: Track usage patterns and resource effectiveness
+
+### Update and Revision Guidelines
+- **Version Control**: Maintain clear version history with change documentation
+- **Backward Compatibility**: Consider impact of changes on existing users
+- **Deprecation Notices**: Provide advance notice before retiring resources
+- **Migration Guidance**: Help users transition from old to new versions
+- **Testing Requirements**: Validate changes before publishing updates
+
+### Quality Assurance Checklist
+- [ ] **Accuracy Verification**: All technical information current and correct
+- [ ] **Completeness Check**: All required sections and information included
+- [ ] **Link Validation**: All internal and external links functional
+- [ ] **Format Consistency**: Follows established templates and style guidelines
+- [ ] **User Testing**: Reviewed by target audience for clarity and usefulness
+- [ ] **Cross-Reference Check**: All related resources properly linked
+- [ ] **Search Optimization**: Includes relevant keywords for discoverability
+- [ ] **Mobile Compatibility**: Works well on different screen sizes
+
+## Resource Discovery & Navigation
+
+### Search and Discovery Standards
+- **Descriptive Titles**: Clear, searchable names that reflect content
+- **Keyword Optimization**: Include relevant terms for search functionality
+- **Category Tags**: Consistent tagging system for filtering and organization
+- **Summary Descriptions**: Brief overviews for quick content assessment
+- **Difficulty Indicators**: Visual cues for skill level requirements
+
+### Navigation and User Experience
+- **Breadcrumb Trails**: Clear indication of location within resource hierarchy
+- **Related Content Links**: Suggestions for complementary resources
+- **Progress Indicators**: Show completion status for multi-step resources
+- **Print-Friendly Options**: Formatted versions for offline reference
+- **Accessibility Features**: Screen reader compatibility and keyboard navigation
+
+### Resource Recommendation System
+- **Personalized Suggestions**: Based on user history and preferences
+- **Learning Path Integration**: Connect resources in logical progression
+- **Skill-Based Filtering**: Allow users to find appropriate difficulty levels
+- **Use Case Matching**: Connect resources to specific business scenarios
+- **Feedback Mechanisms**: Rate and review resources for quality assessment
+
+## Resource Analytics & Measurement
+
+### Usage Tracking Standards
+- **Engagement Metrics**: Track views, downloads, and completion rates
+- **User Feedback**: Collect ratings, comments, and improvement suggestions
+- **Performance Indicators**: Measure resource effectiveness and user satisfaction
+- **Conversion Tracking**: Monitor progression from resource usage to implementation
+- **Error Reporting**: Identify problematic content or technical issues
+
+### Success Measurement Framework
+- **Learning Outcomes**: Assess knowledge acquisition and skill development
+- **Implementation Rates**: Track conversion from learning to practical application
+- **Business Impact**: Measure ROI and value generated from resource usage
+- **User Satisfaction**: Monitor feedback and satisfaction scores
+- **Content Effectiveness**: Identify high-performing vs. underutilized resources
+
+## Key Reference Documents
+
+@resources/README.md
+@README.md
+@workshops/README.md
+@workflow-templates/README.md
+
+---
+*These resource organization standards ensure easy discovery, consistent quality, and effective maintenance of all educational materials and implementation resources.*
