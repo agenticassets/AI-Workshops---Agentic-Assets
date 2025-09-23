@@ -5,7 +5,7 @@
 ## 👨‍💼 Meet Your Instructor
 
 <div align="center">
-<img src="Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
+<img src="https://raw.githubusercontent.com/agenticassets/AI-Workshops---Agentic-Assets/main/Images/cayman-seagraves-wide.png" alt="Dr. Cayman Seagraves" width="600" style="border-radius: 10px; margin: 20px 0;">
 
 **Dr. Cayman Seagraves**  
 *Co-Founder, [Agentic Assets LLC](https://www.agenticassets.ai/)*
