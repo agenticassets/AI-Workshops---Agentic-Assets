@@ -1,0 +1,191 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "cronExpression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        300
+      ],
+      "id": "daily-trigger",
+      "name": "Daily Email Analysis Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session-id",
+              "name": "sessionId",
+              "value": "={{ 'email_learning_' + Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "analysis-date",
+              "name": "analysisDate",
+              "value": "={{ $now.format('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "yesterday",
+              "name": "yesterdayDate",
+              "value": "={{ $now.minus({days: 1}).format('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "start-time",
+              "name": "analysisStartTime",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -600,
+        300
+      ],
+      "id": "initialize-session",
+      "name": "Initialize Analysis Session"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": 50,
+        "simple": false,
+        "options": {
+          "query": "after:{{ $node['Initialize Analysis Session'].json.yesterdayDate }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -400,
+        300
+      ],
+      "id": "gmail-fetch",
+      "name": "Fetch Yesterday's Emails",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "gmail-oauth-credential",
+          "name": "Gmail OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "email-count",
+              "name": "totalEmailCount",
+              "value": "={{ $json.length }}",
+              "type": "number"
+            },
+            {
+              "id": "processed-emails",
+              "name": "processedEmails",
+              "value": "={{ $json.map(email => ({ id: email.id, threadId: email.threadId, from: email.payload?.headers?.find(h => h.name === 'From')?.value || 'Unknown', to: email.payload?.headers?.find(h => h.name === 'To')?.value || 'Unknown', subject: email.payload?.headers?.find(h => h.name === 'Subject')?.value || 'No Subject', date: email.payload?.headers?.find(h => h.name === 'Date')?.value || 'Unknown', body: email.snippet || '', labels: email.labelIds || [], isRead: !email.labelIds?.includes('UNREAD'), isImportant: email.labelIds?.includes('IMPORTANT'), isSent: email.labelIds?.includes('SENT'), isDraft: email.labelIds?.includes('DRAFT'), domain: email.payload?.headers?.find(h => h.name === 'From')?.value?.split('@')[1] || 'unknown' })) }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -200,
+        300
+      ],
+      "id": "preprocess-emails",
+      "name": "Email Preprocessing"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        200,
+        480
+      ],
+      "id": "window-buffer-memory",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to analyze email patterns, behavioral insights, and reasoning about communication styles. Use it when complex reasoning about email behavior patterns is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        360,
+        480
+      ],
+      "id": "think-tool",
+      "name": "Think Tool"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        40,
+        480
+      ],
+      "id": "gpt-model",
+      "name": "GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "openrouter-credential",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"memories\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"memoryId\": { \"type\": \"string\" },\n          \"memoryType\": { \"type\": \"string\", \"enum\": [\"Contact\", \"Style\", \"Pattern\", \"Content\", \"Behavioral\"] },\n          \"memoryCategory\": { \"type\": \"string\" },\n          \"memorySummary\": { \"type\": \"string\" },\n          \"detailedInsight\": { \"type\": \"string\" },\n          \"confidenceScore\": { \"type\": \"number\", \"minimum\": 0, \"maximum\": 1 },\n          \"sourceEmailCount\": { \"type\": \"number\" },\n          \"contactName\": { \"type\": \"string\" },\n          \"contactEmail\": { \"type\": \"string\" },\n          \"contactRelationship\": { \"type\": \"string\" },\n          \"emailDomain\": { \"type\": \"string\" },\n          \"projectTopic\": { \"type\": \"string\" },\n          \"responsePattern\": { \"type\": \"string\" },\n          \"responseTime\": { \"type\": \"string\" },\n          \"communicationStyle\": { \"type\": \"string\" },\n          \"emailFrequency\": { \"type\": \"string\" },\n          \"typicalEmailLength\": { \"type\": \"string\" },\n          \"timesReinforced\": { \"type\": \"number\" },\n          \"lastReinforced\": { \"type\": \"string\" },\n          \"exceptionsNoted\": { \"type\": \"string\" },\n          \"evolutionNotes\": { \"type\": \"string\" },\n          \"actionTriggers\": { \"type\": \"string\" }\n        },\n        \"required\": [\"memoryId\", \"memoryType\", \"memoryCategory\", \"memorySummary\", \"detailedInsight\", \"confidenceScore\"]\n      }\n    },\n    \"analysis_summary\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"total_emails_processed\": { \"type\": \"number\" },\n        \"new_memories_created\": { \"type\": \"number\" },\n        \"memories_reinforced\": { \"type\": \"number\" },\n        \"key_behavioral_insights\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n        \"communication_patterns_identified\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n        \"recommended_actions\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }\n      }\n    }\n  },\n  \"required\": [\"memories\", \"analysis_summary\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        520,
+        480
+      ],
+      "id": "structured-parser",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "connections": {},
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-27T00:00:00.000Z",
+  "versionId": "1"
+}

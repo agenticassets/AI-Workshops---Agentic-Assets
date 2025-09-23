@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "universal-research-agent-2025"
+  },
+  "name": "Universal Research Agent",
+  "tags": ["research", "universal", "configurable", "multi-purpose"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 🔄 Universal Research Agent\n\n**Primary Function:** Configurable agent for all research tasks\n\n## Dynamic Capabilities:\n- **Research Synthesis:** Document analysis and categorization\n- **Academic Opportunities:** Gap analysis and publication mapping\n- **Methodology Evaluation:** Research method assessment\n- **Cross-Reference Validation:** Fact-checking and conflict resolution\n- **Strategic Synthesis:** Business intelligence and recommendations\n\n## Configuration:\nAgent behavior is dynamically configured via input query containing:\n- System prompt template\n- Tool descriptions\n- Output schema\n- Task-specific parameters",
+        "height": 420,
+        "width": 520,
+        "color": 6
+      },
+      "name": "Universal Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_type",
+              "name": "agentType",
+              "value": "={{ $json.parsedInput.agentType }}",
+              "type": "string"
+            },
+            {
+              "id": "system_prompt",
+              "name": "systemPrompt",
+              "value": "={{ $json.parsedInput.systemPrompt }}",
+              "type": "string"
+            },
+            {
+              "id": "task_prompt",
+              "name": "taskPrompt",
+              "value": "={{ $json.parsedInput.taskPrompt }}",
+              "type": "string"
+            },
+            {
+              "id": "output_schema",
+              "name": "outputSchema",
+              "value": "={{ $json.parsedInput.outputSchema }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Parse Configuration"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "={{ $json.parsedInput.tool1Description || 'Primary research tool for document analysis and content extraction using Firecrawl.' }}",
+        "method": "POST",
+        "url": "={{ $json.parsedInput.tool1Url || 'https://api.firecrawl.dev/v1/scrape' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.parsedInput.tool1Body || '{\"url\": \"' + $fromAI('url', 'The URL to analyze', 'string') + '\", \"formats\": [\"markdown\"], \"onlyMainContent\": true}' }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        140
+      ],
+      "id": "configurable-tool-1",
+      "name": "Configurable Tool 1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "={{ $json.parsedInput.tool2Description || 'Secondary research tool for search and information gathering using Tavily.' }}",
+        "method": "POST",
+        "url": "={{ $json.parsedInput.tool2Url || 'https://api.tavily.com/search' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.parsedInput.tool2Body || '{\"api_key\": \"' + $credentials.tavilyApi.api_key + '\", \"query\": \"' + $fromAI('searchTerm', 'Search term for research', 'string') + '\", \"search_depth\": \"advanced\", \"include_answer\": true, \"max_results\": 8}' }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "configurable-tool-2",
+      "name": "Configurable Tool 2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TavilyApiKey",
+          "name": "Tavily API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.taskPrompt }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "={{ $json.systemPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Universal Research Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"agent_type\": {\"type\": \"string\"},\n    \"session_id\": {\"type\": \"string\"},\n    \"analysis_summary\": {\"type\": \"string\"},\n    \"results\": {\n      \"type\": \"object\",\n      \"additionalProperties\": true\n    },\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": true\n      }\n    },\n    \"recommendations\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"metadata\": {\n      \"type\": \"object\",\n      \"additionalProperties\": true\n    }\n  },\n  \"required\": [\"agent_type\", \"analysis_summary\"],\n  \"additionalProperties\": true\n}",
+        "autoFix": true,
+        "customizeRetryPrompt": true,
+        "retryPrompt": "={{ 'Please ensure the output follows this exact schema for ' + $json.agentType + ' analysis:\\n\\n' + JSON.stringify($json.outputSchema, null, 2) + '\\n\\nImportant guidelines:\\n- All required fields must be present\\n- Use proper data types (strings, arrays, objects as specified)\\n- Include confidence scores where specified\\n- Follow the exact field names and structure\\n- Provide detailed, actionable content in each field' }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Dynamic Structured Output"
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Parse Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Configuration": {
+      "main": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurable Tool 1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurable Tool 2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dynamic Structured Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Universal Research Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 

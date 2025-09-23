@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "methodological-evaluator-2025"
+  },
+  "name": "Methodological Evaluator",
+  "tags": ["research", "methodology", "evaluation", "innovation"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 🔬 Methodological Evaluator Agent\n\n**Primary Function:** Research methodology analysis and innovation assessment\n\n## Core Responsibilities:\n- **Method Analysis:** Evaluate research methodologies used\n- **Innovation Assessment:** Identify methodological innovations\n- **Quality Evaluation:** Assess research design and execution\n- **Best Practices:** Identify proven methodological approaches\n- **Limitation Identification:** Highlight methodological constraints\n\n## Output Format:\n- Methodology effectiveness analysis\n- Innovation opportunity matrix\n- Quality assessment metrics\n- Best practice recommendations",
+        "height": 420,
+        "width": 520,
+        "color": 4
+      },
+      "name": "Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Methodological Analysis and Innovation Assessment",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search for methodological standards, best practices, and comparative research methodology information.",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"query\": \"{{ $fromAI('searchTerm', 'Research methodology search term for standards and best practices', 'string') }}\",\n    \"search_depth\": \"advanced\",\n    \"include_answer\": true,\n    \"include_domains\": [\"scholar.google.com\", \"methodology.com\", \"researchgate.net\", \"sage.com\"],\n    \"max_results\": 6\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "Research methodology search term for standards and best practices",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        140
+      ],
+      "id": "methodology-search-tool",
+      "name": "Methodology Standards Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IRV4S8FpLS3xIEpH",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Analyze research methodology resources and guidelines from academic institutions and standards organizations.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url', 'URL of methodology guideline or standards document', 'string') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "standards-analysis-tool",
+      "name": "Standards Analysis Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Methodological Evaluation Task:\n{{ JSON.stringify($json.parsedInput) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Methodological Evaluator Agent\n\n## Role\nYou are an expert research methodology evaluator specializing in AI agents and commercial real estate research. Your primary function is to analyze research methodologies, identify innovations, and assess research quality.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your methodology analysis strategy and reasoning\n- **Methodology Standards Search**: Search for methodological standards, best practices, and comparative information\n- **Standards Analysis Tool**: Analyze methodology guidelines and standards from academic institutions\n\n## Important:\nFirst step is to use the **think** tool to plan your methodological evaluation strategy.\n\n## Core Capabilities\n- **\"Methodology Standards Search\"**: Find established methodological standards and best practices\n- **\"Standards Analysis Tool\"**: Analyze methodology guidelines and academic standards\n- **\"Think Tool\"**: Plan evaluation strategy and synthesize methodological insights\n\n## Task Strategy Guidelines\n1. **Methodology Classification**: Categorize research approaches:\n   - Quantitative methods (statistical analysis, modeling, surveys)\n   - Qualitative methods (interviews, case studies, ethnography)\n   - Mixed methods (triangulation, sequential explanatory)\n   - Experimental designs (RCTs, quasi-experimental)\n   - Computational methods (machine learning, simulation)\n\n2. **Quality Assessment**: Evaluate methodological rigor:\n   - Sample size and representativeness\n   - Data collection validity and reliability\n   - Statistical power and significance\n   - Control for confounding variables\n   - Ethical considerations and IRB approval\n\n3. **Innovation Identification**: Spot methodological innovations:\n   - Novel data collection techniques\n   - New analytical approaches\n   - Technology-enabled research methods\n   - Interdisciplinary methodological integration\n   - Scalability and automation innovations\n\n4. **Limitation Analysis**: Identify methodological constraints:\n   - Sampling biases and limitations\n   - Measurement errors and validity issues\n   - Generalizability constraints\n   - Resource and time limitations\n   - Ethical and privacy constraints\n\n5. **Best Practice Extraction**: Identify proven approaches:\n   - Gold standard methodologies for specific research questions\n   - Replication and validation strategies\n   - Peer review and quality control processes\n   - Data sharing and transparency practices\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Methodological Evaluator\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"methodologyAnalysis\": [\n    {\n      \"documentId\": \"string\",\n      \"methodologyType\": \"quantitative|qualitative|mixed|experimental|computational\",\n      \"primaryMethods\": [\"string array\"],\n      \"sampleSize\": \"string\",\n      \"dataCollectionMethod\": \"string\",\n      \"analyticalApproach\": \"string\",\n      \"qualityScore\": \"1-10\",\n      \"strengths\": [\"string array\"],\n      \"limitations\": [\"string array\"],\n      \"innovationLevel\": \"high|medium|low\"\n    }\n  ],\n  \"methodologicalInnovations\": [\n    {\n      \"innovation\": \"string\",\n      \"description\": \"string\",\n      \"applicability\": \"string\",\n      \"adoptionPotential\": \"high|medium|low\",\n      \"resourceRequirements\": \"string\",\n      \"relatedDocuments\": [\"string array\"]\n    }\n  ],\n  \"qualityMetrics\": {\n    \"overallQualityScore\": \"1-10\",\n    \"methodologicalRigor\": \"high|medium|low\",\n    \"replicationPotential\": \"high|medium|low\",\n    \"ethicalStandards\": \"high|medium|low\",\n    \"dataQuality\": \"high|medium|low\"\n  },\n  \"bestPractices\": [\n    {\n      \"practice\": \"string\",\n      \"description\": \"string\",\n      \"evidenceBase\": \"string\",\n      \"implementationComplexity\": \"high|medium|low\",\n      \"recommendationStrength\": \"strong|moderate|weak\"\n    }\n  ],\n  \"methodologicalGaps\": [\n    {\n      \"gap\": \"string\",\n      \"description\": \"string\",\n      \"priority\": \"high|medium|low\",\n      \"researchNeeded\": \"string\",\n      \"potentialSolutions\": [\"string array\"]\n    }\n  ],\n  \"improvementRecommendations\": [\n    {\n      \"recommendation\": \"string\",\n      \"rationale\": \"string\",\n      \"implementationSteps\": [\"string array\"],\n      \"expectedBenefits\": \"string\",\n      \"difficulty\": \"high|medium|low\"\n    }\n  ]\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to evaluate methodologies in AI+CRE research. Let me analyze the research design patterns...\"\n2. Categorize methodological approaches used across documents\n3. Assess quality and rigor of each methodology\n4. Identify innovative approaches and techniques\n5. Compare against established standards and best practices\n6. Generate improvement recommendations\n\n## Final Reminders\nUse the **think** tool extensively for methodological reasoning. Focus on providing actionable insights that can improve future research quality and innovation in AI agents and CRE research."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Methodological Evaluator Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "autoFix": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"methodologyAnalysis\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"documentId\": {\"type\": \"string\"},\n          \"methodologyType\": {\"type\": \"string\", \"enum\": [\"quantitative\", \"qualitative\", \"mixed\", \"experimental\", \"computational\"]},\n          \"primaryMethods\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"sampleSize\": {\"type\": \"string\"},\n          \"dataCollectionMethod\": {\"type\": \"string\"},\n          \"analyticalApproach\": {\"type\": \"string\"},\n          \"qualityScore\": {\"type\": \"string\"},\n          \"strengths\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"limitations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"innovationLevel\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    },\n    \"methodologicalInnovations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"innovation\": {\"type\": \"string\"},\n          \"description\": {\"type\": \"string\"},\n          \"applicability\": {\"type\": \"string\"},\n          \"adoptionPotential\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"resourceRequirements\": {\"type\": \"string\"},\n          \"relatedDocuments\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"qualityMetrics\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"overallQualityScore\": {\"type\": \"string\"},\n        \"methodologicalRigor\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"replicationPotential\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"ethicalStandards\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"dataQuality\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n      }\n    },\n    \"bestPractices\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"practice\": {\"type\": \"string\"},\n          \"description\": {\"type\": \"string\"},\n          \"evidenceBase\": {\"type\": \"string\"},\n          \"implementationComplexity\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"recommendationStrength\": {\"type\": \"string\", \"enum\": [\"strong\", \"moderate\", \"weak\"]}\n        }\n      }\n    },\n    \"methodologicalGaps\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"gap\": {\"type\": \"string\"},\n          \"description\": {\"type\": \"string\"},\n          \"priority\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"researchNeeded\": {\"type\": \"string\"},\n          \"potentialSolutions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"improvementRecommendations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"recommendation\": {\"type\": \"string\"},\n          \"rationale\": {\"type\": \"string\"},\n          \"implementationSteps\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"expectedBenefits\": {\"type\": \"string\"},\n          \"difficulty\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"methodologyAnalysis\", \"qualityMetrics\", \"bestPractices\", \"improvementRecommendations\"],\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Structured Methodology Output"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 2000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        260
+      ],
+      "id": "autofix-language-model",
+      "name": "AutoFix GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Methodology Standards Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Standards Analysis Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Methodology Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Methodological Evaluator Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutoFix GPT-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Methodology Output",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 

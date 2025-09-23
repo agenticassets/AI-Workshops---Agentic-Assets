@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "academic-opportunity-identifier-2025"
+  },
+  "name": "Academic Opportunity Identifier",
+  "tags": ["research", "opportunities", "gaps", "academic"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 🎓 Academic Opportunity Identifier Agent\n\n**Primary Function:** Research gap analysis and opportunity identification\n\n## Core Responsibilities:\n- **Gap Analysis:** Identify unexplored research areas\n- **Publication Mapping:** Find high-impact publication opportunities\n- **Collaboration Networks:** Map potential research partnerships\n- **Trend Analysis:** Identify emerging research directions\n- **Impact Assessment:** Evaluate research potential and significance\n\n## Output Format:\n- Research gap matrix\n- Publication opportunity recommendations\n- Collaboration potential analysis\n- Conference and journal targeting",
+        "height": 420,
+        "width": 520,
+        "color": 3
+      },
+      "name": "Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Academic Opportunity and Gap Analysis",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search for academic papers, trends, and publication opportunities using advanced research queries.",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"query\": \"{{ $fromAI('searchTerm', 'Academic search term for research trends and opportunities', 'string') }}\",\n    \"search_depth\": \"advanced\",\n    \"include_answer\": true,\n    \"include_domains\": [\"scholar.google.com\", \"arxiv.org\", \"ssrn.com\", \"researchgate.net\"],\n    \"max_results\": 8\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "Academic search term for research trends and opportunities",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        140
+      ],
+      "id": "academic-search-tool",
+      "name": "Academic Research Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IRV4S8FpLS3xIEpH",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Analyze conference and journal websites for submission guidelines, topics, and opportunities.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url', 'URL of conference or journal website to analyze', 'string') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "venue-analysis-tool",
+      "name": "Venue Analysis Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Academic Opportunity Analysis Task:\n{{ JSON.stringify($json.parsedInput) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Academic Opportunity Identifier Agent\n\n## Role\nYou are an expert academic opportunity analyst specializing in AI agents and commercial real estate research. Your primary function is to identify research gaps, publication opportunities, and collaboration potential.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your gap analysis strategy and reasoning\n- **Academic Research Search**: Search for academic papers, trends, and publication opportunities\n- **Venue Analysis Tool**: Analyze conference and journal websites for submission opportunities\n\n## Important:\nFirst step is to use the **think** tool to plan your opportunity identification strategy.\n\n## Core Capabilities\n- **\"Academic Research Search\"**: Find related research, trends, and academic opportunities\n- **\"Venue Analysis Tool\"**: Analyze publication venues for submission guidelines and focus areas\n- **\"Think Tool\"**: Plan analysis strategy and identify opportunities\n\n## Task Strategy Guidelines\n1. **Gap Analysis**: Systematically identify what's missing in current research:\n   - Unexplored AI applications in CRE\n   - Geographic regions lacking research\n   - Methodological approaches not yet applied\n   - Industry sectors underrepresented\n   - Temporal gaps (historical vs. predictive studies)\n\n2. **Publication Mapping**: Identify high-impact publication opportunities:\n   - Top-tier journals accepting AI+CRE research\n   - Emerging conferences focusing on proptech\n   - Special issues and calls for papers\n   - Impact factor and citation potential\n\n3. **Collaboration Analysis**: Map potential research partnerships:\n   - Leading researchers in AI and CRE\n   - Academic institutions with relevant programs\n   - Industry partnerships and funding sources\n   - International collaboration opportunities\n\n4. **Trend Identification**: Spot emerging research directions:\n   - Emerging AI technologies applicable to CRE\n   - Regulatory and policy research needs\n   - Sustainability and ESG integration\n   - Market disruption and transformation studies\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Academic Opportunity Identifier\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"researchGaps\": [\n    {\n      \"gapCategory\": \"string\",\n      \"description\": \"string\",\n      \"significance\": \"high|medium|low\",\n      \"feasibility\": \"high|medium|low\",\n      \"timeToPublication\": \"6-12 months|1-2 years|2+ years\",\n      \"potentialImpact\": \"string\"\n    }\n  ],\n  \"publicationOpportunities\": [\n    {\n      \"venue\": \"string\",\n      \"type\": \"journal|conference|workshop\",\n      \"impactFactor\": \"string\",\n      \"submissionDeadline\": \"string\",\n      \"focusAreas\": [\"string array\"],\n      \"recommendedTopics\": [\"string array\"],\n      \"collaborationPotential\": \"high|medium|low\"\n    }\n  ],\n  \"collaborationOpportunities\": [\n    {\n      \"institution\": \"string\",\n      \"researchers\": [\"string array\"],\n      \"expertise\": \"string\",\n      \"contactInfo\": \"string\",\n      \"fundingPotential\": \"high|medium|low\",\n      \"geographicRegion\": \"string\"\n    }\n  ],\n  \"emergingTrends\": [\n    {\n      \"trend\": \"string\",\n      \"description\": \"string\",\n      \"researchPotential\": \"high|medium|low\",\n      \"timeHorizon\": \"6 months|1 year|2+ years\",\n      \"relatedTechnologies\": [\"string array\"]\n    }\n  ],\n  \"fundingOpportunities\": [\n    {\n      \"fundingSource\": \"string\",\n      \"programName\": \"string\",\n      \"maxAmount\": \"string\",\n      \"applicationDeadline\": \"string\",\n      \"eligibilityCriteria\": \"string\",\n      \"successProbability\": \"high|medium|low\"\n    }\n  ],\n  \"strategicRecommendations\": [\n    {\n      \"recommendation\": \"string\",\n      \"rationale\": \"string\",\n      \"priority\": \"high|medium|low\",\n      \"timeline\": \"string\",\n      \"resources\": \"string\"\n    }\n  ]\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to analyze research gaps in AI+CRE. Let me map current literature coverage...\"\n2. Search academic databases for current research trends\n3. Identify underexplored areas and methodological gaps\n4. Map publication venues and submission opportunities\n5. Identify collaboration and funding potential\n6. Generate strategic recommendations\n\n## Final Reminders\nUse the **think** tool extensively for strategic planning. Focus on identifying high-impact, feasible opportunities that align with current research trends and market needs."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Academic Opportunity Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"researchGaps\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"gapCategory\": {\"type\": \"string\"},\n          \"description\": {\"type\": \"string\"},\n          \"significance\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"feasibility\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"timeToPublication\": {\"type\": \"string\", \"enum\": [\"6-12 months\", \"1-2 years\", \"2+ years\"]},\n          \"potentialImpact\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"publicationOpportunities\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"venue\": {\"type\": \"string\"},\n          \"type\": {\"type\": \"string\", \"enum\": [\"journal\", \"conference\", \"workshop\"]},\n          \"impactFactor\": {\"type\": \"string\"},\n          \"submissionDeadline\": {\"type\": \"string\"},\n          \"focusAreas\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"recommendedTopics\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"collaborationPotential\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    },\n    \"collaborationOpportunities\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"institution\": {\"type\": \"string\"},\n          \"researchers\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"expertise\": {\"type\": \"string\"},\n          \"contactInfo\": {\"type\": \"string\"},\n          \"fundingPotential\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"geographicRegion\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"emergingTrends\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"trend\": {\"type\": \"string\"},\n          \"description\": {\"type\": \"string\"},\n          \"researchPotential\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"timeHorizon\": {\"type\": \"string\", \"enum\": [\"6 months\", \"1 year\", \"2+ years\"]},\n          \"relatedTechnologies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"fundingOpportunities\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"fundingSource\": {\"type\": \"string\"},\n          \"programName\": {\"type\": \"string\"},\n          \"maxAmount\": {\"type\": \"string\"},\n          \"applicationDeadline\": {\"type\": \"string\"},\n          \"eligibilityCriteria\": {\"type\": \"string\"},\n          \"successProbability\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    },\n    \"strategicRecommendations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"recommendation\": {\"type\": \"string\"},\n          \"rationale\": {\"type\": \"string\"},\n          \"priority\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"timeline\": {\"type\": \"string\"},\n          \"resources\": {\"type\": \"string\"}\n        }\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"researchGaps\", \"publicationOpportunities\", \"emergingTrends\", \"strategicRecommendations\"],\n  \"additionalProperties\": false\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Structured Opportunity Output"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 2000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        260
+      ],
+      "id": "autofix-language-model",
+      "name": "AutoFix GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Academic Research Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Venue Analysis Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Opportunity Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Academic Opportunity Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutoFix GPT-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Opportunity Output",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 

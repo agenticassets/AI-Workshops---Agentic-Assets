@@ -1,0 +1,234 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "final-consolidation-agent-2025"
+  },
+  "name": "Final Consolidation Agent",
+  "tags": ["research", "consolidation", "final-report", "synthesis"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 🎯 Final Consolidation Agent\n\n**Primary Function:** Comprehensive research consolidation and final reporting\n\n## Core Responsibilities:\n- **Multi-Agent Synthesis:** Integrate outputs from 5 specialized agents\n- **Cross-Correlation:** Identify connections across different analyses\n- **Executive Reporting:** Create C-level ready summaries\n- **Action Planning:** Consolidate recommendations into coherent strategy\n- **Quality Assurance:** Ensure completeness and consistency\n\n## Input Sources:\n- Research Synthesis Coordinator output\n- Academic Opportunity Identifier results\n- Methodological Evaluator assessment\n- Cross-Reference Validator report\n- Strategic Synthesizer recommendations",
+        "height": 460,
+        "width": 520,
+        "color": 6
+      },
+      "name": "Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 25
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Final Consolidation and Executive Reporting",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 6000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Final Consolidation Task:\n{{ JSON.stringify($json.parsedInput) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Final Consolidation Agent\n\n## Role\nYou are an expert research consolidation specialist and executive advisor. Your primary function is to synthesize outputs from 5 specialized research agents into a comprehensive, actionable final report for senior leadership decision-making.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your consolidation strategy and cross-correlation analysis\n\n## Important:\nFirst step is to use the **think** tool to plan your consolidation and synthesis approach.\n\n## Core Capabilities\n- **\"Think Tool\"**: Plan consolidation strategy and reason through cross-agent synthesis\n\n## Task Strategy Guidelines\n1. **Multi-Agent Integration**: Synthesize outputs from all 5 agents:\n   - **Research Synthesis Coordinator**: Research database, themes, categorization\n   - **Academic Opportunity Identifier**: Research gaps, publication opportunities, collaborations\n   - **Methodological Evaluator**: Quality assessment, innovation opportunities, best practices\n   - **Cross-Reference Validator**: Validation results, conflict resolution, quality flags\n   - **Strategic Synthesizer**: Business intelligence, strategic recommendations, implementation roadmap\n\n2. **Cross-Correlation Analysis**: Identify connections across analyses:\n   - Align research gaps with business opportunities\n   - Connect methodological innovations with strategic recommendations\n   - Cross-reference validation findings with implementation risks\n   - Synthesize academic opportunities with business value propositions\n   - Integrate quality assessments with strategic priorities\n\n3. **Executive Summary Creation**: Develop C-level ready insights:\n   - Key findings that matter to business leadership\n   - Strategic implications and competitive positioning\n   - Investment priorities and resource allocation guidance\n   - Risk assessment and mitigation strategies\n   - Success metrics and measurement frameworks\n\n4. **Actionable Roadmap**: Create integrated implementation plan:\n   - Prioritized initiatives across research and business domains\n   - Resource allocation and timeline coordination\n   - Success metrics spanning academic and business outcomes\n   - Risk mitigation spanning methodological and strategic concerns\n   - Stakeholder engagement and change management\n\n5. **Quality Assurance**: Ensure report completeness and consistency:\n   - Resolve any conflicts between agent outputs\n   - Fill gaps in analysis or recommendations\n   - Ensure logical flow and coherent narrative\n   - Validate alignment between research insights and strategic recommendations\n   - Confirm actionability of all recommendations\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Final Consolidation Agent\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"executiveSummary\": {\n    \"researchScope\": \"string\",\n    \"keyInsights\": [\"string array\"],\n    \"strategicImplications\": \"string\",\n    \"topRecommendations\": [\"string array\"],\n    \"businessImpact\": \"string\",\n    \"implementationUrgency\": \"high|medium|low\"\n  },\n  \"comprehensiveFindings\": {\n    \"researchSynthesis\": {\n      \"documentsAnalyzed\": \"number\",\n      \"keyThemes\": [\"string array\"],\n      \"researchQuality\": \"high|medium|low\",\n      \"primaryInsights\": [\"string array\"]\n    },\n    \"academicOpportunities\": {\n      \"highPriorityGaps\": [\"string array\"],\n      \"publicationTargets\": [\"string array\"],\n      \"collaborationPotential\": [\"string array\"],\n      \"fundingOpportunities\": [\"string array\"]\n    },\n    \"methodologicalAssessment\": {\n      \"overallQuality\": \"high|medium|low\",\n      \"innovations\": [\"string array\"],\n      \"bestPractices\": [\"string array\"],\n      \"improvementAreas\": [\"string array\"]\n    },\n    \"validationResults\": {\n      \"reliabilityScore\": \"string\",\n      \"majorConcerns\": [\"string array\"],\n      \"strengths\": [\"string array\"],\n      \"recommendations\": [\"string array\"]\n    },\n    \"strategicIntelligence\": {\n      \"marketOpportunities\": [\"string array\"],\n      \"competitiveAdvantages\": [\"string array\"],\n      \"implementationPriorities\": [\"string array\"],\n      \"riskFactors\": [\"string array\"]\n    }\n  },\n  \"integratedRecommendations\": [\n    {\n      \"category\": \"academic|methodological|strategic|operational\",\n      \"recommendation\": \"string\",\n      \"priority\": \"high|medium|low\",\n      \"timeframe\": \"immediate|short-term|medium-term|long-term\",\n      \"businessValue\": \"string\",\n      \"academicValue\": \"string\",\n      \"resourceRequirements\": \"string\",\n      \"successMetrics\": [\"string array\"],\n      \"dependencies\": [\"string array\"],\n      \"risks\": [\"string array\"]\n    }\n  ],\n  \"implementationRoadmap\": {\n    \"immediate\": {\n      \"timeframe\": \"0-3 months\",\n      \"objectives\": [\"string array\"],\n      \"actions\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"resources\": \"string\"\n    },\n    \"shortTerm\": {\n      \"timeframe\": \"3-12 months\",\n      \"objectives\": [\"string array\"],\n      \"actions\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"resources\": \"string\"\n    },\n    \"mediumTerm\": {\n      \"timeframe\": \"1-2 years\",\n      \"objectives\": [\"string array\"],\n      \"actions\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"resources\": \"string\"\n    },\n    \"longTerm\": {\n      \"timeframe\": \"2+ years\",\n      \"objectives\": [\"string array\"],\n      \"actions\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"resources\": \"string\"\n    }\n  },\n  \"riskAndMitigation\": {\n    \"criticalRisks\": [\"string array\"],\n    \"mitigationStrategies\": [\"string array\"],\n    \"contingencyPlans\": [\"string array\"],\n    \"successFactors\": [\"string array\"]\n  },\n  \"resourceAndInvestment\": {\n    \"totalInvestmentRequired\": \"string\",\n    \"humanCapital\": \"string\",\n    \"technology\": \"string\",\n    \"external\": \"string\",\n    \"roiProjection\": \"string\",\n    \"paybackPeriod\": \"string\"\n  },\n  \"nextSteps\": [\n    {\n      \"priority\": \"high|medium|low\",\n      \"action\": \"string\",\n      \"owner\": \"string\",\n      \"deadline\": \"string\",\n      \"deliverable\": \"string\",\n      \"dependencies\": [\"string array\"],\n      \"successCriteria\": \"string\"\n    }\n  ],\n  \"appendices\": {\n    \"agentOutputSummaries\": \"string\",\n    \"keyAssumptions\": [\"string array\"],\n    \"limitations\": [\"string array\"],\n    \"furtherResearch\": [\"string array\"]\n  }\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to consolidate 5 agent outputs into executive report. Let me analyze cross-correlations...\"\n2. Review and synthesize all agent outputs\n3. Identify cross-correlations and integration opportunities\n4. Resolve conflicts and fill analytical gaps\n5. Create executive summary with key insights\n6. Develop integrated recommendations and roadmap\n7. Generate comprehensive final report\n\n## Final Reminders\nUse the **think** tool extensively for strategic consolidation reasoning. Focus on creating a coherent, actionable narrative that transforms research insights into executive decision-making tools. Ensure the final report serves both academic research advancement and business strategic planning needs."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Final Consolidation Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"executiveSummary\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"researchScope\": {\"type\": \"string\"},\n        \"keyInsights\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"strategicImplications\": {\"type\": \"string\"},\n        \"topRecommendations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"businessImpact\": {\"type\": \"string\"},\n        \"implementationUrgency\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n      }\n    },\n    \"comprehensiveFindings\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"researchSynthesis\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"documentsAnalyzed\": {\"type\": \"string\"},\n            \"keyThemes\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"researchQuality\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n            \"primaryInsights\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"academicOpportunities\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"highPriorityGaps\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"publicationTargets\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"collaborationPotential\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"fundingOpportunities\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"methodologicalAssessment\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"overallQuality\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n            \"innovations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"bestPractices\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"improvementAreas\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"validationResults\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"reliabilityScore\": {\"type\": \"string\"},\n            \"majorConcerns\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"strengths\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"recommendations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"strategicIntelligence\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"marketOpportunities\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"competitiveAdvantages\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"implementationPriorities\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"riskFactors\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        }\n      }\n    },\n    \"integratedRecommendations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"category\": {\"type\": \"string\", \"enum\": [\"academic\", \"methodological\", \"strategic\", \"operational\"]},\n          \"recommendation\": {\"type\": \"string\"},\n          \"priority\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"timeframe\": {\"type\": \"string\", \"enum\": [\"immediate\", \"short-term\", \"medium-term\", \"long-term\"]},\n          \"businessValue\": {\"type\": \"string\"},\n          \"academicValue\": {\"type\": \"string\"},\n          \"resourceRequirements\": {\"type\": \"string\"},\n          \"successMetrics\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"dependencies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"risks\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"implementationRoadmap\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"immediate\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"resources\": {\"type\": \"string\"}\n          }\n        },\n        \"shortTerm\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"resources\": {\"type\": \"string\"}\n          }\n        },\n        \"mediumTerm\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"resources\": {\"type\": \"string\"}\n          }\n        },\n        \"longTerm\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"actions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"resources\": {\"type\": \"string\"}\n          }\n        }\n      }\n    },\n    \"riskAndMitigation\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"criticalRisks\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"mitigationStrategies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"contingencyPlans\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"successFactors\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    },\n    \"resourceAndInvestment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"totalInvestmentRequired\": {\"type\": \"string\"},\n        \"humanCapital\": {\"type\": \"string\"},\n        \"technology\": {\"type\": \"string\"},\n        \"external\": {\"type\": \"string\"},\n        \"roiProjection\": {\"type\": \"string\"},\n        \"paybackPeriod\": {\"type\": \"string\"}\n      }\n    },\n    \"nextSteps\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"priority\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"action\": {\"type\": \"string\"},\n          \"owner\": {\"type\": \"string\"},\n          \"deadline\": {\"type\": \"string\"},\n          \"deliverable\": {\"type\": \"string\"},\n          \"dependencies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"successCriteria\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"appendices\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"agentOutputSummaries\": {\"type\": \"string\"},\n        \"keyAssumptions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"limitations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"furtherResearch\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"executiveSummary\", \"comprehensiveFindings\", \"integratedRecommendations\", \"implementationRoadmap\", \"nextSteps\"],\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        940,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Structured Final Report"
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Final Consolidation Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Final Consolidation Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Final Consolidation Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Final Consolidation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Final Report": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Final Consolidation Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 

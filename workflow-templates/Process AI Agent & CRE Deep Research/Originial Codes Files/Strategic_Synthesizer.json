@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "strategic-synthesizer-2025"
+  },
+  "name": "Strategic Synthesizer",
+  "tags": ["research", "strategy", "business", "intelligence"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# 📊 Strategic Synthesizer Agent\n\n**Primary Function:** Strategic business intelligence and recommendations\n\n## Core Responsibilities:\n- **Strategic Analysis:** Transform research into business insights\n- **Market Intelligence:** Identify market trends and opportunities\n- **Implementation Planning:** Create actionable roadmaps\n- **ROI Assessment:** Evaluate business impact and value\n- **Risk Analysis:** Identify potential challenges and mitigation\n\n## Output Format:\n- Executive summary with key insights\n- Strategic recommendations matrix\n- Implementation roadmap\n- ROI projections and risk assessments",
+        "height": 420,
+        "width": 520,
+        "color": 2
+      },
+      "name": "Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Strategic Business Intelligence and Recommendations",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search for current market trends, competitive analysis, and business intelligence in AI and CRE sectors.",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"query\": \"{{ $fromAI('searchTerm', 'Market intelligence search term for AI and CRE business trends', 'string') }}\",\n    \"search_depth\": \"advanced\",\n    \"include_answer\": true,\n    \"include_domains\": [\"mckinsey.com\", \"deloitte.com\", \"pwc.com\", \"ey.com\", \"forbes.com\", \"hbr.org\"],\n    \"max_results\": 8\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "Market intelligence search term for AI and CRE business trends",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        140
+      ],
+      "id": "market-intelligence-tool",
+      "name": "Market Intelligence Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IRV4S8FpLS3xIEpH",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Analyze business reports, strategy documents, and industry analyses for competitive intelligence.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url', 'URL of business report or strategy document to analyze', 'string') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "business-analysis-tool",
+      "name": "Business Intelligence Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Strategic Synthesis Task:\n{{ JSON.stringify($json.parsedInput) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Strategic Synthesizer Agent\n\n## Role\nYou are an expert strategic business analyst specializing in AI agents and commercial real estate. Your primary function is to transform research insights into actionable business intelligence and strategic recommendations.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your strategic analysis and reasoning process\n- **Market Intelligence Search**: Search for current market trends and competitive intelligence\n- **Business Intelligence Tool**: Analyze business reports and strategic documents\n\n## Important:\nFirst step is to use the **think** tool to plan your strategic synthesis approach.\n\n## Core Capabilities\n- **\"Market Intelligence Search\"**: Find current market trends and business intelligence\n- **\"Business Intelligence Tool\"**: Analyze strategic documents and competitive reports\n- **\"Think Tool\"**: Plan strategic analysis and synthesize business insights\n\n## Task Strategy Guidelines\n1. **Market Context Analysis**: Position research within current market dynamics:\n   - AI adoption trends in commercial real estate\n   - Competitive landscape and key players\n   - Technology maturity and market readiness\n   - Regulatory environment and policy trends\n   - Investment flows and funding patterns\n\n2. **Business Value Assessment**: Quantify potential business impact:\n   - Revenue generation opportunities\n   - Cost reduction and efficiency gains\n   - Risk mitigation and compliance benefits\n   - Competitive advantage potential\n   - Market differentiation opportunities\n\n3. **Implementation Strategy**: Develop actionable roadmaps:\n   - Short-term (6-12 months) tactical initiatives\n   - Medium-term (1-2 years) strategic projects\n   - Long-term (2+ years) transformational goals\n   - Resource requirements and budget estimates\n   - Success metrics and KPIs\n\n4. **Risk Analysis**: Identify and assess strategic risks:\n   - Technology risks (obsolescence, integration)\n   - Market risks (adoption, competition)\n   - Operational risks (scalability, complexity)\n   - Regulatory risks (compliance, policy changes)\n   - Financial risks (ROI, cost overruns)\n\n5. **Stakeholder Alignment**: Address organizational considerations:\n   - Executive buy-in and sponsorship\n   - Change management requirements\n   - Training and capability development\n   - Vendor selection and partnerships\n   - Internal vs. external development decisions\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Strategic Synthesizer\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"executiveSummary\": {\n    \"keyFindings\": [\"string array\"],\n    \"strategicImplications\": \"string\",\n    \"primaryRecommendations\": [\"string array\"],\n    \"businessImpact\": \"string\",\n    \"urgencyLevel\": \"high|medium|low\"\n  },\n  \"marketAnalysis\": {\n    \"marketSize\": \"string\",\n    \"growthProjections\": \"string\",\n    \"competitiveLandscape\": [\"string array\"],\n    \"marketDrivers\": [\"string array\"],\n    \"barriers\": [\"string array\"],\n    \"opportunities\": [\"string array\"]\n  },\n  \"strategicRecommendations\": [\n    {\n      \"recommendation\": \"string\",\n      \"priority\": \"high|medium|low\",\n      \"timeframe\": \"6 months|1 year|2+ years\",\n      \"businessValue\": \"string\",\n      \"implementation\": {\n        \"steps\": [\"string array\"],\n        \"resources\": \"string\",\n        \"budget\": \"string\",\n        \"timeline\": \"string\"\n      },\n      \"successMetrics\": [\"string array\"],\n      \"risks\": [\"string array\"]\n    }\n  ],\n  \"roiProjections\": [\n    {\n      \"initiative\": \"string\",\n      \"investmentRequired\": \"string\",\n      \"projectedReturns\": \"string\",\n      \"paybackPeriod\": \"string\",\n      \"riskAdjustedROI\": \"string\",\n      \"assumptions\": [\"string array\"]\n    }\n  ],\n  \"implementationRoadmap\": {\n    \"phase1\": {\n      \"timeframe\": \"string\",\n      \"objectives\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"milestones\": [\"string array\"]\n    },\n    \"phase2\": {\n      \"timeframe\": \"string\",\n      \"objectives\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"milestones\": [\"string array\"]\n    },\n    \"phase3\": {\n      \"timeframe\": \"string\",\n      \"objectives\": [\"string array\"],\n      \"deliverables\": [\"string array\"],\n      \"milestones\": [\"string array\"]\n    }\n  },\n  \"riskAssessment\": [\n    {\n      \"risk\": \"string\",\n      \"category\": \"technology|market|operational|financial|regulatory\",\n      \"probability\": \"high|medium|low\",\n      \"impact\": \"high|medium|low\",\n      \"mitigation\": \"string\",\n      \"contingency\": \"string\"\n    }\n  ],\n  \"resourceRequirements\": {\n    \"humanCapital\": \"string\",\n    \"technology\": \"string\",\n    \"financial\": \"string\",\n    \"external\": \"string\",\n    \"timeline\": \"string\"\n  },\n  \"nextSteps\": [\n    {\n      \"action\": \"string\",\n      \"owner\": \"string\",\n      \"deadline\": \"string\",\n      \"dependencies\": [\"string array\"],\n      \"deliverable\": \"string\"\n    }\n  ]\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to synthesize strategic insights from AI+CRE research. Let me analyze market positioning...\"\n2. Assess current market context and competitive landscape\n3. Identify high-value business opportunities\n4. Develop prioritized strategic recommendations\n5. Create implementation roadmap with ROI projections\n6. Assess risks and develop mitigation strategies\n7. Define next steps and resource requirements\n\n## Final Reminders\nUse the **think** tool extensively for strategic reasoning. Focus on creating actionable, business-oriented insights that drive decision-making and implementation. Ensure recommendations are practical, measurable, and aligned with market realities."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Strategic Synthesizer Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "autoFix": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"executiveSummary\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"keyFindings\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"strategicImplications\": {\"type\": \"string\"},\n        \"primaryRecommendations\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"businessImpact\": {\"type\": \"string\"},\n        \"urgencyLevel\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n      }\n    },\n    \"marketAnalysis\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"marketSize\": {\"type\": \"string\"},\n        \"growthProjections\": {\"type\": \"string\"},\n        \"competitiveLandscape\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"marketDrivers\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"barriers\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"opportunities\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    },\n    \"strategicRecommendations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"recommendation\": {\"type\": \"string\"},\n          \"priority\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"timeframe\": {\"type\": \"string\", \"enum\": [\"6 months\", \"1 year\", \"2+ years\"]},\n          \"businessValue\": {\"type\": \"string\"},\n          \"implementation\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"steps\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n              \"resources\": {\"type\": \"string\"},\n              \"budget\": {\"type\": \"string\"},\n              \"timeline\": {\"type\": \"string\"}\n            }\n          },\n          \"successMetrics\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"risks\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"roiProjections\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"initiative\": {\"type\": \"string\"},\n          \"investmentRequired\": {\"type\": \"string\"},\n          \"projectedReturns\": {\"type\": \"string\"},\n          \"paybackPeriod\": {\"type\": \"string\"},\n          \"riskAdjustedROI\": {\"type\": \"string\"},\n          \"assumptions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n        }\n      }\n    },\n    \"implementationRoadmap\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"phase1\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"milestones\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"phase2\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"milestones\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        },\n        \"phase3\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"timeframe\": {\"type\": \"string\"},\n            \"objectives\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"deliverables\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n            \"milestones\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n          }\n        }\n      }\n    },\n    \"riskAssessment\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"risk\": {\"type\": \"string\"},\n          \"category\": {\"type\": \"string\", \"enum\": [\"technology\", \"market\", \"operational\", \"financial\", \"regulatory\"]},\n          \"probability\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"impact\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"mitigation\": {\"type\": \"string\"},\n          \"contingency\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"resourceRequirements\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"humanCapital\": {\"type\": \"string\"},\n        \"technology\": {\"type\": \"string\"},\n        \"financial\": {\"type\": \"string\"},\n        \"external\": {\"type\": \"string\"},\n        \"timeline\": {\"type\": \"string\"}\n      }\n    },\n    \"nextSteps\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"action\": {\"type\": \"string\"},\n          \"owner\": {\"type\": \"string\"},\n          \"deadline\": {\"type\": \"string\"},\n          \"dependencies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"deliverable\": {\"type\": \"string\"}\n        }\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"executiveSummary\", \"strategicRecommendations\", \"implementationRoadmap\", \"nextSteps\"],\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Structured Strategic Output"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 2000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        260
+      ],
+      "id": "autofix-language-model",
+      "name": "AutoFix GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Market Intelligence Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business Intelligence Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Strategic Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Strategic Synthesizer Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutoFix GPT-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Strategic Output",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 

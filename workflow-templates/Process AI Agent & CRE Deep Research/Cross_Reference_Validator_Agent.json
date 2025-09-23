@@ -1,0 +1,1369 @@
+{
+  "name": "Cross-Reference Validator Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "maxTokens": 2000,
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        600
+      ],
+      "id": "db9a2b2e-34c9-49d2-9b36-01ccf23cbd15",
+      "name": "AutoFix GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# ✅ Cross-Reference Validator Agent\n\n**Primary Function:** Validation and conflict resolution\n\n## Core Responsibilities:\n- **Claim Validation:** Verify research claims against sources\n- **Conflict Detection:** Identify contradictory findings\n- **Source Verification:** Validate citation accuracy and relevance\n- **Consistency Checking:** Ensure internal coherence\n- **Quality Assurance:** Flag potential errors and biases\n\n## Output Format:\n- Validated claims with confidence scores\n- Conflict identification and resolution\n- Source verification reports\n- Quality assurance assessments",
+        "height": 720,
+        "width": 520,
+        "color": 5
+      },
+      "name": "Agent Overview1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1020
+      ],
+      "id": "b7504c82-a857-4535-91a0-c72c14e3124e"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2660,
+        580
+      ],
+      "id": "7901fb22-d6cd-4e89-85ca-cf1524ba4a57",
+      "name": "Window Buffer Memory1"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        740
+      ],
+      "id": "6f9a907c-b37d-4f34-949c-1896348d95cb",
+      "name": "Think1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.stringify($json.validationInput.documents) }}",
+              "type": "string"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Cross-Reference Validation and Conflict Resolution",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1560,
+        200
+      ],
+      "id": "1ac2debe-8ba3-4136-8937-f264dd3ad0a4",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Fact-check claims and search for corroborating or contradicting evidence using comprehensive search.",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"api_key\": \"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\",\n    \"query\": \"{{ $fromAI('searchTerm', 'Fact-checking search term to verify claims or find contradictory evidence', 'string') }}\",\n    \"search_depth\": \"advanced\",\n    \"include_answer\": true,\n    \"include_raw_content\": true,\n    \"max_results\": 10\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2480,
+        1060
+      ],
+      "id": "b2c0615c-b4a6-4749-90aa-af23877187dd",
+      "name": "Fact Check Search1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Claims to Validate:\n\nClaim Name: {{ $('Loop Over Items').item.json.claimName }}\n\nClaim Details:\n{{ $('Loop Over Items').item.json.claimDetails }}",
+        "options": {
+          "systemMessage": "=# Cross-Reference Validator Agent\n\n## Role\nYou are an expert research validation specialist focusing on AI agents and commercial real estate research. Your primary function is to validate claims, identify conflicts, and ensure research consistency and accuracy.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your analysis strategy and reasoning process\n- **Search - Firecrawl**: Use this tool to search the internet using a powerful search engine.\n- **Extract From URL - Firecrawl**: Use this tool to Extract the contents from a website URL using Firecrawl. Provide the URL to scrape and receive clean markdown content from the webpage.\n- **Perplexity - Academic Domains**: Use this tool to search academic literature through Google Scholar, SSRN, and JSTOR. Retrieves peer-reviewed articles, working papers, and scholarly research with proper citations for literature reviews and academic validation.\n- **Perplexity Deep Research Tool**: Use this tool to get comprehensive, up-to-date information with cited sources. Excels at research synthesis, fact-checking, and current information retrieval with inline citations and source references.\n\n\n## Important:\nFirst step is to use the **think** tool to plan your validation and conflict detection strategy.\n\n\n\n## Task Strategy Guidelines\n1. **Claim Identification**: Extract verifiable claims from research:\n   - Quantitative assertions (statistics, percentages, amounts)\n   - Qualitative claims (trends, relationships, outcomes)\n   - Methodological assertions (techniques, processes)\n   - Causal relationships (cause-effect claims)\n   - Comparative statements (better/worse, more/less)\n\n2. **Source Verification**: Validate citation accuracy:\n   - Check if cited sources actually exist\n   - Verify if sources support the claims made\n   - Assess source quality and credibility\n   - Identify potential citation errors or misrepresentations\n   - Check for proper attribution and context\n\n3. **Conflict Detection**: Identify contradictory findings:\n   - Compare claims across different documents\n   - Identify inconsistent statistics or findings\n   - Spot conflicting methodological assertions\n   - Find contradictory conclusions or recommendations\n   - Detect temporal inconsistencies\n\n4. **Internal Consistency**: Check logical coherence:\n   - Verify arguments follow logically\n   - Check for internal contradictions within documents\n   - Assess alignment between methodology and conclusions\n   - Evaluate consistency of definitions and terminology\n   - Identify gaps in logical reasoning\n\n5. **Quality Assurance**: Flag potential issues:\n   - Identify potential biases or conflicts of interest\n   - Spot outdated or superseded information\n   - Flag unsupported broad generalizations\n   - Identify missing crucial context or caveats\n   - Detect potential cherry-picking of data\n\n## Example Workflow\n1. Use **think** tool: \"I need to validate claims in this AI+CRE research. Let me identify key assertions to verify...\"\n2. Extract specific, verifiable claims from documents\n3. Use fact-checking tools to find supporting/contradicting evidence\n4. Verify original sources and citations\n5. Compare claims across documents to identify conflicts\n6. Assess internal consistency and logical coherence\n7. Generate comprehensive validation report\n\n## Final Reminders\nUse the **think** tool to think.\nYou **must** validate the claims using reputable sources. You **must** use your tools to do this.",
+          "maxIterations": 25
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2820,
+        200
+      ],
+      "id": "c6cc9fec-70fa-4a2f-87d3-590879e2f4d8",
+      "name": "Cross-Reference Validator Agent1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"claimValidation\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"claim\": {\"type\": \"string\"},\n          \"sourceDocument\": {\"type\": \"string\"},\n          \"validationStatus\": {\"type\": \"string\", \"enum\": [\"verified\", \"contradicted\", \"unverifiable\", \"partial\"]},\n          \"confidenceScore\": {\"type\": \"string\"},\n          \"supportingEvidence\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"contradictingEvidence\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"verificationSources\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"qualityAssessment\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    },\n    \"conflictIdentification\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"conflictType\": {\"type\": \"string\", \"enum\": [\"statistical\", \"methodological\", \"causal\", \"temporal\", \"definitional\"]},\n          \"description\": {\"type\": \"string\"},\n          \"involvedDocuments\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"conflictingClaims\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"severity\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"proposedResolution\": {\"type\": \"string\"},\n          \"additionalResearchNeeded\": {\"type\": \"boolean\"}\n        }\n      }\n    },\n    \"sourceVerification\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"citationContext\": {\"type\": \"string\"},\n          \"originalSource\": {\"type\": \"string\"},\n          \"accessible\": {\"type\": \"boolean\"},\n          \"accurateRepresentation\": {\"type\": \"boolean\"},\n          \"credibilityScore\": {\"type\": \"string\"},\n          \"issuesIdentified\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"recommendedAction\": {\"type\": \"string\", \"enum\": [\"accept\", \"flag\", \"investigate\", \"replace\"]}\n        }\n      }\n    },\n    \"consistencyAssessment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"overallConsistency\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"internalLogicScore\": {\"type\": \"string\"},\n        \"terminologyConsistency\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"methodologyAlignment\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"majorInconsistencies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    },\n    \"qualityFlags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"flagType\": {\"type\": \"string\", \"enum\": [\"bias\", \"outdated\", \"unsupported\", \"misleading\", \"incomplete\"]},\n          \"description\": {\"type\": \"string\"},\n          \"location\": {\"type\": \"string\"},\n          \"severity\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"recommendedAction\": {\"type\": \"string\"},\n          \"impact\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"overallAssessment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"reliabilityScore\": {\"type\": \"string\"},\n        \"validationSummary\": {\"type\": \"string\"},\n        \"majorConcerns\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"strengthAreas\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"recommendationsForImprovement\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"claimValidation\", \"conflictIdentification\", \"consistencyAssessment\", \"overallAssessment\"],\n  \"additionalProperties\": false\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        3240,
+        440
+      ],
+      "id": "99ed6583-85d8-485b-bd7f-b9ab53defff5",
+      "name": "Structured Validation Output1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        200
+      ],
+      "id": "8fd41435-7287-490c-a6fd-f84c35a0b251",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "google_scholar",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google scholar search query. Use the correct query structure.`, 'string') }}",
+        "additionalFields": {
+          "num": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Number_of_Results__num_', `A number to set the Number of Results. Choose a number between 10 - 20`, 'number') }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        1060
+      ],
+      "id": "d39e8374-2747-433e-8142-daab7badac52",
+      "name": "Google_scholar search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_news",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google news search query. Use the correct query structure.`, 'string') }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        1060
+      ],
+      "id": "3c53c065-82b7-422a-be9c-2512ad5bdf9c",
+      "name": "Google_news search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google search query. Use the correct query structure.`, 'string') }}",
+        "location": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Location__location_', `Location`, 'string') }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        1260
+      ],
+      "id": "5ac74f52-16d3-4e9c-a054-e4a3ea3e73ae",
+      "name": "Google search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_trends",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google trends search query`, 'string') }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        1260
+      ],
+      "id": "d3902414-6e02-4cd1-9997-516f5f087dce",
+      "name": "Google_trends search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_autocomplete",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google search query. Use the correct query structure.`, 'string') }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        3440,
+        1060
+      ],
+      "id": "5ff798b1-e944-4cf1-8c9b-08b6174afcb0",
+      "name": "Google_autocomplete search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        720
+      ],
+      "id": "a5707103-dccf-4b58-8ee3-81ea9bd5cd6c",
+      "name": "gpt-4.1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search academic literature and scholarly sources using Perplexity, limited to Google Scholar, SSRN, and JSTOR. This tool specializes in retrieving peer-reviewed articles, working papers, and academic research with proper citations. Ideal for literature reviews, citation searches, and accessing scholarly publications in finance, economics, and related fields.",
+        "model": "sonar-reasoning",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', `The system prompt for your AI expert academic research assistant. Give it clear and concise instructions. Be specific.`, 'string') }}",
+              "role": "system"
+            },
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message1_Text', `Your academic research query, including author names, paper titles, keywords, or research topics. Be specific about the scholarly information you seek.`, 'string') }}"
+            }
+          ]
+        },
+        "options": {
+          "searchDomainFilter": "scholar.google.com,ssrn.com,jstor.org"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        560
+      ],
+      "id": "457ec674-bb2d-412f-9974-de5296a3692c",
+      "name": "Perplexity - Academic Domains",
+      "credentials": {
+        "perplexityApi": {
+          "id": "vH3AF0fHA6kORfGd",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Query Perplexity's AI models to get comprehensive, up-to-date information with cited sources. This tool excels at research tasks, fact-checking, and retrieving current information from the web. Perplexity provides responses with inline citations and source references, making it ideal for tasks requiring verifiable information.",
+        "model": "sonar-reasoning",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', `Instructions for how Perplexity should approach the task, including response format, level of detail, and any specific constraints or requirements.`, 'string') }}",
+              "role": "system"
+            },
+            {
+              "content": "The query or question you want Perplexity to answer. Be specific and clear about what information you need."
+            }
+          ]
+        },
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        3140,
+        740
+      ],
+      "id": "59a10115-7bc7-4c39-86a6-30ec4254062f",
+      "name": "Perplexity Deep Research Tool",
+      "credentials": {
+        "perplexityApi": {
+          "id": "vH3AF0fHA6kORfGd",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_scholar",
+        "q": "={{ $json.search_query }} {{ $('When Executed by Another Workflow').item.json[\"journals for google scholar\"] }}\n",
+        "additionalFields": {
+          "as_ylo": "={{ $json.year_from }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        4180,
+        660
+      ],
+      "id": "fad2cbe1-10f3-4d9e-8f26-329e5a77e973",
+      "name": "SerpApi - Journal Filter",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_scholar",
+        "q": "={{ $json.search_query }} (source:\"SSRN\")\n",
+        "additionalFields": {
+          "as_ylo": "={{ $json.year_from }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        4180,
+        860
+      ],
+      "id": "32d92b4a-1081-44bd-ad2c-a32322dffc9b",
+      "name": "SerpApi2 - SSRN Filter",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_scholar",
+        "q": "={{ $fromAI('Search_Query__q_', `Google scholar search query. Use the correct query structure.`, 'string') }}",
+        "additionalFields": {
+          "num": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Number_of_Results__num_', `A number to set the Number of Results. Choose a number between 10 - 20`, 'number') }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        4440,
+        660
+      ],
+      "id": "649ea5b4-4c05-482d-a003-8474ddf3dcc4",
+      "name": "Google_scholar search in SerpApi1",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "google_scholar",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', `Google scholar search query. Use the correct query structure.`, 'string') }}",
+        "additionalFields": {
+          "num": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Number_of_Results__num_', `A number to set the Number of Results. Choose a number between 10 - 20`, 'number') }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        4460,
+        860
+      ],
+      "id": "303c22b7-5dc2-4d3c-94de-5da3a8b9d75a",
+      "name": "Google_scholar search in SerpApi2",
+      "credentials": {
+        "serpApi": {
+          "id": "RknC68pUUk6sg5WV",
+          "name": "SerpAPI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Journal ISSN Variations organized by category\nconst journalData = {\n  finance: {\n    \"Journal of Finance\": {\"print\": \"0022-1082\", \"electronic\": \"1540-6261\"},\n    \"Journal of Financial Economics\": {\"print\": \"0304-405X\", \"electronic\": \"1879-2774\"},\n    \"Review of Financial Studies\": {\"print\": \"0893-9454\", \"electronic\": \"1465-7368\"},\n    \"Journal of Financial and Quantitative Analysis\": {\"print\": \"0022-1090\", \"electronic\": \"1756-6916\"},\n    \"Review of Finance\": {\"print\": \"1572-3097\", \"electronic\": \"1875-692X\"},\n    \"Journal of Financial Intermediation\": {\"print\": \"1042-9573\", \"electronic\": \"1096-0473\"},\n    \"Journal of Corporate Finance\": {\"print\": \"0929-1199\", \"electronic\": \"1872-6313\"},\n    \"Financial Management\": {\"print\": \"0046-3892\", \"electronic\": \"1755-053X\"},\n    \"Journal of Banking and Finance\": {\"print\": \"0378-4266\", \"electronic\": \"1872-6372\"},\n    \"Journal of International Money and Finance\": {\"print\": \"0261-5606\", \"electronic\": \"1873-0639\"},\n    \"Journal of Empirical Finance\": {\"print\": \"0927-5398\", \"electronic\": \"1879-1727\"},\n    \"Journal of International Business Studies\": {\"print\": \"0047-2506\", \"electronic\": \"1478-6990\"},\n    \"Journal of Financial Research\": {\"print\": \"0270-2592\", \"electronic\": \"1475-6803\"},\n    \"Financial Analysts Journal\": {\"print\": \"0015-198X\", \"electronic\": \"1938-3312\"},\n    \"The Financial Review\": {\"print\": \"0732-8516\", \"electronic\": \"1540-6288\"},\n    \"Journal of Portfolio Management\": {\"print\": \"0095-4918\", \"electronic\": \"2168-8651\"},\n    \"Pacific Basin Finance Journal\": {\"print\": \"0927-538X\", \"electronic\": \"1879-0585\"},\n    \"Emerging Markets Review\": {\"print\": \"1566-0141\", \"electronic\": \"1873-6173\"}\n  },\n  \n  real_estate: {\n    \"Real Estate Economics\": {\"print\": \"1080-8620\", \"electronic\": \"1540-6229\"},\n    \"Journal of Real Estate Finance and Economics\": {\"print\": \"0895-5638\", \"electronic\": \"1573-045X\"},\n    \"Journal of Real Estate Research\": {\"print\": \"0896-5803\", \"electronic\": \"2691-1175\"},\n    \"Journal of Housing Economics\": {\"print\": \"1051-1377\", \"electronic\": \"1096-0791\"},\n    \"Housing Studies\": {\"print\": \"0267-3037\", \"electronic\": \"1466-1810\"},\n    \"Journal of Property Research\": {\"print\": \"0959-9916\", \"electronic\": \"1466-4453\"},\n    \"Journal of Property Investment and Finance\": {\"print\": \"1463-578X\", \"electronic\": \"1470-2002\"},\n    \"Journal of Real Estate Portfolio Management\": {\"print\": \"1083-5547\", \"electronic\": \"2691-1205\"},\n    \"Journal of Housing Research\": {\"print\": \"1052-7001\", \"electronic\": \"1691-1337\"}\n  },\n  \n  accounting: {\n    \"Journal of Accounting Research\": {\"print\": \"0021-8456\", \"electronic\": \"1475-679X\"},\n    \"The Accounting Review\": {\"print\": \"0001-4826\", \"electronic\": \"1558-7967\"},\n    \"Journal of Accounting and Economics\": {\"print\": \"0165-4101\", \"electronic\": \"1879-2553\"},\n    \"Review of Accounting Studies\": {\"print\": \"1380-6653\", \"electronic\": \"1573-7136\"},\n    \"Contemporary Accounting Research\": {\"print\": \"0823-9150\", \"electronic\": \"1911-3846\"},\n    \"Accounting, Organizations and Society\": {\"print\": \"0361-3682\", \"electronic\": \"1873-6289\"},\n    \"Management Accounting Research\": {\"print\": \"1044-5005\", \"electronic\": \"1096-1224\"},\n    \"Auditing: A Journal of Practice and Theory\": {\"print\": \"0278-0380\", \"electronic\": \"1558-7991\"},\n    \"Accounting Horizons\": {\"print\": \"0888-7993\", \"electronic\": \"1558-7975\"},\n    \"Journal of Management Accounting Research\": {\"print\": \"1049-2127\", \"electronic\": \"1558-8033\"}\n  },\n  \n  economics: {\n    \"Quarterly Journal of Economics\": {\"print\": \"0033-5533\", \"electronic\": \"1531-4650\"},\n    \"American Economic Review\": {\"print\": \"0002-8282\", \"electronic\": \"1944-7981\"},\n    \"Journal of Political Economy\": {\"print\": \"0022-3808\", \"electronic\": \"1537-534X\"},\n    \"Econometrica\": {\"print\": \"0012-9682\", \"electronic\": \"1468-0262\"},\n    \"Review of Economic Studies\": {\"print\": \"0034-6527\", \"electronic\": \"1467-937X\"},\n    \"Review of Economics and Statistics\": {\"print\": \"0034-6535\", \"electronic\": \"1530-9142\"},\n    \"Economic Journal\": {\"print\": \"0013-0133\", \"electronic\": \"1468-0297\"},\n    \"Journal of Econometrics\": {\"print\": \"0304-4076\", \"electronic\": \"1872-6895\"},\n    \"Journal of Public Economics\": {\"print\": \"0047-2727\", \"electronic\": \"1879-2316\"},\n    \"Journal of Labor Economics\": {\"print\": \"0734-306X\", \"electronic\": \"1537-5307\"},\n    \"Journal of International Economics\": {\"print\": \"0022-1996\", \"electronic\": \"1873-0507\"},\n    \"Journal of Economic Theory\": {\"print\": \"0022-0531\", \"electronic\": \"1095-7235\"},\n    \"Journal of Development Economics\": {\"print\": \"0304-3878\", \"electronic\": \"1873-6165\"},\n    \"Journal of Economic Literature\": {\"print\": \"0022-0515\", \"electronic\": \"2328-8175\"},\n    \"Journal of Economic Perspectives\": {\"print\": \"0895-3309\", \"electronic\": \"1944-7965\"}\n  }\n};\n\n// Return the complete data structure\nreturn [\n  {\n    json: {\n      allJournals: journalData,\n      finance: journalData.finance,\n      real_estate: journalData.real_estate,\n      accounting: journalData.accounting,\n      economics: journalData.economics\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4420,
+        320
+      ],
+      "id": "fa0f77fd-c203-41be-8885-f8b7a1ce24d5",
+      "name": "Journal ISSN Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fbe5027-821a-424d-945a-4249b8d6009c",
+              "name": "finance",
+              "value": "={{ Object.keys($json.finance) }}",
+              "type": "array"
+            },
+            {
+              "id": "d46e8d51-4e2d-45ce-9f10-0cdd6884f4cb",
+              "name": "finance and real estate",
+              "value": "={{ Object.keys($json.finance).concat(Object.keys($json.real_estate)) }}",
+              "type": "array"
+            },
+            {
+              "id": "ba23b06d-139b-421a-9442-f8502962760d",
+              "name": "finance for google scholar",
+              "value": "={{ '(' + Object.keys($json.finance).map(j => `source:\"${j}\"`).join(' OR ') + ')' }}",
+              "type": "string"
+            },
+            {
+              "id": "e98e85a9-a635-4f45-bdda-a825ac103881",
+              "name": "finance and real estate for google scholar",
+              "value": "={{ '(' + Object.keys($json.finance).concat(Object.keys($json.real_estate)).map(j => `source:\"${j}\"`).join(' OR ') + ')' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4600,
+        320
+      ],
+      "id": "5ce179dc-4609-49e9-b8e0-3993fff89b62",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4240,
+        320
+      ],
+      "id": "7308e092-8414-4a17-a2c7-41be03c39b22",
+      "name": "Set after lit agent"
+    },
+    {
+      "parameters": {
+        "content": "## Set Journal List\nSet to Finance and Real Estate",
+        "height": 380,
+        "width": 540,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4200,
+        200
+      ],
+      "id": "4398778b-df6a-4ed4-8a5e-41e3c9ee6367",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash-preview",
+        "options": {
+          "temperature": 0.1,
+          "maxRetries": 2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        520
+      ],
+      "id": "0fbf89ae-c67a-49a5-bb9a-3da805640f1f",
+      "name": "2.5-Pro",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=========================\n# Research Document for Analysis:\n{{ JSON.stringify($('Edit Fields1').item.json.validationInput.documents) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Claims Extraction Agent\n\n## Primary Mission\nYou are a specialized Claims Extraction Agent that analyzes comprehensive research documents, literature reviews, and academic papers to identify and extract the 3-5 most significant claims, findings, or ideas. Your output will guide the next agent in validating or researching these claims.\n\n## Core Task\n\n### Step 1: Document Analysis\n- Read the entire document thoroughly\n- Identify the main thesis, arguments, and key findings\n- Look for:\n  - Central hypotheses or research questions\n  - Major empirical findings or discoveries\n  - Theoretical contributions or frameworks\n  - Controversial or disputed points\n  - Novel methodologies or approaches\n  - Policy implications or recommendations\n\n### Step 2: Claim Prioritization\nSelect the 3-5 most significant claims based on:\n- **Impact**: How central is this to the document's argument?\n- **Novelty**: Does this represent new knowledge or challenge existing views?\n- **Verifiability**: Can this be validated through further research?\n- **Controversy**: Is this disputed or needs additional verification?\n- **Actionability**: Does this have practical implications?\n\n### Step 3: Claim Structuring\nFor each selected claim, create:\n\n1. **claimName**: A concise, descriptive title (10-15 words max)\n   - Should capture the essence of the claim\n   - Use clear, academic language\n   - Make it searchable and specific\n\n2. **claimDetails**: A comprehensive string containing:\n   - **Summary** (2-3 sentences): What exactly is being claimed?\n   - **Context** (2-3 sentences): Why is this claim important? What's the background?\n   - **Evidence mentioned** (2-3 sentences): What support does the document provide?\n   - **Validation instructions** (4-5 sentences): Detailed guidance for the next agent:\n     - What specific sources to search for\n     - What type of evidence would confirm or refute this\n     - Key authors, journals, or databases to check\n     - Specific metrics or data points to look for\n     - Time periods or geographic regions to focus on\n 3.**supporting evidence**: Include all the supporting evidence, links, research the document cites.\n\n## Output Format Rules\n2. **Include 3-5 claims** - no more, no less\n3. **Each claim must have exactly two properties**: claimName and claimDetails\n5. **Make instructions specific and actionable** - the next agent should know exactly what to search for\n\n\n\n## Critical Reminders\n\n- Focus on claims that are verifiable and research-worthy\n- Provide specific, actionable search instructions\n- Include enough context for the next agent to understand the importance\n- Use academic language but keep instructions clear\n- Think like a research assistant preparing work for a senior researcher\n- Each claimDetails string should be comprehensive but readable\n",
+          "maxIterations": 20
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1800,
+        200
+      ],
+      "id": "7c5c0444-6a77-44c4-8e80-3f898cc114a1",
+      "name": "Claims Extraction Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1740,
+        500
+      ],
+      "id": "0d2b9ed6-aa65-429a-b79b-736fb0ab691a",
+      "name": "Window Buffer Memory2"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to reason through which claims are most significant and how to structure validation instructions effectively."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        500
+      ],
+      "id": "c3c9aa3e-e2a3-4427-accc-92f810b49075",
+      "name": "Think2"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash-preview:thinking",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        640
+      ],
+      "id": "6aa6e1cd-a314-4ce9-9fd0-2fcef903872c",
+      "name": "gemini 2.5 flash thinking",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Cross-Reference Validation Task:\n{{ JSON.stringify($json.validationInput.documents) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Cross-Reference Validator Agent\n\n## Role\nYou are an expert research validation specialist focusing on AI agents and commercial real estate research. Your primary function is to validate claims, identify conflicts, and ensure research consistency and accuracy.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your analysis strategy and reasoning process\n- **Tavily Search Tool**: Use this tool to search the internet using a query.\n- **Extract With Fire Crawl Tool**: Extract the contents from a website URL using Firecrawl. Provide the URL to scrape and receive clean markdown content from the webpage.\n- **Perplexity - Academic Domains**: Use this tool to search academic literature through Google Scholar, SSRN, and JSTOR. Retrieves peer-reviewed articles, working papers, and scholarly research with proper citations for literature reviews and academic validation.\n- **Perplexity Deep Research Tool**: Use this tool to get comprehensive, up-to-date information with cited sources. Excels at research synthesis, fact-checking, and current information retrieval with inline citations and source references.\n- **Google Scholar Search via SerpAPI**: Use this tool to access Google Scholar's academic database for systematic scholarly research. Retrieves papers, citations, author profiles, and publication metrics for literature reviews and citation analysis.\n- **Google News Search via SerpAPI**: Use this tool to monitor current news and media coverage for real-time market intelligence. Provides breaking news, industry developments, and market sentiment indicators.\n- **Google Search via SerpAPI**: Use this tool for comprehensive web search and broad information gathering. Accesses industry reports, company information, and professional resources beyond academic sources.\n- **Google Trends Search via SerpAPI**: Use this tool to analyze search trend data and public interest patterns. Provides market sentiment insights, emerging trends, and public awareness levels for strategic timing.\n\n## Important:\nFirst step is to use the **think** tool to plan your validation and conflict detection strategy.\n\n## Core Capabilities\n- **\"Fact Check Search\"**: Find evidence to support or contradict research claims\n- **\"Source Verification Tool\"**: Access and verify original source documents\n- **\"Think Tool\"**: Plan validation strategy and reason through conflicts\n\n## Task Strategy Guidelines\n1. **Claim Identification**: Extract verifiable claims from research:\n   - Quantitative assertions (statistics, percentages, amounts)\n   - Qualitative claims (trends, relationships, outcomes)\n   - Methodological assertions (techniques, processes)\n   - Causal relationships (cause-effect claims)\n   - Comparative statements (better/worse, more/less)\n\n2. **Source Verification**: Validate citation accuracy:\n   - Check if cited sources actually exist\n   - Verify if sources support the claims made\n   - Assess source quality and credibility\n   - Identify potential citation errors or misrepresentations\n   - Check for proper attribution and context\n\n3. **Conflict Detection**: Identify contradictory findings:\n   - Compare claims across different documents\n   - Identify inconsistent statistics or findings\n   - Spot conflicting methodological assertions\n   - Find contradictory conclusions or recommendations\n   - Detect temporal inconsistencies\n\n4. **Internal Consistency**: Check logical coherence:\n   - Verify arguments follow logically\n   - Check for internal contradictions within documents\n   - Assess alignment between methodology and conclusions\n   - Evaluate consistency of definitions and terminology\n   - Identify gaps in logical reasoning\n\n5. **Quality Assurance**: Flag potential issues:\n   - Identify potential biases or conflicts of interest\n   - Spot outdated or superseded information\n   - Flag unsupported broad generalizations\n   - Identify missing crucial context or caveats\n   - Detect potential cherry-picking of data\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Cross-Reference Validator\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"claimValidation\": [\n    {\n      \"claim\": \"string\",\n      \"sourceDocument\": \"string\",\n      \"validationStatus\": \"verified|contradicted|unverifiable|partial\",\n      \"confidenceScore\": \"1-10\",\n      \"supportingEvidence\": [\"string array\"],\n      \"contradictingEvidence\": [\"string array\"],\n      \"verificationSources\": [\"string array\"],\n      \"qualityAssessment\": \"high|medium|low\"\n    }\n  ],\n  \"conflictIdentification\": [\n    {\n      \"conflictType\": \"statistical|methodological|causal|temporal|definitional\",\n      \"description\": \"string\",\n      \"involvedDocuments\": [\"string array\"],\n      \"conflictingClaims\": [\"string array\"],\n      \"severity\": \"high|medium|low\",\n      \"proposedResolution\": \"string\",\n      \"additionalResearchNeeded\": \"boolean\"\n    }\n  ],\n  \"sourceVerification\": [\n    {\n      \"citationContext\": \"string\",\n      \"originalSource\": \"string\",\n      \"accessible\": \"boolean\",\n      \"accurateRepresentation\": \"boolean\",\n      \"credibilityScore\": \"1-10\",\n      \"issuesIdentified\": [\"string array\"],\n      \"recommendedAction\": \"accept|flag|investigate|replace\"\n    }\n  ],\n  \"consistencyAssessment\": {\n    \"overallConsistency\": \"high|medium|low\",\n    \"internalLogicScore\": \"1-10\",\n    \"terminologyConsistency\": \"high|medium|low\",\n    \"methodologyAlignment\": \"high|medium|low\",\n    \"majorInconsistencies\": [\"string array\"]\n  },\n  \"qualityFlags\": [\n    {\n      \"flagType\": \"bias|outdated|unsupported|misleading|incomplete\",\n      \"description\": \"string\",\n      \"location\": \"string\",\n      \"severity\": \"high|medium|low\",\n      \"recommendedAction\": \"string\",\n      \"impact\": \"string\"\n    }\n  ],\n  \"overallAssessment\": {\n    \"reliabilityScore\": \"1-10\",\n    \"validationSummary\": \"string\",\n    \"majorConcerns\": [\"string array\"],\n    \"strengthAreas\": [\"string array\"],\n    \"recommendationsForImprovement\": [\"string array\"]\n  }\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to validate claims in this AI+CRE research. Let me identify key assertions to verify...\"\n2. Extract specific, verifiable claims from documents\n3. Use fact-checking tools to find supporting/contradicting evidence\n4. Verify original sources and citations\n5. Compare claims across documents to identify conflicts\n6. Assess internal consistency and logical coherence\n7. Generate comprehensive validation report\n\n## Final Reminders\nUse the **think** tool extensively for logical reasoning about validation strategies. Focus on providing thorough, evidence-based assessments that enhance research credibility and identify areas needing improvement or additional investigation.",
+          "maxIterations": 25
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        3640,
+        840
+      ],
+      "id": "309b3e09-6254-4617-87e8-0b026ac70f47",
+      "name": "Cross-Reference Validator Agent org"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Cross-Reference Validation and Conflict Resolution",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2620,
+        200
+      ],
+      "id": "dc18e23d-c42b-47ce-9cc0-3276e8347a5d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "[\n  {\n    \"claimName\": \"Independent directors improve firm performance by 15-20%\",\n    \"claimDetails\": \"Summary: The literature consistently shows...\\n\\nContext: This finding challenges...\\n\\nEvidence mentioned: Meta-analysis of 140 studies...\\n\\nValidation instructions: Search Journal of Finance for...\"\n  },\n  {\n    \"claimName\": \"CEO duality negatively impacts shareholder returns\",\n    \"claimDetails\": \"Summary: When the CEO also serves as board chair...\\n\\nContext: This governance structure...\\n\\nEvidence mentioned: Analysis of S&P 500 firms...\\n\\nValidation instructions: Check Corporate Governance: An International Review...\"\n  },\n  {\n    \"claimName\": \"ESG metrics correlate with long-term financial performance\",\n    \"claimDetails\": \"Summary: Firms with high ESG scores...\\n\\nContext: The sustainability-performance link...\\n\\nEvidence mentioned: Longitudinal study of 3000 firms...\\n\\nValidation instructions: Search for recent meta-analyses in...\"\n  }\n]",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2040,
+        500
+      ],
+      "id": "380a8ced-e6e0-476a-aaed-1f5ac31a80ec",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this tool to search the internet using a powerful search engine.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{ $fromAI('query', 'The search query to search the internet and get results back', 'string') }}\",\n  \"limit\": 10,\n  \"location\": \"\",\n  \"tbs\": \"\",\n  \"scrapeOptions\": {\n    \"formats\": [ \"markdown\", \"links\" ]\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2940,
+        760
+      ],
+      "id": "b9306576-58ca-4a15-af0f-d25f1c796aa3",
+      "name": "Search - Firecrawl",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this tool to extract the content from a URL",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url', 'URL of original source document to verify', 'string') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2760,
+        720
+      ],
+      "id": "fb48ffc4-7c6a-440d-bd22-e936080a797a",
+      "name": "Extract From URL - Firecrawl",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash-preview:thinking",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        720
+      ],
+      "id": "a8f41f54-14c0-4872-a690-f8bb6b115aeb",
+      "name": "gemini 2.5 flash thinking1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        200
+      ],
+      "id": "b28e4608-a825-4174-b561-39d7d87ded30",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2400,
+        160
+      ],
+      "id": "c23bbae4-de77-4316-8547-c6d962119aac",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Validation_Results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        -200
+      ],
+      "id": "7002974e-f0ed-4f0f-99bd-a60f9ac78c62",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83525be8-736c-42be-a97b-f2b0d448c261",
+              "name": "claimName",
+              "value": "={{ $('Edit Fields').item.json.claimName }}",
+              "type": "string"
+            },
+            {
+              "id": "d254f6e6-92a3-458e-ab86-e2b597004137",
+              "name": "claimDetails",
+              "value": "={{ $('Edit Fields').item.json.claimDetails }}",
+              "type": "string"
+            },
+            {
+              "id": "8927562f-5f42-4497-8e3d-3ce41c7c2004",
+              "name": "claimReport",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3180,
+        200
+      ],
+      "id": "15cb4702-643e-4efa-9ad0-71beed83b21d",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2880,
+        -40
+      ],
+      "id": "4a624230-d6b2-4742-8537-f68410e09488",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "name": "=Cross-Reference Validator Agent_{{ $('When Executed by Another Workflow').item.json.validationInput.sessionId }}___{{ $now }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1UTjbvB9H4OHY2iaktN9ZRsJLLw9EsjW_",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3100,
+        -40
+      ],
+      "id": "66298f74-89a3-4c50-a9bd-21c7df60a23e",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "HNhK8H5Lq7CD4IXH",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3280,
+        -240
+      ],
+      "id": "ed24d068-adda-4bbb-8958-8f89dbca98af",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxTokens": 2000,
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        680
+      ],
+      "id": "e9b2f477-fdcf-4ece-8431-bb0fc78144bc",
+      "name": "AutoFix GPT-4.1-mini1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        480
+      ],
+      "id": "86d67d21-8a7e-4ac1-8a7e-8adcf3984b95",
+      "name": "gpt-4.2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3520,
+        -240
+      ],
+      "id": "fc0d9dbd-4c5e-4578-a307-897f9a2f1b3d",
+      "name": "Edit Fields3"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "validationInput": {
+            "sessionId": "cre-research-63422",
+            "documents": [],
+            "context": "AI Agents and Agentic Workflows in Institutional Commercial Real Estate Investment",
+            "task": "Cross-reference validation and conflict resolution",
+            "focus": "Claim validation, source verification, consistency checking"
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "AutoFix GPT-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Validation Output1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Claims Extraction Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fact Check Search1": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Structured Validation Output1": {
+      "ai_outputParser": [
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_scholar search in SerpApi": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Google_news search in SerpApi": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Google search in SerpApi": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Google_trends search in SerpApi": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "gpt-4.1": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Perplexity Deep Research Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity - Academic Domains": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Journal ISSN Data": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set after lit agent": {
+      "main": [
+        [
+          {
+            "node": "Journal ISSN Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.5-Pro": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Claims Extraction Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Claims Extraction Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gemini 2.5 flash thinking": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Claims Extraction Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Claims Extraction Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search - Firecrawl": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract From URL - Firecrawl": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gemini 2.5 flash thinking1": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cross-Reference Validator Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutoFix GPT-4.1-mini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Claims Extraction Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "14baee95-b806-47a3-a264-4f1b44eefaf6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "417b0a8b2a10d0a50938a93dd6b8dd01385b21d758ab43693102c5df3493c401"
+  },
+  "id": "2YhNzZveOAaSQ7bA",
+  "tags": []
+}

@@ -1,0 +1,590 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "updated-cre-research-coordinator-2025"
+  },
+  "name": "Updated Main Research Processing Coordinator",
+  "tags": ["research", "ai-agents", "cre", "coordinator", "universal"],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "research-coordinator-v2",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Research Processing Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-200, 200],
+      "webhookId": "cre-research-coordinator-v2",
+      "id": "webhook-trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId", 
+              "value": "=cre-research-{{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "research_context",
+              "name": "researchContext",
+              "value": "=AI Agents and Agentic Workflows in Institutional Commercial Real Estate Investment",
+              "type": "string"
+            },
+            {
+              "id": "processing_timestamp",
+              "name": "processingTimestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true
+      },
+      "name": "Initialize Research Session",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [40, 200],
+      "id": "init-session"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "synthesis_config",
+              "name": "synthesisConfig",
+              "value": "={\n  \"agentType\": \"research_synthesis\",\n  \"systemPrompt\": \"You are a Research Synthesis Coordinator specializing in AI agents and commercial real estate. Your primary function is to process, categorize, and synthesize research documents into a structured knowledge database. You excel at identifying themes, organizing information hierarchically, and creating comprehensive research taxonomies.\",\n  \"taskPrompt\": \"Analyze the provided research documents about AI agents in commercial real estate. Create a comprehensive synthesis that:\n\n1. **Document Analysis**: Process each document and extract key information\n2. **Theme Identification**: Identify major themes and categorize research\n3. **Knowledge Structuring**: Create hierarchical organization of findings\n4. **Research Database**: Build structured database of all findings\n\nFocus on creating a comprehensive foundation for the research that other agents can build upon.\",\n  \"outputSchema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"synthesis_summary\": {\"type\": \"string\"},\n      \"major_themes\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n      \"document_categories\": {\"type\": \"object\"},\n      \"research_database\": {\"type\": \"array\"}\n    }\n  },\n  \"tool1Description\": \"Document analysis and content extraction tool for processing research papers and reports.\",\n  \"tool2Description\": \"Research search tool for finding additional context and related studies.\"\n}",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "name": "Configure Synthesis Agent",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [280, 380],
+      "id": "config-synthesis"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "opportunity_config",
+              "name": "opportunityConfig", 
+              "value": "={\n  \"agentType\": \"academic_opportunity\",\n  \"systemPrompt\": \"You are an Academic Opportunity Identifier with expertise in research gap analysis and publication strategy. You excel at identifying underexplored areas, potential research collaborations, and publication opportunities in the intersection of AI agents and commercial real estate.\",\n  \"taskPrompt\": \"Analyze the research landscape to identify academic and research opportunities:\n\n1. **Gap Analysis**: Identify underexplored research areas\n2. **Publication Opportunities**: Map potential publication venues and topics\n3. **Collaboration Potential**: Identify researchers and institutions for collaboration\n4. **Future Research Directions**: Suggest promising research trajectories\n\nFocus on actionable opportunities that could advance the field.\",\n  \"outputSchema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"research_gaps\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n      \"publication_opportunities\": {\"type\": \"array\"},\n      \"collaboration_potential\": {\"type\": \"array\"},\n      \"future_directions\": {\"type\": \"array\"}\n    }\n  },\n  \"tool1Description\": \"Academic database search tool for finding publication opportunities and research gaps.\",\n  \"tool2Description\": \"Scholar and researcher identification tool for collaboration mapping.\"\n}",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "name": "Configure Opportunity Agent",
+      "type": "n8n-nodes-base.set", 
+      "typeVersion": 3.4,
+      "position": [480, 380],
+      "id": "config-opportunity"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "methodology_config",
+              "name": "methodologyConfig",
+              "value": "={\n  \"agentType\": \"methodology_evaluation\",\n  \"systemPrompt\": \"You are a Methodological Evaluator specializing in research methodology analysis and innovation assessment. You excel at evaluating research methods, identifying methodological strengths and weaknesses, and suggesting improvements for research quality and rigor.\",\n  \"taskPrompt\": \"Evaluate the research methodologies used in AI agents and commercial real estate studies:\n\n1. **Method Analysis**: Assess research methods used across studies\n2. **Quality Evaluation**: Evaluate methodological rigor and validity\n3. **Innovation Assessment**: Identify novel methodological approaches\n4. **Improvement Recommendations**: Suggest methodological enhancements\n\nFocus on methodological quality and opportunities for innovation.\",\n  \"outputSchema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"methodology_assessment\": {\"type\": \"string\"},\n      \"quality_metrics\": {\"type\": \"object\"},\n      \"methodological_innovations\": {\"type\": \"array\"},\n      \"improvement_recommendations\": {\"type\": \"array\"}\n    }\n  },\n  \"tool1Description\": \"Research methodology database for analyzing study designs and approaches.\",\n  \"tool2Description\": \"Quality assessment tool for evaluating research rigor and validity.\"\n}",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "name": "Configure Methodology Agent",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4, 
+      "position": [680, 380],
+      "id": "config-methodology"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "validation_config",
+              "name": "validationConfig",
+              "value": "={\n  \"agentType\": \"cross_reference_validation\",\n  \"systemPrompt\": \"You are a Cross-Reference Validator specializing in fact-checking, source verification, and conflict resolution. You excel at identifying inconsistencies, validating claims across multiple sources, and ensuring research accuracy and reliability.\",\n  \"taskPrompt\": \"Validate information across research sources and resolve conflicts:\n\n1. **Claim Validation**: Verify key claims and findings across sources\n2. **Source Verification**: Check credibility and reliability of sources\n3. **Conflict Resolution**: Identify and resolve contradictory information\n4. **Accuracy Assessment**: Evaluate overall research accuracy and consistency\n\nFocus on ensuring research integrity and identifying reliable conclusions.\",\n  \"outputSchema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"validation_summary\": {\"type\": \"string\"},\n      \"verified_claims\": {\"type\": \"array\"},\n      \"conflicting_information\": {\"type\": \"array\"},\n      \"reliability_assessment\": {\"type\": \"object\"}\n    }\n  },\n  \"tool1Description\": \"Fact-checking tool for validating claims and cross-referencing information.\",\n  \"tool2Description\": \"Source credibility assessment tool for evaluating research reliability.\"\n}",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "name": "Configure Validation Agent",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [880, 380],
+      "id": "config-validation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "strategic_config",
+              "name": "strategicConfig",
+              "value": "={\n  \"agentType\": \"strategic_synthesis\",\n  \"systemPrompt\": \"You are a Strategic Synthesizer focused on business intelligence and actionable recommendations. You excel at translating research findings into strategic insights, implementation roadmaps, and ROI analysis for commercial real estate professionals.\",\n  \"taskPrompt\": \"Synthesize research into strategic business intelligence:\n\n1. **Strategic Analysis**: Extract business-relevant insights from research\n2. **Implementation Roadmap**: Create actionable implementation strategies\n3. **ROI Assessment**: Analyze potential return on investment\n4. **Risk-Benefit Analysis**: Evaluate risks and benefits of AI adoption\n\nFocus on practical, actionable recommendations for CRE professionals.\",\n  \"outputSchema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"strategic_insights\": {\"type\": \"array\"},\n      \"implementation_roadmap\": {\"type\": \"object\"},\n      \"roi_analysis\": {\"type\": \"object\"},\n      \"risk_assessment\": {\"type\": \"object\"}\n    }\n  },\n  \"tool1Description\": \"Business intelligence tool for market analysis and strategic planning.\",\n  \"tool2Description\": \"ROI calculation tool for evaluating investment opportunities and returns.\"\n}",
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "name": "Configure Strategic Agent",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+             "position": [1080, 380],
+       "id": "config-strategic"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "synthesis_input",
+               "name": "synthesisInput",
+               "value": "={{ JSON.stringify(Object.assign($json.synthesisConfig, {\n  sessionId: $('Initialize Research Session').item.json.sessionId,\n  documents: $json.documents || [],\n  context: $('Initialize Research Session').item.json.researchContext\n})) }}",
+               "type": "string"
+             }
+           ]
+         }
+       },
+       "name": "Prepare Synthesis Input",
+       "type": "n8n-nodes-base.set",
+       "typeVersion": 3.4,
+       "position": [280, 580],
+       "id": "prep-synthesis"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "opportunity_input",
+               "name": "opportunityInput", 
+               "value": "={{ JSON.stringify(Object.assign($json.opportunityConfig, {\n  sessionId: $('Initialize Research Session').item.json.sessionId,\n  documents: $json.documents || [],\n  context: $('Initialize Research Session').item.json.researchContext\n})) }}",
+               "type": "string"
+             }
+           ]
+         }
+       },
+       "name": "Prepare Opportunity Input",
+       "type": "n8n-nodes-base.set",
+       "typeVersion": 3.4,
+       "position": [480, 580],
+       "id": "prep-opportunity"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "methodology_input",
+               "name": "methodologyInput",
+               "value": "={{ JSON.stringify(Object.assign($json.methodologyConfig, {\n  sessionId: $('Initialize Research Session').item.json.sessionId,\n  documents: $json.documents || [],\n  context: $('Initialize Research Session').item.json.researchContext\n})) }}",
+               "type": "string"
+             }
+           ]
+         }
+       },
+       "name": "Prepare Methodology Input",
+       "type": "n8n-nodes-base.set",
+       "typeVersion": 3.4,
+       "position": [680, 580],
+       "id": "prep-methodology"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "validation_input",
+               "name": "validationInput",
+               "value": "={{ JSON.stringify(Object.assign($json.validationConfig, {\n  sessionId: $('Initialize Research Session').item.json.sessionId,\n  documents: $json.documents || [],\n  context: $('Initialize Research Session').item.json.researchContext\n})) }}",
+               "type": "string"
+             }
+           ]
+         }
+       },
+       "name": "Prepare Validation Input",
+       "type": "n8n-nodes-base.set",
+       "typeVersion": 3.4,
+       "position": [880, 580],
+       "id": "prep-validation"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "strategic_input",
+               "name": "strategicInput",
+               "value": "={{ JSON.stringify(Object.assign($json.strategicConfig, {\n  sessionId: $('Initialize Research Session').item.json.sessionId,\n  documents: $json.documents || [],\n  context: $('Initialize Research Session').item.json.researchContext\n})) }}",
+               "type": "string"
+             }
+           ]
+         }
+       },
+       "name": "Prepare Strategic Input",
+       "type": "n8n-nodes-base.set", 
+       "typeVersion": 3.4,
+       "position": [1080, 580],
+       "id": "prep-strategic"
+     },
+     {
+       "parameters": {
+         "workflowId": "universal-research-agent",
+         "workflowInputs": {
+           "values": [
+             {
+               "name": "query",
+               "value": "={{ $json.synthesisInput }}"
+             }
+           ]
+         }
+       },
+       "name": "Execute Synthesis Agent",
+       "type": "n8n-nodes-base.executeWorkflow",
+       "typeVersion": 1.2,
+       "position": [280, 780],
+       "id": "exec-synthesis"
+     },
+     {
+       "parameters": {
+         "workflowId": "universal-research-agent",
+         "workflowInputs": {
+           "values": [
+             {
+               "name": "query",
+               "value": "={{ $json.opportunityInput }}"
+             }
+           ]
+         }
+       },
+       "name": "Execute Opportunity Agent",
+       "type": "n8n-nodes-base.executeWorkflow",
+       "typeVersion": 1.2,
+       "position": [480, 780],
+       "id": "exec-opportunity"
+     },
+     {
+       "parameters": {
+         "workflowId": "universal-research-agent",
+         "workflowInputs": {
+           "values": [
+             {
+               "name": "query",
+               "value": "={{ $json.methodologyInput }}"
+             }
+           ]
+         }
+       },
+       "name": "Execute Methodology Agent",
+       "type": "n8n-nodes-base.executeWorkflow",
+       "typeVersion": 1.2,
+       "position": [680, 780],
+       "id": "exec-methodology"
+     },
+     {
+       "parameters": {
+         "workflowId": "universal-research-agent",
+         "workflowInputs": {
+           "values": [
+             {
+               "name": "query",
+               "value": "={{ $json.validationInput }}"
+             }
+           ]
+         }
+       },
+       "name": "Execute Validation Agent",
+       "type": "n8n-nodes-base.executeWorkflow",
+       "typeVersion": 1.2,
+       "position": [880, 780],
+       "id": "exec-validation"
+     },
+     {
+       "parameters": {
+         "workflowId": "universal-research-agent",
+         "workflowInputs": {
+           "values": [
+             {
+               "name": "query",
+               "value": "={{ $json.strategicInput }}"
+             }
+           ]
+         }
+       },
+       "name": "Execute Strategic Agent",
+       "type": "n8n-nodes-base.executeWorkflow",
+       "typeVersion": 1.2,
+       "position": [1080, 780],
+       "id": "exec-strategic"
+     },
+     {
+       "parameters": {
+         "assignments": {
+           "assignments": [
+             {
+               "id": "final_results",
+               "name": "finalResults",
+               "value": "={\n  \"sessionId\": \"{{ $('Initialize Research Session').item.json.sessionId }}\",\n  \"processingTimestamp\": \"{{ $('Initialize Research Session').item.json.processingTimestamp }}\",\n  \"synthesisResults\": {{ JSON.stringify($('Execute Synthesis Agent').item.json) }},\n  \"opportunityResults\": {{ JSON.stringify($('Execute Opportunity Agent').item.json) }},\n  \"methodologyResults\": {{ JSON.stringify($('Execute Methodology Agent').item.json) }},\n  \"validationResults\": {{ JSON.stringify($('Execute Validation Agent').item.json) }},\n  \"strategicResults\": {{ JSON.stringify($('Execute Strategic Agent').item.json) }}\n}",
+               "type": "object"
+             }
+           ]
+         }
+       },
+       "name": "Collect Final Results",
+       "type": "n8n-nodes-base.set",
+       "typeVersion": 3.4,
+       "position": [680, 980],
+       "id": "collect-results"
+     },
+     {
+       "parameters": {
+         "respondWith": "allEntries",
+         "options": {}
+       },
+       "name": "Return Research Results",
+       "type": "n8n-nodes-base.webhook",
+       "typeVersion": 2,
+       "position": [680, 1180],
+       "id": "return-results"
+     }
+   ],
+   "connections": {
+     "Research Processing Webhook": {
+       "main": [
+         [
+           {
+             "node": "Initialize Research Session",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Initialize Research Session": {
+       "main": [
+         [
+           {
+             "node": "Configure Synthesis Agent",
+             "type": "main",
+             "index": 0
+           },
+           {
+             "node": "Configure Opportunity Agent",
+             "type": "main",
+             "index": 0
+           },
+           {
+             "node": "Configure Methodology Agent",
+             "type": "main",
+             "index": 0
+           },
+           {
+             "node": "Configure Validation Agent",
+             "type": "main",
+             "index": 0
+           },
+           {
+             "node": "Configure Strategic Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Configure Synthesis Agent": {
+       "main": [
+         [
+           {
+             "node": "Prepare Synthesis Input",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Configure Opportunity Agent": {
+       "main": [
+         [
+           {
+             "node": "Prepare Opportunity Input",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Configure Methodology Agent": {
+       "main": [
+         [
+           {
+             "node": "Prepare Methodology Input",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Configure Validation Agent": {
+       "main": [
+         [
+           {
+             "node": "Prepare Validation Input",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Configure Strategic Agent": {
+       "main": [
+         [
+           {
+             "node": "Prepare Strategic Input",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Prepare Synthesis Input": {
+       "main": [
+         [
+           {
+             "node": "Execute Synthesis Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Prepare Opportunity Input": {
+       "main": [
+         [
+           {
+             "node": "Execute Opportunity Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Prepare Methodology Input": {
+       "main": [
+         [
+           {
+             "node": "Execute Methodology Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Prepare Validation Input": {
+       "main": [
+         [
+           {
+             "node": "Execute Validation Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Prepare Strategic Input": {
+       "main": [
+         [
+           {
+             "node": "Execute Strategic Agent",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Execute Synthesis Agent": {
+       "main": [
+         [
+           {
+             "node": "Collect Final Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Execute Opportunity Agent": {
+       "main": [
+         [
+           {
+             "node": "Collect Final Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Execute Methodology Agent": {
+       "main": [
+         [
+           {
+             "node": "Collect Final Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Execute Validation Agent": {
+       "main": [
+         [
+           {
+             "node": "Collect Final Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Execute Strategic Agent": {
+       "main": [
+         [
+           {
+             "node": "Collect Final Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     },
+     "Collect Final Results": {
+       "main": [
+         [
+           {
+             "node": "Return Research Results",
+             "type": "main",
+             "index": 0
+           }
+         ]
+       ]
+     }
+   },
+   "active": false,
+   "settings": {
+     "executionOrder": "v1"
+   }
+} 

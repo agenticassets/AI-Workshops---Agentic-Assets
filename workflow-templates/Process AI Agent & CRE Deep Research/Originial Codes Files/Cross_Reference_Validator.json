@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cross-reference-validator-2025"
+  },
+  "name": "Cross Reference Validator",
+  "tags": ["research", "validation", "verification", "consistency"],
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# ✅ Cross-Reference Validator Agent\n\n**Primary Function:** Validation and conflict resolution\n\n## Core Responsibilities:\n- **Claim Validation:** Verify research claims against sources\n- **Conflict Detection:** Identify contradictory findings\n- **Source Verification:** Validate citation accuracy and relevance\n- **Consistency Checking:** Ensure internal coherence\n- **Quality Assurance:** Flag potential errors and biases\n\n## Output Format:\n- Validated claims with confidence scores\n- Conflict identification and resolution\n- Source verification reports\n- Quality assurance assessments",
+        "height": 420,
+        "width": 520,
+        "color": 5
+      },
+      "name": "Agent Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "agent-overview"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        140
+      ],
+      "id": "memory-buffer",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "workflow-trigger",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "description": "Use the **think** tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        780,
+        140
+      ],
+      "id": "think-tool",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 100000) + 1 }}",
+              "type": "string"
+            },
+            {
+              "id": "parsed_input",
+              "name": "parsedInput",
+              "value": "={{ JSON.parse($json.query) }}",
+              "type": "object"
+            },
+            {
+              "id": "agent_focus",
+              "name": "agentFocus",
+              "value": "=Cross-Reference Validation and Conflict Resolution",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        -80
+      ],
+      "id": "edit-fields",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        440,
+        140
+      ],
+      "id": "language-model",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Fact-check claims and search for corroborating or contradicting evidence using comprehensive search.",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"query\": \"{{ $fromAI('searchTerm', 'Fact-checking search term to verify claims or find contradictory evidence', 'string') }}\",\n    \"search_depth\": \"advanced\",\n    \"include_answer\": true,\n    \"include_raw_content\": true,\n    \"max_results\": 10\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "Fact-checking search term to verify claims or find contradictory evidence",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        140
+      ],
+      "id": "fact-check-tool",
+      "name": "Fact Check Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "IRV4S8FpLS3xIEpH",
+          "name": "Tavily"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Verify original sources by directly accessing research papers, reports, and citations.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url', 'URL of original source document to verify', 'string') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "source-verification-tool",
+      "name": "Source Verification Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TPcndSkdpkbo1dlu",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=________________________\n# Cross-Reference Validation Task:\n{{ JSON.stringify($json.parsedInput) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Cross-Reference Validator Agent\n\n## Role\nYou are an expert research validation specialist focusing on AI agents and commercial real estate research. Your primary function is to validate claims, identify conflicts, and ensure research consistency and accuracy.\n\n## Tools:\n- **Think Tool**: Use this tool to plan your validation strategy and logical reasoning\n- **Fact Check Search**: Search for corroborating or contradicting evidence to verify claims\n- **Source Verification Tool**: Access original sources to verify citations and claims\n\n## Important:\nFirst step is to use the **think** tool to plan your validation and conflict detection strategy.\n\n## Core Capabilities\n- **\"Fact Check Search\"**: Find evidence to support or contradict research claims\n- **\"Source Verification Tool\"**: Access and verify original source documents\n- **\"Think Tool\"**: Plan validation strategy and reason through conflicts\n\n## Task Strategy Guidelines\n1. **Claim Identification**: Extract verifiable claims from research:\n   - Quantitative assertions (statistics, percentages, amounts)\n   - Qualitative claims (trends, relationships, outcomes)\n   - Methodological assertions (techniques, processes)\n   - Causal relationships (cause-effect claims)\n   - Comparative statements (better/worse, more/less)\n\n2. **Source Verification**: Validate citation accuracy:\n   - Check if cited sources actually exist\n   - Verify if sources support the claims made\n   - Assess source quality and credibility\n   - Identify potential citation errors or misrepresentations\n   - Check for proper attribution and context\n\n3. **Conflict Detection**: Identify contradictory findings:\n   - Compare claims across different documents\n   - Identify inconsistent statistics or findings\n   - Spot conflicting methodological assertions\n   - Find contradictory conclusions or recommendations\n   - Detect temporal inconsistencies\n\n4. **Internal Consistency**: Check logical coherence:\n   - Verify arguments follow logically\n   - Check for internal contradictions within documents\n   - Assess alignment between methodology and conclusions\n   - Evaluate consistency of definitions and terminology\n   - Identify gaps in logical reasoning\n\n5. **Quality Assurance**: Flag potential issues:\n   - Identify potential biases or conflicts of interest\n   - Spot outdated or superseded information\n   - Flag unsupported broad generalizations\n   - Identify missing crucial context or caveats\n   - Detect potential cherry-picking of data\n\n## Output Requirements\nStructure your final output with this exact schema:\n{\n  \"sessionId\": \"string\",\n  \"agentType\": \"Cross-Reference Validator\",\n  \"processingTimestamp\": \"ISO timestamp\",\n  \"claimValidation\": [\n    {\n      \"claim\": \"string\",\n      \"sourceDocument\": \"string\",\n      \"validationStatus\": \"verified|contradicted|unverifiable|partial\",\n      \"confidenceScore\": \"1-10\",\n      \"supportingEvidence\": [\"string array\"],\n      \"contradictingEvidence\": [\"string array\"],\n      \"verificationSources\": [\"string array\"],\n      \"qualityAssessment\": \"high|medium|low\"\n    }\n  ],\n  \"conflictIdentification\": [\n    {\n      \"conflictType\": \"statistical|methodological|causal|temporal|definitional\",\n      \"description\": \"string\",\n      \"involvedDocuments\": [\"string array\"],\n      \"conflictingClaims\": [\"string array\"],\n      \"severity\": \"high|medium|low\",\n      \"proposedResolution\": \"string\",\n      \"additionalResearchNeeded\": \"boolean\"\n    }\n  ],\n  \"sourceVerification\": [\n    {\n      \"citationContext\": \"string\",\n      \"originalSource\": \"string\",\n      \"accessible\": \"boolean\",\n      \"accurateRepresentation\": \"boolean\",\n      \"credibilityScore\": \"1-10\",\n      \"issuesIdentified\": [\"string array\"],\n      \"recommendedAction\": \"accept|flag|investigate|replace\"\n    }\n  ],\n  \"consistencyAssessment\": {\n    \"overallConsistency\": \"high|medium|low\",\n    \"internalLogicScore\": \"1-10\",\n    \"terminologyConsistency\": \"high|medium|low\",\n    \"methodologyAlignment\": \"high|medium|low\",\n    \"majorInconsistencies\": [\"string array\"]\n  },\n  \"qualityFlags\": [\n    {\n      \"flagType\": \"bias|outdated|unsupported|misleading|incomplete\",\n      \"description\": \"string\",\n      \"location\": \"string\",\n      \"severity\": \"high|medium|low\",\n      \"recommendedAction\": \"string\",\n      \"impact\": \"string\"\n    }\n  ],\n  \"overallAssessment\": {\n    \"reliabilityScore\": \"1-10\",\n    \"validationSummary\": \"string\",\n    \"majorConcerns\": [\"string array\"],\n    \"strengthAreas\": [\"string array\"],\n    \"recommendationsForImprovement\": [\"string array\"]\n  }\n}\n\n## Example Workflow\n1. Use **think** tool: \"I need to validate claims in this AI+CRE research. Let me identify key assertions to verify...\"\n2. Extract specific, verifiable claims from documents\n3. Use fact-checking tools to find supporting/contradicting evidence\n4. Verify original sources and citations\n5. Compare claims across documents to identify conflicts\n6. Assess internal consistency and logical coherence\n7. Generate comprehensive validation report\n\n## Final Reminders\nUse the **think** tool extensively for logical reasoning about validation strategies. Focus on providing thorough, evidence-based assessments that enhance research credibility and identify areas needing improvement or additional investigation."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        692,
+        -80
+      ],
+      "id": "ai-agent",
+      "name": "Cross-Reference Validator Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "autoFix": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sessionId\": {\"type\": \"string\"},\n    \"agentType\": {\"type\": \"string\"},\n    \"processingTimestamp\": {\"type\": \"string\"},\n    \"claimValidation\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"claim\": {\"type\": \"string\"},\n          \"sourceDocument\": {\"type\": \"string\"},\n          \"validationStatus\": {\"type\": \"string\", \"enum\": [\"verified\", \"contradicted\", \"unverifiable\", \"partial\"]},\n          \"confidenceScore\": {\"type\": \"string\"},\n          \"supportingEvidence\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"contradictingEvidence\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"verificationSources\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"qualityAssessment\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]}\n        }\n      }\n    },\n    \"conflictIdentification\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"conflictType\": {\"type\": \"string\", \"enum\": [\"statistical\", \"methodological\", \"causal\", \"temporal\", \"definitional\"]},\n          \"description\": {\"type\": \"string\"},\n          \"involvedDocuments\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"conflictingClaims\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"severity\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"proposedResolution\": {\"type\": \"string\"},\n          \"additionalResearchNeeded\": {\"type\": \"boolean\"}\n        }\n      }\n    },\n    \"sourceVerification\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"citationContext\": {\"type\": \"string\"},\n          \"originalSource\": {\"type\": \"string\"},\n          \"accessible\": {\"type\": \"boolean\"},\n          \"accurateRepresentation\": {\"type\": \"boolean\"},\n          \"credibilityScore\": {\"type\": \"string\"},\n          \"issuesIdentified\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n          \"recommendedAction\": {\"type\": \"string\", \"enum\": [\"accept\", \"flag\", \"investigate\", \"replace\"]}\n        }\n      }\n    },\n    \"consistencyAssessment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"overallConsistency\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"internalLogicScore\": {\"type\": \"string\"},\n        \"terminologyConsistency\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"methodologyAlignment\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n        \"majorInconsistencies\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    },\n    \"qualityFlags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"flagType\": {\"type\": \"string\", \"enum\": [\"bias\", \"outdated\", \"unsupported\", \"misleading\", \"incomplete\"]},\n          \"description\": {\"type\": \"string\"},\n          \"location\": {\"type\": \"string\"},\n          \"severity\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"recommendedAction\": {\"type\": \"string\"},\n          \"impact\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"overallAssessment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"reliabilityScore\": {\"type\": \"string\"},\n        \"validationSummary\": {\"type\": \"string\"},\n        \"majorConcerns\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"strengthAreas\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}},\n        \"recommendationsForImprovement\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    }\n  },\n  \"required\": [\"sessionId\", \"agentType\", \"claimValidation\", \"conflictIdentification\", \"consistencyAssessment\", \"overallAssessment\"],\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        140
+      ],
+      "id": "structured-output",
+      "name": "Structured Validation Output"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1-mini",
+        "options": {
+          "temperature": 0.1,
+          "maxTokens": 2000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        260
+      ],
+      "id": "autofix-language-model",
+      "name": "AutoFix GPT-4.1-mini",
+      "credentials": {
+        "openRouterApi": {
+          "id": "72mF2DZvmuIMyDu5",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fact Check Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Verification Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Validation Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Cross-Reference Validator Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutoFix GPT-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Validation Output",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+} 
