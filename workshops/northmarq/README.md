@@ -10,8 +10,7 @@
 
 
 <div align="center">
-  <h2><strong>AI for CRE: Practical Foundations (75–90 min)</strong></h2>
-  <p><em>Comprehensive AI training for commercial real estate professionals</em></p>
+  <h2><strong>AI for CRE: Practical Foundations (75–90 min)</strong></h2><p><em>Comprehensive AI training for commercial real estate professionals</em></p>
 </div>
 
 
